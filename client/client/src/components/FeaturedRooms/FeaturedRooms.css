@@ -1,0 +1,30 @@
+.sectionTitle{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.carousel {
+    padding: 50px;
+    height: 50vh;
+    color: #fff;
+    box-sizing:border-box;
+    background-color: rgb(27, 27, 48);
+    background-repeat: no-repeat;
+}
+
+.carousel img {
+    width: 50%;
+    height: 100%;
+    border: 1px solid red;
+    object-fit: cover;
+}
+
+.carousel-caption{
+    color: white;
+}
+
+.carouselItem {
+   height: 50%;
+   border: 1px solid green;
+}
