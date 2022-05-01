@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import './App.css'
 import HeaderForm from "./components/HeaderForm/HeaderForm";
 import FeaturedRooms from "./components/FeaturedRooms/FeaturedRooms";
+import Stats from "./components/Stats/Stats";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <HeaderForm />
       <Features />
       <FeaturedRooms />
+      <Stats />
     </div>
   );
 }
