@@ -1,0 +1,38 @@
+.statsContainer{
+    background-color: rgba(27, 27, 48, 0.9);
+    min-height: 100px;
+    height: 200px;
+    margin-top: 50px;
+}
+
+.countersContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    height: 100%;
+}
+
+.counterItem {
+    height: 100%;
+    width: 20%;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.counterTitle {
+    color: rgb(242, 233, 228);
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.counter {
+    color:rgb(242, 233, 228);
+    font-size: 1.4rem;
+    font-weight: bold;
+}
