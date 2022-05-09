@@ -4,6 +4,7 @@ import './App.css'
 import HeaderForm from "./components/HeaderForm/HeaderForm";
 import FeaturedRooms from "./components/FeaturedRooms/FeaturedRooms";
 import Stats from "./components/Stats/Stats";
+import Testimonials from "./components/Testimonials/Testimonials";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Features />
       <FeaturedRooms />
       <Stats />
+      <Testimonials />
     </div>
   );
 }
