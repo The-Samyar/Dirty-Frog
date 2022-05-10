@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
+import IMG from '../images/person1.jpg'
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
 import './Testimonials.css'
 
 const Testimonials = () => {
 
     const [index, setIndex] = useState(0);
+    const [value, setValue] = useState(2);
     const ref = useRef();
     var children = ref.current?.children.length - 1;
 
@@ -21,14 +25,13 @@ const Testimonials = () => {
 
     const handleLeft = () => {
         console.log(children)
-        if (index < children && index > 0) {
+        console.log(index);
+        if (index <= children && index > 0) {
             setIndex(index - 1);
-            console.log('if')
         }
 
-        else if (index <= 0) {
+        else if (index < 0) {
             setIndex(0);
-            console.log('else')
         }
 
     }
@@ -51,10 +54,96 @@ const Testimonials = () => {
             <div className="sliderContainer">
                 <div className="innerSlider" ref={ref}>
                     <div className="testimonials">
-                        hello
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <Box sx={{
+                                    '& > legend': { mt: 2 },
+                                }} className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        size="small"
+                                        sx="10"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
                     </div>
                     <div className="testimonials">
-                        hello2
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                    </div>
+                    <div className="testimonials">
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
+                        <div className="card">
+                            <div className="cardHeader">
+                                <img src={IMG} alt="" className="cardImg" />
+                                <span className="cardName">Kean Walker away</span>
+                            </div>
+                            <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts.</p>
+                        </div>
                     </div>
                 </div>
                 <i className="fa fa-angle-right rightIcon" onClick={handleRight}></i>
