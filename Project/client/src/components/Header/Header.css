@@ -42,6 +42,10 @@
     color:rgb(242, 233, 228)
 }
 
+.headerContent span{
+    font-weight: 500;
+}
+
 .formContainer{
     width: 70%;
 }
