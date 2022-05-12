@@ -57,16 +57,13 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <Box sx={{
-                                    '& > legend': { mt: 2 },
-                                }} className="cardInfo">
+                                <Box className="cardInfo">
                                     <span className="cardName">Kean Walker</span>
                                     <Rating
                                         name="simple-controlled"
                                         className="rating"
                                         value={value}
-                                        size="small"
-                                        sx="10"
+                                        className="rating"
                                         onChange={(event, newValue) => {
                                             setValue(newValue);
                                         }}
@@ -79,7 +76,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -87,7 +95,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -97,7 +116,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -105,7 +135,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -113,7 +154,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -123,7 +175,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -131,7 +194,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
@@ -139,7 +213,18 @@ const Testimonials = () => {
                         <div className="card">
                             <div className="cardHeader">
                                 <img src={IMG} alt="" className="cardImg" />
-                                <span className="cardName">Kean Walker away</span>
+                                <Box className="cardInfo">
+                                    <span className="cardName">Kean Walker</span>
+                                    <Rating
+                                        name="simple-controlled"
+                                        className="rating"
+                                        value={value}
+                                        className="rating"
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Box>
                             </div>
                             <p className="cardDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                                 there live the blind texts.</p>
