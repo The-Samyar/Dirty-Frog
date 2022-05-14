@@ -8,6 +8,7 @@
     display: flex;
     width: 80%;
     margin: auto;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 }
