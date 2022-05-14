@@ -5,7 +5,6 @@ import HeaderForm from "./components/HeaderForm/HeaderForm";
 import FeaturedRooms from "./components/FeaturedRooms/FeaturedRooms";
 import Stats from "./components/Stats/Stats";
 
-
 function App() {
   return (
     <div className="App">

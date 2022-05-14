@@ -1,8 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
-# Create your views here.
+from rest_framework.response import Response
+from .serializers import RoomPictureSerializer, ReviewSerializer
+from . import models
 
 def Homepage(request):
-    # return HttpResponse("Hello")
-    pass
+    if request.method == 'GET':
+        review = models.Review.objects.all()
+        serialized = RoomPictureSerializer(review)
+        se = RoomPictureSerializer()
+        return Response(serialized.data)
+
+    elif request.method == 'POST':
+
+        pass
