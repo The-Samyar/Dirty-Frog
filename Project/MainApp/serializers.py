@@ -4,9 +4,16 @@ from . import models
 class RoomPictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RoomPicture
-        field = "__all__"
+        fields = "__all__"
+
+class RoomTypeSerializer(serializers.ModelSerializer):
+    room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
+
+    class Meta:
+        model = models.RoomType
+        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures']
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Review
-        field = "__all__"
+        fields = "__all__"
