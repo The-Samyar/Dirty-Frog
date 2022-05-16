@@ -62,11 +62,8 @@ const Testimonials = () => {
                                     <Rating
                                         name="simple-controlled"
                                         className="rating"
-                                        value={value}
                                         className="rating"
-                                        onChange={(event, newValue) => {
-                                            setValue(newValue);
-                                        }}
+                                        value={4}
                                     />
                                 </Box>
                             </div>
