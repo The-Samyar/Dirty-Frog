@@ -2,12 +2,13 @@
     background-color: rgba(27, 27, 48, 0.9);
     width: 100%;
     height: 40vh;
+    padding: 10px;
     display: flex;
+    box-sizing: border-box;
     align-items: center;
 }
 
 .footerItem {
-    border: 1px solid red;
     width: 20%;
     flex: 1;
     height: 80%;
@@ -19,9 +20,15 @@
     font-size: 1.3rem;
 }
 
+.footerContactUs {
+
+    height: 80%;
+}
+
 .Information {
-    border: 1px solid blue;
-    
+    display: flex;
+    flex-direction: column;
+    height: 90%;
 }
 
 .informationItem {
@@ -29,8 +36,35 @@
     width: 50%;
     display: flex;
     align-items: center;
+    margin: 10px 0px;
 }
 
 .informationIcon {
     margin-right: 20px;
+}
+
+.linksContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 90%;
+}
+
+.links {
+    cursor: pointer;
+    width: 20%;
+}
+
+.links:not(:first-child) {
+    margin: 5px 0px;
+}
+
+.links:hover {
+    color:rgba(143, 143, 218, 0.644);
+}
+
+.mapContainer {
+    width: 100%;
+    border-radius: 5px;
+    height: 100%;
 }

@@ -9,7 +9,7 @@ const HeaderForm = () => {
     
 
     return (
-        <from onClick={(e) => handleForm(e)} className="formContainer">
+        <form onClick={(e) => handleForm(e)} className="formContainer">
             <div className="inputSection">
                 <label htmlFor="checkIn">Check In</label>
                 <input type="date" id="checkIn" />
@@ -56,7 +56,7 @@ const HeaderForm = () => {
             </div>
 
             <input type="submit" value="Check Availability" className="button"/>
-        </from>
+        </form>
     )
 }
 
