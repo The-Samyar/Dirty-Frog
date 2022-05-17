@@ -7,8 +7,11 @@
 - Form [arrival date, departure date, no. of adults, no. of children]
 - Hotel facilites
 - Featured rooms
-- Dynamic stats about hotel **OR** contact us button with background
-- Video
+- Dynamic stats about hotel:
+    - No. of guests
+    - No. of rooms
+    - No. of staff
+    - No. of positive ratings
 - Review with stars
 - Footer :
     - Social media quick links
