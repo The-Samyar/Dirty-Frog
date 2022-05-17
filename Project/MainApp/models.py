@@ -9,10 +9,10 @@ class RoomType(models.Model):
     cost_per_day = models.IntegerField()
     size = models.IntegerField()
     capacity = models.IntegerField()
-    # bed = 
+    bed = models.CharField(max_length=30)
     room_count = models.IntegerField()
     booked_count = models.IntegerField()
-    desciption = models.TextField()
+    description = models.TextField()
 
     def __str__(self):
         return self.room_name
@@ -21,11 +21,13 @@ class RoomType(models.Model):
 class RoomPicture(models.Model):
     room_name = models.ForeignKey(
         RoomType,
-        on_delete=models.CASCADE)
-    image_address = models.CharField(max_length=50)
+        on_delete=models.CASCADE,
+        related_name='room_pictures')
+    picture_address = models.CharField(max_length=50)
     def __str__(self):
-        return self.room_name
-
+        # REDO
+        # return self.room_name.room_name
+        return f"{self.room_name.room_name} | {self.picture_address}"
 
 class RoomService(models.Model):
     room_name = models.ManyToManyField(RoomType)
@@ -60,20 +62,20 @@ class Booking(models.Model):
 #  ---Table for user's info---
 class UserInfo(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=14)
-    is_checked = models.BooleanField(blank=True, null=True, default=False)
-    dob = models.DateField()
-    gender = models.CharField(max_length=6)
+    phone_number = models.CharField(max_length=14 ,blank=True, null=True)
+    is_checked = models.BooleanField(default=False)
+    dob = models.DateField(blank=True, null=True)
+    gender = models.CharField(max_length=6 ,blank=True, null=True)
     # profile_picture = models.ImageField(upload_to='')
-    profile_picture = models.ImageField()
+    profile_picture = models.ImageField(blank=True, null=True)
     def __str__(self):
-        return self.user_id
+        return self.user_id.username
 
 
 class Review(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     review = models.TextField()
     rate = models.IntegerField()
-    # def __str__(self):
-    #     return self.user_id
+    def __str__(self):
+        return f"By {self.user_id.username}"
 # -----------------------------
