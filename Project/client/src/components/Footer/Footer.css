@@ -11,7 +11,8 @@
 .footerItem {
     width: 20%;
     flex: 1;
-    height: 80%;
+    height: 90%;
+    margin: auto;
     padding: 10px; 
     color: rgb(242, 233, 228);
 }
@@ -20,23 +21,16 @@
     font-size: 1.3rem;
 }
 
-.footerContactUs {
-
-    height: 80%;
-}
-
 .Information {
     display: flex;
     flex-direction: column;
-    height: 90%;
 }
 
 .informationItem {
-    margin-top: 10px;
     width: 50%;
     display: flex;
     align-items: center;
-    margin: 10px 0px;
+    margin: 10px;
 }
 
 .informationIcon {
@@ -53,11 +47,10 @@
 .links {
     cursor: pointer;
     width: 20%;
+    margin: 10px;
+    transform: translateY(-30px);
 }
 
-.links:not(:first-child) {
-    margin: 5px 0px;
-}
 
 .links:hover {
     color:rgba(143, 143, 218, 0.644);
