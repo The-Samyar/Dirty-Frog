@@ -1,57 +1,46 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import './FeaturedRooms.css'
+import { fetchFeaturedRooms } from '../../api/api'
 import IMG1 from '../images/room1.jpg'
 import IMG2 from '../images/room2.jpg'
 import IMG3 from '../images/room3.jpg'
 
 
 const FeaturedRooms = () => {
+
+    const [rooms, setRooms] = useState([])
+
+    useEffect(() => {
+        const getData = async () => {
+            const { data } = await fetchFeaturedRooms()
+            const { room_types } = data[0]
+            setRooms(room_types)
+        }
+
+        getData()
+    }, [])
+
+    console.log(rooms)
+
     return (
         <section>
             <h3 className="sectionTitle">Featured Rooms</h3>
             <div className="featuredRoomContainer">
-                
-                <div className="featuredRoom">
-                    <div className="imageSection">
-                        <img src={IMG1} alt="King Room" />
-                    </div>
-                    <div className="infoSection">
-                        <h4 className="infoSectionTitle">King Room</h4>
-                        <span className="cost">$140/Night</span>
-                        <p className="infoDescription">
-                            Far far away, behind the word mountains, far from the countries Vokalia
-                             and Consonantia, there live the blind texts.
-                        </p>
-                    </div>
-                </div>
 
-                <div className="featuredRoom">
-                    <div className="imageSection">
-                        <img src={IMG2} alt="Deluxe Room" />
-                    </div>
-                    <div className="infoSection">
-                        <h4 className="infoSectionTitle">King Room</h4>
-                        <span className="cost">$140/Night</span>
-                        <p className="infoDescription">
-                            Far far away, behind the word mountains, far from the countries Vokalia
-                             and Consonantia, there live the blind texts.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="featuredRoom">
-                    <div className="imageSection">
-                        <img src={IMG3} alt="Suit Room" />
-                    </div>
-                    <div className="infoSection">
-                        <h4 className="infoSectionTitle">King Room</h4>
-                        <span className="cost">$140/Night</span>
-                        <p className="infoDescription">
-                            Far far away, behind the word mountains, far from the countries Vokalia
-                             and Consonantia, there live the blind texts.
-                        </p>
-                    </div>
-                </div>
+                {rooms.map((room ,index) => 
+                    (<div className="featuredRoom" key={index}>
+                        <div className="imageSection">
+                            <img src={IMG1} alt="King Room" />
+                        </div>
+                        <div className="infoSection">
+                            <h4 className="infoSectionTitle">{room.room_name}</h4>
+                            <span className="cost">${room.cost_per_day}/Night</span>
+                            <p className="infoDescription">
+                                {room.description}
+                            </p>
+                        </div>
+                    </div>)
+                )}
             </div>
         </section>
     )

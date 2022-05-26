@@ -12,6 +12,8 @@
     background-color: transparent;
     color: rgb(242, 233, 228);
     width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .navItems {
@@ -22,10 +24,15 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.navItemLinks {
+    color: rgb(242, 233, 228);
+    text-decoration: none;
     cursor: pointer;
 }
 
-.navItem.special{
+.special{
     background-color: rgb(255, 255, 255);
     color:rgba(27, 27, 48, 0.9);
     padding: 15px;
