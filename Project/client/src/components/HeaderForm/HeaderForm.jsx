@@ -8,9 +8,8 @@ const HeaderForm = () => {
 
     const handleForm = (e) => {
         e.preventDefault();
-        const data = JSON.stringify(formData)
-        console.log(data)
-        post(data)
+        console.log(formData)
+        post(formData)
     }
 
     return (
