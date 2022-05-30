@@ -1,6 +1,7 @@
 
 import React from 'react'
 import './Footer.css'
+import {Link} from 'react-router-dom'
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import LocalPhoneSharpIcon from '@mui/icons-material/LocalPhoneSharp';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
@@ -38,11 +39,11 @@ const Footer = () => {
                         <h4 className="Title">Quick Links</h4>
                     </div>
                     <div className="linksContainer">
-                        <span className="links">Home</span>
-                        <span className="links">Sign Up</span>
-                        <span className="links">Sign In</span>
-                        <span className="links">Rooms</span>
-                        <span className="links">About Us</span>
+                        <Link to="/" className="links">Home</Link>
+                        <Link to="/signUp" className="links">Sign Up</Link>
+                        <Link to="/signIn" className="links">Sign In</Link>
+                        <Link to="/rooms" className="links">Rooms</Link>
+                        <Link to="/aboutUs" className="links">About Us</Link>
                     </div>
                 </div>
             </div>
