@@ -7,12 +7,20 @@ import CountUp from 'react-countup'
 const Stats = () => {
 
     const [data, setData] = useState({})
+    const [run, setRun] = useState(false);
 
+    const checkViewPort = () => {
+        if (window.scrollY >= 1500) {
+            setRun(true);
+        }
+    }
+
+    window.addEventListener('scroll', checkViewPort);
+    
     useEffect(() =>{
         const getData = async () => {
           const {data} = await fetchStats()
           setData(data)
-          /* console.log(data) */ 
         }
     
         getData();
@@ -24,7 +32,7 @@ const Stats = () => {
         <section className="statsContainer">
             <div className="countersContainer">
                 <div className="counterItem">
-                    <CountUp className="counter" separator="," duration={2} end={guests_count} redraw />
+                   <CountUp className="counter" separator="," duration={2} end={guests_count} redraw />
                     <span className="counterTitle">No. Of Guests</span>
                 </div>
                 <div className="counterItem">
