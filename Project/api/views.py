@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from datetime import date
 from django.db.models import Sum
 
-from .serializers import RoomTypeSerializer, ReviewSerializer, HeaderFormSerializer
+from .serializers import RoomTypeSerializer, ReviewSerializer
 from . import models
 
 
@@ -16,6 +16,7 @@ def FeaturedRooms_component(request):
     for item in room_types_serialized.data:
         item = dict(item)
 
+    print(room_types_serialized.data)
     json_response = [
         {"room_types" : room_types_serialized.data},
     ]
@@ -58,17 +59,5 @@ def Stats_component(request):
 @api_view(('POST',))
 def HeaderForm_component(request):
     if request.method == 'POST':
-        serialized_data = HeaderFormSerializer(data=request.data)
-        if serialized_data.is_valid():
-            # print("valid")
-            # print(request.data)
-            # Assuming that data is valid:
-            valid_data = serialized_data.validated_data
-            # Filtering rooms based on number of guest:
-            rooms = models.RoomType.objects.filter(capacity__gte = int(valid_data['adults'] + valid_data['children']))
-            vacant_rooms = models.RoomVacancy.objects.filter(is_vacant = True).filter(room_name__in=rooms)
-            return Response(vacant_rooms)
-        else:
-            print("invalid")
-            print(serialized_data.errors)
-            return Response(None)           
+        rambod = request.data
+        return Response(rambod)
