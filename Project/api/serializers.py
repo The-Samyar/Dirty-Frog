@@ -17,3 +17,10 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Review
         fields = "__all__"
+
+class HeaderFormSerializer(serializers.Serializer):
+    checkIn = serializers.DateField()
+    checkOut = serializers.DateField()
+    rooms = serializers.IntegerField()
+    adults = serializers.IntegerField()
+    children = serializers.IntegerField()
