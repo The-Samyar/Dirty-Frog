@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from datetime import date
-from django.db.models import Sum
+from django.db.models import Sum, Q, Count
 
 from .serializers import RoomTypeSerializer, ReviewSerializer, HeaderFormSerializer
 from . import models
@@ -10,7 +10,7 @@ from . import models
 
 @api_view(('GET',))
 def FeaturedRooms_component(request):
-    room_types = models.RoomType.objects.all()
+    room_types = models.RoomType.objects.filter(Q(room_name='Premium King') | Q(room_name='Premium Royal') | Q(room_name='Premium Sea View'))
     room_types_serialized = RoomTypeSerializer(room_types, many=True)
 
     for item in room_types_serialized.data:
@@ -58,17 +58,31 @@ def Stats_component(request):
 @api_view(('POST',))
 def HeaderForm_component(request):
     if request.method == 'POST':
+        print(request.data)
         serialized_data = HeaderFormSerializer(data=request.data)
         if serialized_data.is_valid():
-            # print("valid")
-            # print(request.data)
-            # Assuming that data is valid:
+            print("VALID")
             valid_data = serialized_data.validated_data
-            # Filtering rooms based on number of guest:
+            # Returns the rooms that have space for equal or more than the number of guests,
+            # and that have number of vacant rooms equal or more than then desire number of rooms
             rooms = models.RoomType.objects.filter(capacity__gte = int(valid_data['adults'] + valid_data['children']))
-            vacant_rooms = models.RoomVacancy.objects.filter(is_vacant = True).filter(room_name__in=rooms)
-            return Response(vacant_rooms)
+            for room in rooms:
+                if models.RoomVacancy.objects.filter(room_name=room.room_name, is_vacant=True).count() >= valid_data['rooms']:
+                    continue
+                else:
+                    rooms = rooms.exclude(room_name=room.room_name) 
+            returned_serialized = RoomTypeSerializer(rooms, many=True)
+            for item in returned_serialized.data:
+                item = dict(item)
+
+            json_response = {
+                "rooms" : returned_serialized.data
+            }
+
+            print(json_response)
+            return Response(json_response)
+
         else:
-            print("invalid")
+            print("INVALID INPUT")
             print(serialized_data.errors)
-            return Response(None)           
+            return Response(serialized_data.errors)

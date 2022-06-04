@@ -33,7 +33,7 @@ class RoomService(models.Model):
     room_name = models.ManyToManyField(RoomType)
     service = models.CharField(max_length=50)
     def __str__(self):
-        return f"{self.room_name}, {self.service}"
+        return f"{self.service}"
 
 class RoomVacancy(models.Model):
     room_number = models.IntegerField(unique=True)
