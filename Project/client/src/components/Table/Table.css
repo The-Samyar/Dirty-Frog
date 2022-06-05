@@ -1,7 +1,11 @@
+form {
+    width: 100%;
+}
+
 .table {
     border: 1px solid rgba(27, 27, 48, 0.9);
-    width: 100%;
-    margin: 100px 0px;
+    width: 90%;
+    margin: 100px auto;
     border-collapse: collapse;
 }
 
@@ -13,11 +17,59 @@
 }
 
 .tableCells {
-    width: 20%;
     border: 1px solid rgba(27, 27, 48, 0.9);
     padding: 10px;
 }
 
 .smallTableCells {
     width: 10%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(27, 27, 48, 0.9);
+}
+
+.ReserveCell {
+    border-top: 1px solid rgba(27, 27, 48, 0.9);
+    padding: 10px;
+}
+
+.tableCellContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.buttonTable {
+    border: none;
+    padding: 15px 30px;
+    color: rgb(242, 233, 228);
+    background-color: rgba(27, 27, 48, 0.9);
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.tableSelect {
+    width: 60%;
+    outline: none;
+    border: none;
+    padding: 10px 15px;
+    background-color: #f1f1f1;
+    color: rgba(27, 27, 48, 0.9);
+    font-size: 1.1rem;
+}
+
+.titleRoom {
+    cursor: pointer;
+}
+
+.titleRoom:hover {
+    color: rgba(143, 143, 218, 0.644);
+}
+
+.roomCost {
+    font-weight: bold;
+    font-size: 1.1rem;
 }

@@ -46,10 +46,9 @@
 
 .linksContainer .links {
     cursor: pointer;
-    color: rgba(27, 27, 48, 0.9);
+    color: rgb(242, 233, 228);
     text-decoration: none;
     font-size: 1rem;
-    font-weight: 700;
     width: 20%;
     margin: 10px;
     transform: translateY(-30px);

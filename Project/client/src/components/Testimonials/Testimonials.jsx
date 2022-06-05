@@ -8,10 +8,10 @@ import './Testimonials.css'
 const Testimonials = () => {
 
     const [index, setIndex] = useState(0);
-    const [value, setValue] = useState(2);
     const [review, setReview] = useState([])
     const ref = useRef();
     var children = ref.current?.children.length - 1;
+    console.log(children)
 
     const handleRight = () => {
         if (index < children) {
@@ -101,9 +101,9 @@ const Testimonials = () => {
 
             <div className="sliderContainer">
                 <div className="innerSlider" ref={ref}>
-                    {
-                        review.map((reviewList , index) => (
-                            <div className="testimonials" key={index}>
+                    
+                        {review.map((reviewList , index) => (
+                          reviewList.length !== 0 &&  <div className="testimonials" key={index}>
                                 {
                                     reviewList.map(reviewItem => (
                                         <div className="card" key={reviewItem.userId}>
