@@ -32,7 +32,7 @@ const Navbar = ({covered}) => {
             <Link to="/contactUs" className="navItemLinks">Contact Us</Link>
           </li>
           <li className="navItem">
-            <Link to="/bookNow" className="navItemLinks special">Books Now</Link>
+            <Link to="/bookNow" className="navItemLinks special">Book Now</Link>
           </li>
           <li className="navItem">
             <Link to="/signIn" className="navItemLinks">Sign In</Link>
