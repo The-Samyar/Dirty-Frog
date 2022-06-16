@@ -4,7 +4,7 @@ import { post } from '../../api/api'
 
 const HeaderForm = () => {
 
-    const [formData , setFormData] = useState({checkIn : '' , checkOut : '' , rooms: '' , adults: '' , children: ''})
+    const [formData , setFormData] = useState({checkIn : '' , checkOut : '' , rooms: '1' , adults: '1' , children: '0'})
 
     const handleForm = (e) => {
         e.preventDefault();
