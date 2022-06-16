@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from datetime import date
 from django.db.models import Sum, Q, Count
 
-from .serializers import RoomTypeSerializer, ReviewSerializer, HeaderFormSerializer
+from .serializers import *
 from . import models
 
 
@@ -55,32 +55,51 @@ def Stats_component(request):
     return Response(json_response)
 
 
-@api_view(('POST',))
-def HeaderForm_component(request):
-    if request.method == 'POST':
-        print(request.data)
+@api_view(("GET","POST"))
+def BookNow(request):
+    if request.method == 'GET':
+        rooms = models.RoomType.objects.annotate(
+            vacant_count=Count('roomvacancy', filter=Q(roomvacancy__is_vacant=True))
+            ).filter(vacant_count__gte=1)
+
+        returned_serialized = BookRoomSerializer(rooms, many=True)
+
+        return Response(returned_serialized.data)
+    elif request.method == 'POST':
         serialized_data = HeaderFormSerializer(data=request.data)
+        print(request.data)
         if serialized_data.is_valid():
             print("VALID")
             valid_data = serialized_data.validated_data
-            # Returns the rooms that have space for equal or more than the number of guests,
-            # and that have number of vacant rooms equal or more than then desire number of rooms
-            rooms = models.RoomType.objects.filter(capacity__gte = int(valid_data['adults'] + valid_data['children']))
-            for room in rooms:
-                if models.RoomVacancy.objects.filter(room_name=room.room_name, is_vacant=True).count() >= valid_data['rooms']:
-                    continue
-                else:
-                    rooms = rooms.exclude(room_name=room.room_name) 
-            returned_serialized = RoomTypeSerializer(rooms, many=True)
-            for item in returned_serialized.data:
-                item = dict(item)
 
-            json_response = {
-                "rooms" : returned_serialized.data
-            }
+            # Returns the rooms that have space for equal
+            # or more than the number of guests,
+            # and that have number of vacant rooms
+            # equal or more than then desire number of rooms
 
-            print(json_response)
-            return Response(json_response)
+
+            # Solution 1:
+            # rooms = models.RoomType.objects.filter(capacity__gte = int(valid_data['adults'] + valid_data['children']))
+            # for room in rooms:
+            #     if models.RoomVacancy.objects.filter(room_name=room.room_name, is_vacant=True).count() >= valid_data['rooms']:
+            #         continue
+            #     else:
+            #         rooms = rooms.exclude(room_name=room.room_name) 
+            
+            # Solution explanation:
+            # https://betterprogramming.pub/django-annotations-and-aggregations-48685994d149
+
+            # Solution 2:
+
+            rooms = models.RoomType.objects.annotate(
+                    vacant_count=Count(
+                        'roomvacancy', filter=Q(roomvacancy__is_vacant=True)
+                        )
+                    ).filter(vacant_count__gte=valid_data['rooms'], capacity__gte = int(valid_data['adults'] + valid_data['children']))
+
+            returned_serialized = BookRoomSerializer(rooms, many=True)
+
+            return Response(returned_serialized.data)
 
         else:
             print("INVALID INPUT")
