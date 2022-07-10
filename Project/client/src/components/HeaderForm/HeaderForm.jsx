@@ -1,15 +1,18 @@
 import React , {useState} from 'react'
 import './HeaderForm.css'
-import { post } from '../../api/api'
+import { useNavigate } from "react-router-dom";
 
 const HeaderForm = () => {
 
     const [formData , setFormData] = useState({checkIn : '' , checkOut : '' , rooms: '1' , adults: '1' , children: '0'})
+    const navigator = useNavigate();
 
     const handleForm = (e) => {
         e.preventDefault();
-        console.log(formData)
-        post(formData)
+        const urlParms = 
+        `?checkIn=${formData.checkIn}&checkOut=${formData.checkOut}&rooms=${formData.rooms}&adults=${formData.adults}&children=${formData.children}`;
+        navigator('/bookNow'+ urlParms);
+        
     }
 
     return (
@@ -60,7 +63,7 @@ const HeaderForm = () => {
                 </select>
             </div>
 
-            <input type="submit" value="Check Availability" className="button"/>
+            <button className="button">Check Availability</button>
         </form>
     )
 }
