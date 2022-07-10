@@ -76,6 +76,11 @@ class Review(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     review = models.TextField()
     rate = models.IntegerField()
+
+    @property
+    def first_name(self):
+        return self.user_id.first_name
+
     def __str__(self):
-        return f"By {self.user_id.username}"
+        return f"By {self.user_id.first_name}"
 # -----------------------------
