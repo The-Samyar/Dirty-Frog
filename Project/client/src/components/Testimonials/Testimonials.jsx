@@ -114,7 +114,6 @@ const Testimonials = () => {
                                                     <Rating
                                                         name="simple-controlled"
                                                         className="rating"
-                                                        className="rating"
                                                         value={reviewItem.rate}
                                                         readOnly
                                                     />
@@ -129,7 +128,7 @@ const Testimonials = () => {
                     }
                 </div>
                 <i className="fa fa-angle-right rightIcon" onClick={handleRight}></i>
-                <i class="fa fa-angle-left leftIcon" onClick={handleLeft}></i>
+                <i className="fa fa-angle-left leftIcon" onClick={handleLeft}></i>
             </div>
         </section>
     )
