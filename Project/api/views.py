@@ -73,10 +73,10 @@ def BookNow(request):
             print("VALID")
             valid_data = serialized_data.validated_data
 
-            # Returns the rooms that have space for equal
+            # Returns the rooms with space equal
             # or more than the number of guests,
             # and that have number of vacant rooms
-            # equal or more than then desire number of rooms
+            # equal or more than then desired number of rooms
 
 
             # Solution 1:

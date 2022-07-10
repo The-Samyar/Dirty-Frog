@@ -21,12 +21,14 @@ class RoomTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.RoomType
-        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures']
+        # fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures']
+        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'services']
 
 class ReviewSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = models.Review
-        fields = "__all__"
+        fields = ['first_name', 'review', 'rate']
 
 class HeaderFormSerializer(serializers.Serializer):
     checkIn = serializers.DateField()
