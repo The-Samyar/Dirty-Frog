@@ -110,7 +110,7 @@ const Testimonials = () => {
                                             <div className="cardHeader">
                                                 <img src={IMG} alt="" className="cardImg" />
                                                 <Box className="cardInfo">
-                                                    <span className="cardName">Kean Walker</span>
+                                                    <span className="cardName">{reviewItem.first_name}</span>
                                                     <Rating
                                                         name="simple-controlled"
                                                         className="rating"
