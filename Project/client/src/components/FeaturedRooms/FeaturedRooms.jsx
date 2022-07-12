@@ -12,7 +12,8 @@ const FeaturedRooms = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const { data } = await fetchFeaturedRooms()
+            const data  = await fetchFeaturedRooms()
+            console.log(data)
             const { room_types } = data[0]
             setRooms(room_types)
         }
