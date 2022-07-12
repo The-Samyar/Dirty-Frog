@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import { useSearchParams } from 'react-router-dom'
-import { fetchBookNow } from '../../api/api'
+import { fetchBookNow , getBookNow } from '../../api/api'
 import './Table.css'
 
 const Table = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
-    const [recommended, setRecomended] = useState({})
+    const [recommended, setRecomended] = useState([])
     const [existance, setExistance] = useState(false)
 
     useEffect(() => {
@@ -18,6 +18,12 @@ const Table = () => {
             const rooms = searchParams.get('rooms');
             const adults = searchParams.get('adults');
             const children = searchParams.get('children');
+
+            if(!checkIn){
+                const {data} = await getBookNow();
+                console.log(data);
+                setRecomended(data);
+            }
 
             const readyData = { checkIn, checkOut, rooms, adults, children }
 
@@ -57,7 +63,7 @@ const Table = () => {
                 </thead>
 
                 <tbody>
-                    {existance &&
+                    {recommended &&
                         recommended?.map((room, index) => (
                             <tr key={index}>
                                 <td className="tableCells">
@@ -107,9 +113,7 @@ const Table = () => {
                         ))
                     }
 
-                    {
-                        !existance && <div className="errorCell">Not found</div>
-                    }
+                   
                 </tbody>
 
 

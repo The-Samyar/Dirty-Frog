@@ -23,7 +23,7 @@ const Sign = ({ signUp }) => {
                     :
 
                     <div className="box">
-
+                        
                     </div>
             }
         </div>
