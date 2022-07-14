@@ -12,17 +12,18 @@ class BookRoomSerializer(serializers.Serializer):
     cost_per_day = serializers.IntegerField()
     size = serializers.IntegerField()
     capacity = serializers.IntegerField()
-    vacant_count = serializers.IntegerField()
-    description = serializers.CharField()
-    room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
+    # vacant_count = serializers.IntegerField()
+    # description = serializers.CharField()
+    # room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
+    services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
 
 class RoomTypeSerializer(serializers.ModelSerializer):
     room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
 
     class Meta:
         model = models.RoomType
-        # fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures']
-        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'services']
+        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures']
+        # fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'services']
 
 class ReviewSerializer(serializers.ModelSerializer):
 
