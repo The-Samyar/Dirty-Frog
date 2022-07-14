@@ -7,3 +7,5 @@ export const fetchFeaturedRooms = () => API.get('/FeaturedRooms/');
 export const fetchTestimonials = () => API.get('/Testimonials/');
 export const fetchBookNow = (data) => API.post('/BookNow/' , data)
 export const getBookNow = () => API.get('/BookNow/')
+export const sendSignUpData = (data) => API.post('/SignUp/', data)
+export const sendSignInData = (data) => API.post('/SignIn/', data)

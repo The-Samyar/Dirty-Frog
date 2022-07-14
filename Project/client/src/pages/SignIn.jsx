@@ -3,7 +3,7 @@ import Sign from '../components/Sign/Sign'
 
 const SignIn = () => {
   return (
-    <Sign signUp />
+    <Sign />
   )
 }
 
