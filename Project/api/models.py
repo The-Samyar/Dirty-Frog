@@ -30,8 +30,13 @@ class RoomPicture(models.Model):
         return f"{self.room_name.room_name} | {self.picture_address}"
 
 class RoomService(models.Model):
-    room_name = models.ManyToManyField(RoomType)
+    room_name = models.ManyToManyField(RoomType, related_name='services')
     service = models.CharField(max_length=50)
+
+    @property
+    def services_full_info(self):
+        return {self.id : self.service}
+
     def __str__(self):
         return f"{self.service}"
 
