@@ -2,10 +2,27 @@ import React from 'react'
 import './Navbar.css'
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBus , faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = ({covered}) => {
 
     const [nav, setNav] = useState(false)
+    const [visibility , setVisibility] = useState(false);
+
+    const checkScroll = () => {
+        if (window.scrollY >= 500 && !visibility) {
+            setVisibility(true);
+        } else if (window.scrollY < 500 && visibility) {
+            setVisibility(false);
+        }
+    }
+
+    const scrollToTop = () => {
+        window.scrollTo({behavior: 'smooth' , top: 0});
+    }
+
+    window.addEventListener('scroll', checkScroll);
 
     const setBackground = () => {
         if (window.screenY >= 80) {
@@ -17,6 +34,7 @@ const Navbar = ({covered}) => {
 
 
   return (
+    <>
     <nav className="navigation" style={{backgroundColor : covered ? 'rgba(27, 27, 48, 0.9)' : null}}>
         <ul className="navItems">
           <li className="navItem">
@@ -42,6 +60,10 @@ const Navbar = ({covered}) => {
           </li>
         </ul>
       </nav>
+      <FontAwesomeIcon icon={faArrowUp} className="toTopIcon" onClick={scrollToTop} style={{display: visibility ? 'block' : 'none'}}/>
+    </>
+
+      
   )
 }
 
