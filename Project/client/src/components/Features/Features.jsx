@@ -6,21 +6,7 @@ import './Features.css'
 
 export const Features = () => {
 
-    const [visibility , setVisibility] = useState(false);
-
-    const checkScroll = () => {
-        if (window.scrollY >= 500 && !visibility) {
-            setVisibility(true);
-        } else if (window.scrollY < 500 && visibility) {
-            setVisibility(false);
-        }
-    }
-
-    const scrollToTop = () => {
-        window.scrollTo({behavior: 'smooth' , top: 0});
-    }
-
-    window.addEventListener('scroll', checkScroll);
+    
 
 
 
@@ -61,7 +47,7 @@ export const Features = () => {
                     </p>
                 </div>
             </div>
-            <FontAwesomeIcon icon={faArrowUp} className="toTopIcon" onClick={scrollToTop} style={{display: visibility ? 'block' : 'none'}}/>
+           
         </section>
     )
 }
