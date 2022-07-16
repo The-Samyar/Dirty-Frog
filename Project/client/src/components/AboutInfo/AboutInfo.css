@@ -1,0 +1,54 @@
+.AboutContainer {
+    width: 100%;
+    height: 100vh;
+    /* margin-top: 50px; */
+    display: flex;
+}
+
+.leftSection {
+    width: 50%;
+    height: 100%;
+}
+
+.rightSection {
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    transform: translateY(-100px);
+}
+
+.leftSection .colored {
+    width: 50%;
+    height: 100%;
+    background-color: rgba(27, 27, 48, 0.9);
+    display: flex;
+    align-items: center;
+}
+
+.leftSection .colored img {
+    width: 170%;
+    height: 80%;
+    z-index: 2;
+    margin: auto 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    transform: translateX(140px);
+}
+
+.rightSection h3 {
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+
+.rightSection .description {
+    padding: 50px;
+    font-size: 1.2rem;
+    letter-spacing:1px;
+}

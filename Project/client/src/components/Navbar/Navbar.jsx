@@ -3,7 +3,7 @@ import './Navbar.css'
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBus , faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = ({covered}) => {
 
