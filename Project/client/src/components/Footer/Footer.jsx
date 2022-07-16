@@ -55,7 +55,7 @@ const Footer = () => {
                         <GoogleMap
                             mapContainerStyle={{
                                 width: '100%',
-                                height: '100%'
+                                height: '300px'
                             }}
                             center={{
                                 lat: 3.745,

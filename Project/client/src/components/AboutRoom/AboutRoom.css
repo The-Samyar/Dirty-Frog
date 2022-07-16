@@ -1,0 +1,61 @@
+.AboutRoomContainer{
+    width:100%;
+    height: 100vh;
+}
+
+.title {
+    box-sizing: border-box;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+.AboutCard{
+    width: 70%;
+    margin: 70px auto;
+    display: flex;
+    border-radius: 10px;
+}
+
+.leftSide {
+    flex: 1;
+    border-radius: 10px;
+}
+
+.leftSide img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.rightSide {
+    flex: 1;
+    background-color: rgba(27, 27, 48, 0.9);
+    color:rgb(242, 233, 228);
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 0px 10px 10px 0px;
+    border-left: 5px solid rgba(27, 27, 48, 1);
+    align-items: center;
+    justify-content: space-around;
+}
+
+.rightSide .information h4 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+.rightSide .information p {
+    line-height: 30px;
+}
+
+.btn a{
+    text-decoration: none;
+    color:rgb(242, 233, 228);
+    font-size: 1rem;
+}
