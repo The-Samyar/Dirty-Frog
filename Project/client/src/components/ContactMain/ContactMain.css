@@ -1,0 +1,79 @@
+.ContactMainContainer{
+    width:100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.leftSection {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 40px;
+}
+
+.leftSection h3 {
+    color: rgba(27, 27, 48, 0.9);
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.leftSection p {
+    margin-top: -20px;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.form input , .form textarea{
+    background-color: #f7f7f7;
+    outline: none;
+    border: none;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    padding: 15px 20px;
+    border-radius: 10px;
+}
+
+.inputsContainer{
+    display: flex;
+    width: 100%;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin: 0px 10px;
+   /*  border: 1px solid red; */
+    overflow: hidden;
+}
+
+.form label{
+    font-weight: bold;
+}
+
+.inputContainer input{
+    width: 80%;
+}
+
+.form textarea {
+    resize: none;
+    width: 100%;
+}
+
+.form button {
+    border: none;
+    padding: 20px 40px;
+    background-color: rgba(27, 27, 48, 0.9);
+    color:rgb(242, 233, 228);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}

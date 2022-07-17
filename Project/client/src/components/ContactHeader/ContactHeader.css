@@ -1,0 +1,29 @@
+.ContactHeaderContainer{
+    height: 100vh;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/lobby.jpg');
+    color: rgb(242, 233, 228);
+}
+
+.ContactHeaderContainer div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    display: flex;
+    flex-direction: column
+}
+
+.ContactHeaderContainer div h1{
+    font-size: 4rem;
+    font-weight: bold;
+    letter-spacing:2px;
+}
+
+.ContactHeaderContainer div span {
+    font-size: 1.5rem;
+    margin-top: -10px;
+    letter-spacing: 1px;
+}
