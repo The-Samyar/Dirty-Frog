@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useEffect } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import { useSearchParams } from 'react-router-dom'
-import { fetchBookNow, getBookNow } from '../../api/api'
+import { fetchBookNow, getBookNow, reserveBookNow } from '../../api/api'
+import HeaderForm from '../HeaderForm/HeaderForm'
 import {
     MdBalcony, MdWifi, MdOutlineWaves, MdOutlineSafetyDivider, MdBathtub, MdIron, MdFitnessCenter,
     MdMonitor, MdOutlinePets, MdKitchen, MdVolumeOff
@@ -42,11 +43,14 @@ const Icon = ({ item }) => {
     return selectedIcon ? selectedIcon() : null
 }
 
-const Table = () => {
+const Table = ({ passedData }) => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
+    const [reserved, setReserved] = useState({})
     const [existance, setExistance] = useState(false)
+
+    const ref = useRef();
 
     useEffect(() => {
         async function sendData() {
@@ -56,25 +60,46 @@ const Table = () => {
             const adults = searchParams.get('adults');
             const children = searchParams.get('children');
 
-            if (!checkIn) {
-                const { data } = await getBookNow();
-                console.log(data);
-                setRecomended(data);
-            }
-
             const readyData = { checkIn, checkOut, rooms, adults, children }
+            console.log(passedData)
+            if (!passedData) {
+                if (readyData.rooms !== null) {
+                    const { data } = await fetchBookNow(readyData);
+                    console.log(data)
+                    console.log(data.length);
+                    if (data.length > 0) {
 
-            if (readyData.rooms !== null) {
-                const { data } = await fetchBookNow(readyData);
+                        setRecomended(data)
+                        setExistance(true)
+                    } else {
+                        ref.current.textContent = 'There is not any room with such an information'
+                    }
+
+
+
+                }
+
+                if (!checkIn) {
+                    const { data } = await getBookNow();
+                    console.log(data);
+                    setRecomended(data);
+                }
+            }else if (passedData) {
+                console.log(passedData);
+                const { data } = await fetchBookNow(passedData);
+
                 console.log(data)
-
+                console.log(data.length);
                 if (data.length > 0) {
 
                     setRecomended(data)
                     setExistance(true)
+                } else {
+                    ref.current.textContent = 'There is not any room with such an information'
                 }
+            }
 
-            } else {
+            else {
                 console.log('empty');
             }
         }
@@ -85,8 +110,24 @@ const Table = () => {
     }, [])
 
     console.log(recommended);
+    console.log(reserved);
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        console.log(reserved);
+        /* reserveBookNow(reserved); */
+    }
+
+    const handleChange = (e, roomName) => {
+        console.log(e.target.value, roomName);
+
+        setReserved({ ...reserved, [roomName]: e.target.value });
+    }
+
     return (
         <form>
+            <h2 className="title" ref={ref}></h2>
+            <HeaderForm />
             <table className="table">
                 <thead>
                     <tr>
@@ -141,7 +182,7 @@ const Table = () => {
                                     </div>
                                 </td>
                                 <td className="tableCells">
-                                    <select name="" id="" className="tableSelect">
+                                    <select name="" id="" className="tableSelect" onChange={(e) => handleChange(e, room.room_name)}>
                                         <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
                                         <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
                                         <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
@@ -154,7 +195,7 @@ const Table = () => {
 
                                 {
                                     index === 0 ? <td className="ReserveCell">
-                                        <input type="submit" className="buttonTable" value="Reserve" />
+                                        <button className="buttonTable" onClick={(e) => handleForm(e)}>Reserve</button>
                                     </td> : null
                                 }
                             </tr>
