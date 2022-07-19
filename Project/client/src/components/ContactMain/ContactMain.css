@@ -1,6 +1,6 @@
-.ContactMainContainer{
-    width:100%;
-    height: 100vh;
+.ContactMainContainer {
+    width: 100%;
+    height: 90vh;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -11,6 +11,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    width: 50%;
     padding: 40px;
 }
 
@@ -31,7 +32,7 @@
     overflow: hidden;
 }
 
-.form input , .form textarea{
+.form input, .form textarea {
     background-color: #f7f7f7;
     outline: none;
     border: none;
@@ -41,25 +42,25 @@
     border-radius: 10px;
 }
 
-.inputsContainer{
+.inputsContainer {
     display: flex;
     width: 100%;
 }
 
-.inputContainer{
+.inputContainer {
     display: flex;
     flex-direction: column;
     width: 45%;
     margin: 0px 10px;
-   /*  border: 1px solid red; */
+    /*  border: 1px solid red; */
     overflow: hidden;
 }
 
-.form label{
+.form label {
     font-weight: bold;
 }
 
-.inputContainer input{
+.inputContainer input {
     width: 80%;
 }
 
@@ -72,8 +73,76 @@
     border: none;
     padding: 20px 40px;
     background-color: rgba(27, 27, 48, 0.9);
-    color:rgb(242, 233, 228);
+    color: rgb(242, 233, 228);
     border-radius: 10px;
     cursor: pointer;
     font-size: 1.1rem;
+}
+
+.ContactMainContainer>.rightSection {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding: 40px;
+    /*  border: 1px solid rgba(27, 27, 48, 0.9); */
+    transform: translateY(0px);
+}
+
+.upper, .lower {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.upper {
+    box-sizing: border-box;
+    padding: 0px 40px;
+}
+
+.lower {
+    border-radius: 20px;
+}
+
+.info {
+    width: 40%;
+}
+
+.titleInfo {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.contactInfo {
+    color: rgb(128, 128, 128);
+}
+
+.firstRow, .secondRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.contactIcons {
+    display: flex;
+    align-items: center;
+    color: rgb(242, 233, 228);
+}
+
+.contactIcons span {
+    background-color: rgba(27, 27, 48, 0.9);
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
 }

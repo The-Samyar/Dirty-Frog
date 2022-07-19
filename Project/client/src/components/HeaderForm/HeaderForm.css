@@ -6,7 +6,6 @@
     padding: 30px;
     background-color: rgb(242, 233, 228);
     margin: auto;
-    transform: translateY(-100px);
     border-radius: 10px 5px 10px 5px;
     -webkit-box-shadow: -6px -2px 18px 0px rgba(0, 0, 0, 0.6);
     box-shadow: -6px -2px 18px 0px rgba(0, 0, 0, 0.6);
