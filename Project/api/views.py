@@ -74,7 +74,6 @@ def BookNow(request):
         return Response(returned_serialized.data)
     elif request.method == 'POST':
         serialized_data = HeaderFormSerializer(data=request.data)
-        print(json.dumps(request.data))
         if serialized_data.is_valid():
             print("VALID")
             valid_data = serialized_data.validated_data
