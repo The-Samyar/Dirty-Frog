@@ -1,8 +1,9 @@
 import React , {useState} from 'react'
 import './HeaderForm.css'
+import Table from '../Table/Table'
 import { useNavigate } from "react-router-dom";
 
-const HeaderForm = () => {
+const HeaderForm = ({main}) => {
 
     const [formData , setFormData] = useState({checkIn : '' , checkOut : '' , rooms: '1' , adults: '1' , children: '0'})
     const navigator = useNavigate();
@@ -16,7 +17,7 @@ const HeaderForm = () => {
     }
 
     return (
-        <form onSubmit={(e) => handleForm(e)} className="formContainer">
+        <form onSubmit={(e) => handleForm(e)} className="formContainer" style={main ? {transform: 'translateY(-100px)'} : null}>
             <div className="inputSection">
                 <label htmlFor="checkIn">Check In</label>
                 <input type="date" id="checkIn" onChange={(e) => setFormData({...formData , checkIn :e.target.value})}/>

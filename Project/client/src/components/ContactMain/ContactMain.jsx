@@ -1,5 +1,7 @@
 import React from 'react'
 import './ContactMain.css'
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { BsTelegram, BsInstagram, BsTwitter, BsLinkedin } from 'react-icons/bs'
 
 const ContactMain = () => {
     return (
@@ -28,8 +30,58 @@ const ContactMain = () => {
                 </form>
             </div>
 
-            <div className="rightsection">
+            <div className="rightSection">
+                <div className="upper">
+                    <div className="firstRow">
+                        <div className="info">
+                            <h4 className="titleInfo">Address</h4>
+                            <span className="contactInfo">
+                                203 Fake St. Mountain View, San Francisco,
+                                <br />
+                                 California, USA
+                            </span>
+                        </div>
+                        <div className="info">
+                            <h4 className="titleInfo">Phone</h4>
+                            <span className="contactInfo">+12 345-678-9999</span>
+                        </div>
+                    </div>
 
+                    <div className="secondRow">
+                        <div className="info">
+                            <h4 className="titleInfo">Email</h4>
+                            <span className="contactInfo">info@yourdomain.com</span>
+                        </div>
+                        <div className="info">
+                            <h4 className="titleInfo">Social Media</h4>
+                            <div className="contactIcons">
+                                <span><BsTelegram /></span>
+                                <span><BsInstagram /></span>
+                                <span><BsTwitter /></span>
+                                <span><BsLinkedin /></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="lower">
+                    <LoadScript
+                        googleMapsApiKey="AIzaSyB6z3QIgN40KZ4LIxVI-OlioBgTLQfXTKs"
+                    >
+                        <GoogleMap
+                            mapContainerStyle={{
+                                width: '100%',
+                                height: '100%'
+                            }}
+                            center={{
+                                lat: 3.745,
+                                lng: 38.523
+                            }}
+                            zoom={10}
+                        >
+                        </GoogleMap>
+                    </LoadScript>
+                </div>
             </div>
         </div>
     )

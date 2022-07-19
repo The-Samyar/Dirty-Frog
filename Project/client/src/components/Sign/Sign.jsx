@@ -45,7 +45,8 @@ const Sign = ({ signUp }) => {
             errorRef.current.textContent = 'Some of your inputs are empty';
             errorRef.current.style.color = 'red';
         }else{ 
-            console.log(SignData)
+            console.log(SignData);
+            sendSignUpData(SignData);
         }
 
     }
@@ -68,7 +69,8 @@ const Sign = ({ signUp }) => {
             errorRef.current.textContent = 'Some of your inputs are empty';
             errorRef.current.style.color = 'red';
         }else{ 
-            console.log(loginData)
+            console.log(loginData);
+            sendSignInData(loginData);
         }
     }
 
