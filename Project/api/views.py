@@ -74,6 +74,7 @@ def BookNow(request):
         return Response(returned_serialized.data)
     elif request.method == 'POST':
         serialized_data = HeaderFormSerializer(data=request.data)
+        print(json.dumps(request.data))
         if serialized_data.is_valid():
             print("VALID")
             valid_data = serialized_data.validated_data
@@ -98,35 +99,38 @@ def BookNow(request):
                         returned_serialized = BookRoomSerializer(rooms, many=True)
                         response = {
                             "Error" : "No error",
-                            "data" : returned_serialized.data}
-                        status_code = status.HTTP_302_FOUND
+                            "Data" : returned_serialized.data}
+
                     else:
                         returned_serialized = BookRoomSerializer(rooms, many=True)
                         response = {
                             "Error" : "Vacant rooms are lesser than the number of rooms requested",
-                            "data" : returned_serialized.data
+                            "Data" : returned_serialized.data
                             }
-                        status_code = status.HTTP_302_FOUND
                 
                 elif free_space == 0:
-                    response = {"Error": "All rooms are booked"}
-                    status_code = status.HTTP_404_NOT_FOUND
+                    response = {
+                        "Error": "All rooms are booked",
+                        "Data": ""}
                 
                 elif free_space < total_guests:
-                    response = {"Error": "Vacant rooms are not enough for the number of guests"}
-                    status_code = status.HTTP_404_NOT_FOUND
+                    response = {
+                        "Error": "Vacant rooms are not enough for the number of guests",
+                        "Data" : ""}
                 
             else:
-                response = {"Error": "All rooms are booked"}
-                status_code = status.HTTP_404_NOT_FOUND
+                response = {
+                    "Error": "All rooms are booked",
+                    "Data": ""}
 
         else:
             print("INVALID")
 
-            response = serialized_data.errors
-            status_code = status.HTTP_400_BAD_REQUEST
+            response = {
+                "Error" : serialized_data.errors,
+                "Data" : ""
+            }
 
         print(response)
-        print(status_code)
 
-        return Response(data = response, status = status_code)
+        return Response(data = response)
