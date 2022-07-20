@@ -79,7 +79,7 @@ class UserInfo(models.Model):
 
 class Review(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    review = models.TextField()
+    review = models.TextField(blank=True, null=True)
     rate = models.IntegerField()
 
     @property

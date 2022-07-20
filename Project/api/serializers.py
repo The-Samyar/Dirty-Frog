@@ -43,7 +43,12 @@ class HeaderFormSerializer(serializers.Serializer):
         # checkIn before checkOut
         if data['checkIn'] and data['checkOut']:
             if data['checkIn'] > data['checkOut']:
-                errors["checkOut"] = "Submitted check out date must be after check in date"
+                error_message = "Submitted check-out date must be after check-in date"
+                try:
+                    errors['checkOut'].append(error_message)
+                except KeyError:
+                    errors['checkOut'] = [error_message]
+
 
         # checkIn and checkOut before today's date
         if data['checkIn'] and data['checkOut']:
@@ -52,26 +57,56 @@ class HeaderFormSerializer(serializers.Serializer):
             today = datetime.now().date()
 
             if data['checkIn'] < today:
-                errors['checkIn'] = "Submitted check in date must not be before today's date"
-            
+                error_message = "Submitted check-in date must not be before today's date"
+                try:
+                    errors['checkIn'].append()
+                except KeyError:
+                    errors['checkIn'] = [error_message]
+
             if data['checkOut'] < today:
-                errors['checkOut'] = "Submitted check out date must not be before today's date"
+                error_message = "Submitted check-out date must not be before today's date"
+                try:
+                    errors['checkOut'].append(error_message)
+                except KeyError:
+                    errors['checkOut'] = [error_message]
+
+        # rooms less than equal to total number of guests
+        if data['rooms'] and data['adults'] and data['children']:
+            if data['rooms'] < data['adults'] + data['children']:
+                error_message = "Submitted number of rooms must not exceed the total number of guests"
+                try:
+                    errors['rooms'].append(error_message)
+                except KeyError:
+                    errors['rooms'] = [error_message]
 
         # rooms between 1-6 inclusive
         if data['rooms']:
             if data['rooms'] > 6 or data['rooms'] < 1:
-                errors['rooms'] = "Submitted number of rooms must be between 1 to 6 (inclusive)"
+                error_message = "Submitted number of rooms must be between 1 to 6 (inclusive)"
+                try:
+                    errors['rooms'].append(error_message)
+                except KeyError:
+                    errors['rooms'] = [error_message]
 
         # adults between 1-6 inclusive
         if data['adults']:
             if data['adults'] > 6 or data['adults'] < 1:
-                errors['adults'] = "Submitted number of adults must be between 1 to 6 (inclusive)"
+                error_message = "Submitted number of adults must be between 1 to 6 (inclusive)"
+                try:
+                    errors['adults'].append(error_message)
+                except KeyError:
+                    errors['adults'] = [error_message]
 
         # children between 0-6 inclusive
         if data['children']:
             if data['children'] > 6 or data['children'] < 0:
-                errors['children'] = "Submitted number of children must be between 0 to 6 (inclusive)"
+                error_message = "Submitted number of children must be between 0 to 6 (inclusive)"
+                try:
+                    errors['children'].append(error_message)
+                except KeyError:
+                    errors['children'] = [error_message]
+
         if errors:
             raise serializers.ValidationError(errors)
-
+            
         return data

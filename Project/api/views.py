@@ -1,8 +1,11 @@
+import json
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.decorators import api_view
 from datetime import date
-from django.db.models import Sum, Q, Count
+from django.db.models import Sum, Q, Count, F
 from datetime import datetime
+from http import HTTPStatus
 
 from .serializers import *
 from . import models
@@ -14,14 +17,15 @@ def FeaturedRooms_component(request):
     room_types = models.RoomType.objects.filter(Q(room_name='Premium King') | Q(room_name='Premium Royal') | Q(room_name='Premium Sea View'))
     room_types_serialized = RoomTypeSerializer(room_types, many=True)
 
-    for item in room_types_serialized.data:
-        item = dict(item)
+    return Response(room_types_serialized.data)
+    # for item in room_types_serialized.data:
+    #     item = dict(item)
 
-    json_response = [
-        {"room_types" : room_types_serialized.data},
-    ]
+    # json_response = [
+    #     {"room_types" : room_types_serialized.data},
+    # ]
 
-    return Response(json_response)
+    # return Response(json_response)
 
 
 
@@ -29,13 +33,15 @@ def FeaturedRooms_component(request):
 def Testimonials_component(request):
     reviews = models.Review.objects.all().order_by('rate')[:9]
     reviews_serialized = ReviewSerializer(reviews, many=True)
-    for item in reviews_serialized.data:
-        item = dict(item)
+    return Response(reviews_serialized.data)
+    
+    # for item in reviews_serialized.data:
+    #     item = dict(item)
 
-    json_response = [
-        {"reviews" : reviews_serialized.data},
-    ]
-    return Response(json_response)
+    # json_response = [
+    #     {"reviews" : reviews_serialized.data},
+    # ]
+    # return Response(json_response)
 
 
 @api_view(('GET',))
@@ -68,41 +74,59 @@ def BookNow(request):
         return Response(returned_serialized.data)
     elif request.method == 'POST':
         serialized_data = HeaderFormSerializer(data=request.data)
-        print(request.data)
         if serialized_data.is_valid():
             print("VALID")
             valid_data = serialized_data.validated_data
 
-            # Returns the rooms with space equal
-            # or more than the number of guests,
-            # and that have number of vacant rooms
-            # equal or more than then desired number of rooms
-
-
-            # Solution 1:
-            # rooms = models.RoomType.objects.filter(capacity__gte = int(valid_data['adults'] + valid_data['children']))
-            # for room in rooms:
-            #     if models.RoomVacancy.objects.filter(room_name=room.room_name, is_vacant=True).count() >= valid_data['rooms']:
-            #         continue
-            #     else:
-            #         rooms = rooms.exclude(room_name=room.room_name) 
-            
-            # Solution explanation:
-            # https://betterprogramming.pub/django-annotations-and-aggregations-48685994d149
-
-            # Solution 2:
+            total_guests = valid_data['adults'] + valid_data['children']
 
             rooms = models.RoomType.objects.annotate(
                     vacant_count=Count(
                         'roomvacancy', filter=Q(roomvacancy__is_vacant=True)
                         )
-                    ).filter(vacant_count__gte=valid_data['rooms'], capacity__gte = int(valid_data['adults'] + valid_data['children']))
+                    ).filter(
+                        vacant_count__gte=1,
+                        capacity__gte = int(total_guests)
+                        )
 
-            returned_serialized = BookRoomSerializer(rooms, many=True)
+            free_space = rooms.annotate(free_space= F('vacant_count') * F('capacity')).aggregate(total_free_space=Sum('free_space'))['total_free_space']
+            vacant_count = rooms.aggregate(total_vacant_count=Sum('vacant_count'))['total_vacant_count']
 
-            return Response(returned_serialized.data)
+            if rooms:
+                if free_space >=  total_guests:
+                    if vacant_count >= valid_data['rooms']:
+                        returned_serialized = BookRoomSerializer(rooms, many=True)
+                        response = {
+                            "Error" : "No error",
+                            "data" : returned_serialized.data}
+                        status_code = status.HTTP_302_FOUND
+                    else:
+                        returned_serialized = BookRoomSerializer(rooms, many=True)
+                        response = {
+                            "Error" : "Vacant rooms are lesser than the number of rooms requested",
+                            "data" : returned_serialized.data
+                            }
+                        status_code = status.HTTP_302_FOUND
+                
+                elif free_space == 0:
+                    response = {"Error": "All rooms are booked"}
+                    status_code = status.HTTP_404_NOT_FOUND
+                
+                elif free_space < total_guests:
+                    response = {"Error": "Vacant rooms are not enough for the number of guests"}
+                    status_code = status.HTTP_404_NOT_FOUND
+                
+            else:
+                response = {"Error": "All rooms are booked"}
+                status_code = status.HTTP_404_NOT_FOUND
 
         else:
-            print("INVALID INPUT")
-            print(serialized_data.errors)
-            return Response(serialized_data.errors)
+            print("INVALID")
+
+            response = serialized_data.errors
+            status_code = status.HTTP_400_BAD_REQUEST
+
+        print(response)
+        print(status_code)
+
+        return Response(data = response, status = status_code)
