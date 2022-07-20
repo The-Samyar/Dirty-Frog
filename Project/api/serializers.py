@@ -12,7 +12,7 @@ class BookRoomSerializer(serializers.Serializer):
     cost_per_day = serializers.IntegerField()
     size = serializers.IntegerField()
     capacity = serializers.IntegerField()
-    # vacant_count = serializers.IntegerField()
+    vacant_count = serializers.IntegerField()
     # description = serializers.CharField()
     # room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
     services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
@@ -72,7 +72,7 @@ class HeaderFormSerializer(serializers.Serializer):
 
         # rooms less than equal to total number of guests
         if data['rooms'] and data['adults'] and data['children']:
-            if data['rooms'] < data['adults'] + data['children']:
+            if data['rooms'] > data['adults'] + data['children']:
                 error_message = "Submitted number of rooms must not exceed the total number of guests"
                 try:
                     errors['rooms'].append(error_message)
