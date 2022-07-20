@@ -14,8 +14,9 @@ const FeaturedRooms = () => {
         const getData = async () => {
             const {data}  = await fetchFeaturedRooms()
             console.log(data)
-            const { room_types } = data[0]
-            setRooms(room_types)
+            // const { room_types } = data[0]
+            // setRooms(room_types)
+            setRooms(data)
         }
 
         getData()
