@@ -48,7 +48,6 @@ const Table = ({ passedData }) => {
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
     const [reserved, setReserved] = useState({})
-    const [existance, setExistance] = useState(false)
 
     const ref = useRef();
 
@@ -59,45 +58,32 @@ const Table = ({ passedData }) => {
             const rooms = searchParams.get('rooms');
             const adults = searchParams.get('adults');
             const children = searchParams.get('children');
+            ref.current.textContent = '';
 
             const readyData = { checkIn, checkOut, rooms, adults, children }
-            console.log(passedData)
-            if (!passedData) {
-                if (readyData.rooms !== null) {
-                    const { data } = await fetchBookNow(readyData);
-                    console.log(data)
-                    console.log(data.length);
-                    if (data.length > 0) {
 
-                        setRecomended(data)
-                        setExistance(true)
-                    } else {
-                        ref.current.textContent = 'There is not any room with such an information'
-                    }
-
-
-
-                }
-
-                if (!checkIn) {
-                    const { data } = await getBookNow();
-                    console.log(data);
-                    setRecomended(data);
-                }
-            }else if (passedData) {
-                console.log(passedData);
-                const { data } = await fetchBookNow(passedData);
-
+            if (readyData.rooms !== null) {
+                const { data } = await fetchBookNow(readyData);
                 console.log(data)
                 console.log(data.length);
                 if (data.length > 0) {
 
                     setRecomended(data)
-                    setExistance(true)
                 } else {
                     ref.current.textContent = 'There is not any room with such an information'
+                    setRecomended(null)
                 }
+
+
+
             }
+
+            if (!checkIn) {
+                const { data } = await getBookNow();
+                console.log(data);
+                setRecomended(data);
+            }
+
 
             else {
                 console.log('empty');
@@ -107,7 +93,8 @@ const Table = ({ passedData }) => {
         sendData();
 
 
-    }, [])
+    }, [searchParams])
+
 
     console.log(recommended);
     console.log(reserved);
@@ -125,90 +112,92 @@ const Table = ({ passedData }) => {
     }
 
     return (
-        <form>
+        <>
             <h2 className="title" ref={ref}></h2>
             <HeaderForm />
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th className="tableHeader">Room Type</th>
-                        <th className="tableHeader">Sleeps</th>
-                        <th className="tableHeader">Price per Night</th>
-                        <th className="tableHeader">Services</th>
-                        <th className="tableHeader">Select room</th>
-                        <th className="tableHeader">Reserve</th>
-                    </tr>
-                </thead>
+            <form>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th className="tableHeader">Room Type</th>
+                            <th className="tableHeader">Sleeps</th>
+                            <th className="tableHeader">Price per Night</th>
+                            <th className="tableHeader">Services</th>
+                            <th className="tableHeader">Select room</th>
+                            <th className="tableHeader">Reserve</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {recommended &&
-                        recommended?.map((room, index) => (
-                            <tr key={index}>
-                                <td className="tableCells">
-                                    <h4 className="titleRoom">
-                                        {room.room_name}
-                                    </h4>
-                                    {
-                                        room.description
-                                    }
-                                </td>
-                                <td className="smallTableCells">
-                                    {
-                                        [...Array(room.capacity)].map(item => <PersonIcon key={item} />)
-                                    }
-                                </td>
-                                <td className="tableCells">
-                                    <span className="roomCost">
-                                        {room.cost_per_day} $
-                                    </span>
-                                </td>
-                                <td className="tableCellsService">
-                                    <div className="tableCellContainer">
-                                        <div className="servicesContainer">
-                                            {
-                                                room.services.map((service, index) => <span key={index}>{
-                                                    Object.keys(service).map(item => {
-                                                        return (
-                                                            <div className="services">
-                                                                <Icon item={Number(item)} />
-                                                                <span>{service[item]}</span>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }</span>)
+                    <tbody>
+                        {recommended &&
+                            recommended?.map((room, index) => (
+                                <tr key={index}>
+                                    <td className="tableCells">
+                                        <h4 className="titleRoom">
+                                            {room.room_name}
+                                        </h4>
+                                        {
+                                            room.description
+                                        }
+                                    </td>
+                                    <td className="smallTableCells">
+                                        {
+                                            [...Array(room.capacity)].map(item => <PersonIcon key={item} />)
+                                        }
+                                    </td>
+                                    <td className="tableCells">
+                                        <span className="roomCost">
+                                            {room.cost_per_day} $
+                                        </span>
+                                    </td>
+                                    <td className="tableCellsService">
+                                        <div className="tableCellContainer">
+                                            <div className="servicesContainer">
+                                                {
+                                                    room.services.map((service, index) => <span key={index}>{
+                                                        Object.keys(service).map(item => {
+                                                            return (
+                                                                <div className="services">
+                                                                    <Icon item={Number(item)} />
+                                                                    <span>{service[item]}</span>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }</span>)
 
-                                            }
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td className="tableCells">
-                                    <select name="" id="" className="tableSelect" onChange={(e) => handleChange(e, room.room_name)}>
-                                        <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
-                                        <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
-                                        <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
-                                        <option value="3">3 &nbsp; &nbsp; &nbsp; ({3 * room.cost_per_day}$)</option>
-                                        <option value="4">4 &nbsp; &nbsp; &nbsp; ({4 * room.cost_per_day}$)</option>
-                                        <option value="5">5 &nbsp; &nbsp; &nbsp; ({5 * room.cost_per_day}$)</option>
-                                        <option value="6">6 &nbsp; &nbsp; &nbsp; ({6 * room.cost_per_day}$)</option>
-                                    </select>
-                                </td>
+                                    </td>
+                                    <td className="tableCells">
+                                        <select name="" id="" className="tableSelect" onChange={(e) => handleChange(e, room.room_name)}>
+                                            <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
+                                            <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
+                                            <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
+                                            <option value="3">3 &nbsp; &nbsp; &nbsp; ({3 * room.cost_per_day}$)</option>
+                                            <option value="4">4 &nbsp; &nbsp; &nbsp; ({4 * room.cost_per_day}$)</option>
+                                            <option value="5">5 &nbsp; &nbsp; &nbsp; ({5 * room.cost_per_day}$)</option>
+                                            <option value="6">6 &nbsp; &nbsp; &nbsp; ({6 * room.cost_per_day}$)</option>
+                                        </select>
+                                    </td>
 
-                                {
-                                    index === 0 ? <td className="ReserveCell">
-                                        <button className="buttonTable" onClick={(e) => handleForm(e)}>Reserve</button>
-                                    </td> : null
-                                }
-                            </tr>
+                                    {
+                                        index === 0 ? <td className="ReserveCell">
+                                            <button className="buttonTable" onClick={(e) => handleForm(e)}>Reserve</button>
+                                        </td> : null
+                                    }
+                                </tr>
 
-                        ))
-                    }
-
-
-                </tbody>
+                            ))
+                        }
 
 
-            </table>
-        </form>
+                    </tbody>
+
+
+                </table>
+            </form>
+        </>
     )
 }
 
