@@ -11,7 +11,7 @@ const Testimonials = () => {
     const [review, setReview] = useState([])
     const ref = useRef();
     var children = ref.current?.children.length - 1;
-    console.log(children)
+   /*  console.log(children) */
 
     const handleRight = () => {
         if (index < children) {
@@ -26,8 +26,8 @@ const Testimonials = () => {
     }
 
     const handleLeft = () => {
-        console.log(children)
-        console.log(index);
+        /* console.log(children)
+        console.log(index); */
         if (index <= children && index > 0) {
             setIndex(index - 1);
         }
@@ -75,13 +75,15 @@ const Testimonials = () => {
         children = ref.current?.children.length - 1;
         let amount = index * 100 * -1;
         ref.current.style.transform = `translateX(${amount}%)`
-        console.log(index);
+        /* console.log(index); */
     }, [index])
 
     useEffect(() => {
         const getData = async () => {
-            const { data } = await fetchTestimonials();
-            const { reviews } = data[0]
+            const {data} = await fetchTestimonials();
+            console.log(data[0]);
+            const {reviews} = data[0]
+            /* console.log(reviews); */
             setReview(splitToThreeArray(reviews, 2))
         }
 
@@ -106,6 +108,7 @@ const Testimonials = () => {
                           reviewList.length !== 0 &&  <div className="testimonials" key={index}>
                                 {
                                     reviewList.map(reviewItem => (
+
                                         <div className="card" key={reviewItem.userId}>
                                             <div className="cardHeader">
                                                 <img src={IMG} alt="" className="cardImg" />
