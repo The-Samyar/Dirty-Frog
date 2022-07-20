@@ -81,10 +81,11 @@ const Testimonials = () => {
     useEffect(() => {
         const getData = async () => {
             const {data} = await fetchTestimonials();
-            console.log(data[0]);
-            const {reviews} = data[0]
+            console.log(data);
+            // const {reviews} = data
+            // const reviews = data
             /* console.log(reviews); */
-            setReview(splitToThreeArray(reviews, 2))
+            setReview(splitToThreeArray(data, 2))
         }
 
         getData()
