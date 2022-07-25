@@ -43,7 +43,7 @@ const Icon = ({ item }) => {
     return selectedIcon ? selectedIcon() : null
 }
 
-const Table = () => {
+const Table = ({ passedData }) => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
