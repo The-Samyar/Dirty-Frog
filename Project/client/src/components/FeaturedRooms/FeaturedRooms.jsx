@@ -8,14 +8,14 @@ import { fetchFeaturedRooms } from '../../api/api'
 
 const FeaturedRooms = () => {
 
-    const [rooms, setRooms] = useState([])
+    const [rooms, setRooms] = useState([{room_name: '' , cost_per_day: 0 , room_pictures: [] , description: ''}])
 
     useEffect(() => {
-        const getData = async () => {
-            const {data}  = await fetchFeaturedRooms()
-            console.log(data)
-            const { room_types } = data[0]
-            setRooms(room_types)
+        const getData = async() => {
+            const data  = await fetchFeaturedRooms()
+            const pureData = data.data
+            console.log(pureData)
+            setRooms(pureData)
         }
 
         getData()
