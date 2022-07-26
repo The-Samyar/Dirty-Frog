@@ -82,9 +82,6 @@ const Testimonials = () => {
         const getData = async () => {
             const {data} = await fetchTestimonials();
             console.log(data);
-            // const {reviews} = data
-            // const reviews = data
-            /* console.log(reviews); */
             setReview(splitToThreeArray(data, 2))
         }
 
