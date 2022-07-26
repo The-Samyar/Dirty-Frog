@@ -64,13 +64,15 @@ const Table = ({ passedData }) => {
 
             if (readyData.rooms !== null) {
                 const { data } = await fetchBookNow(readyData);
-                console.log(data)
-                console.log(data.length);
-                if (data.length > 0) {
+                const { Error, Data } = data
+                console.log(Error)
+                console.log(Data)
+                console.log(Data.length);
+                if (Data.length > 0) {
 
-                    setRecomended(data)
+                    setRecomended(Data)
                 } else {
-                    ref.current.textContent = 'There is not any room with such an information'
+                    ref.current.textContent = Error.checkOut
                     setRecomended(null)
                 }
 
