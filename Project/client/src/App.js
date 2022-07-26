@@ -7,6 +7,7 @@ import BookNow from "./pages/BookNow";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import {BrowserRouter , Routes , Route} from 'react-router-dom'
+import RoomPage from './pages/RoomPage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/rooms" element={<Rooms />}></Route>
+          <Route path="/room/:id" element={<RoomPage />}></Route>
           <Route path="/aboutUs" element={<AboutUs />}></Route>
           <Route path="/contactUs" element={<ContactUs />}></Route>
           <Route path="/bookNow" element={<BookNow />}></Route>
