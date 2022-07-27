@@ -1,8 +1,9 @@
 import React from 'react'
 import Footer from '../components/Footer/Footer'
 import Navbar from '../components/Navbar/Navbar'
-import Room from '../components/Room/Room'
 import { useParams } from 'react-router-dom'
+import RoomHeader from '../components/RoomHeader/RoomHeader'
+import RoomSummary from '../components/RoomSummary/RoomSummary'
 
 const RoomPage = () => {
 
@@ -11,7 +12,8 @@ const RoomPage = () => {
   return (
     <div>
       <Navbar covered />
-      <Room id={id} />
+      <RoomHeader id={id} />
+      <RoomSummary />
       <Footer />
     </div>
   )
