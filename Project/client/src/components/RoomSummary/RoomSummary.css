@@ -1,0 +1,32 @@
+.RoomSummaryContainer{
+    width:100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.titleRoomInfo{
+    text-align: center;
+    font-size: 2rem;
+}
+
+.aminitiesContainer{
+    width:80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.aminitesItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.3rem;
+    margin: 10px;
+}
+
+.icons {
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
