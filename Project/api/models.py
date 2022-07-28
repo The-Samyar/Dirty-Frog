@@ -40,12 +40,12 @@ class RoomService(models.Model):
     def __str__(self):
         return f"{self.service}"
 
-class RoomVacancy(models.Model):
-    room_number = models.IntegerField(unique=True)
+class Room(models.Model):
+    room_number = models.IntegerField(primary_key=True)
     room_name = models.ForeignKey(RoomType, on_delete=models.CASCADE)
-    is_vacant = models.BooleanField(default=False)
+    # is_vacant = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.room_number} vacancy: -->{self.is_vacant}"
+        return f"{self.room_number}, {self.room_name}"
 
 #  -----------------------------------
 
@@ -53,9 +53,9 @@ class RoomVacancy(models.Model):
 #  ----Tables related to bookings----
 class Booking(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    room_number = models.IntegerField()
-    check_in = models.DateTimeField()
-    check_out = models.DateTimeField()
+    room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
+    check_in = models.DateField()
+    check_out = models.DateField()
     adults_count = models.IntegerField()
     children_count = models.IntegerField()
     total_cost = models.IntegerField()
