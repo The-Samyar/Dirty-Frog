@@ -1,0 +1,13 @@
+.BookingDetailContainer{
+    width: 80%;
+    text-align: left;
+    margin: 20px auto;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.BookingDetailTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

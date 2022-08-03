@@ -6,6 +6,7 @@ import ContactUs from "./pages/ContactUs";
 import BookNow from "./pages/BookNow";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Booking from "./pages/Booking";
 import {BrowserRouter , Routes , Route} from 'react-router-dom'
 import RoomPage from './pages/RoomPage'
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/bookNow?/*" element={<BookNow />}></Route>
           <Route path="/signIn" element={<SignIn />}></Route>
           <Route path="/signUp" element={<SignUp />}></Route>
+          <Route path="/Booking" element={<Booking />}></Route>
           <Route path="/*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>

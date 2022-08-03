@@ -1,0 +1,75 @@
+.contianer {
+    box-sizing: border-box;
+    width: 60%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.titleDetails {
+    font-size: 2rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+.overviewDetail {
+    font-size: 1.1rem;
+    color: #494949;
+    letter-spacing: 0.4px;
+}
+
+.houseRules {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rule {
+    width: 100%;
+    background-color: rgba(27, 27, 48, 0.9);
+    color:rgb(242, 233, 228);
+    margin: 15px 0px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.rule:hover {
+    transform: translateY(-10px);
+}
+
+.rule:not(:last-child){
+    border-bottom: 1px solid #b6b4b4;
+}
+
+.ruleContainer {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    justify-content: space-between;
+}
+
+.ruleTitle{
+    widows: 50%;
+    font-size: 1.2rem;
+}
+
+.ruleDetail , .ruleDetailList{
+    text-align: left;
+    width: 50%;
+}
+
+.ruleDetailList {
+    margin: 0;
+    padding: 0;
+}
+
+.ruleDetailList li , .ruleDetail p {
+    line-height: 2;
+    font-size: 1.1rem;
+}
+
+.ruleDetailList li {
+    margin-top: 10px;
+}
+
