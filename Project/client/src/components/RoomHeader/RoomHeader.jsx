@@ -1,9 +1,11 @@
 import React from 'react'
 import './RoomHeader.css'
+import Navbar from '../Navbar/Navbar'
 
 const RoomHeader = ({ id }) => {
     return (
         <div className="roomContainer">
+            <Navbar />
             <div className="menu">
                 <span className="roomInfo">
                     Room Name

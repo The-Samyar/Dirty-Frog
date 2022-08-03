@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react'
 import { useEffect } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import { useSearchParams } from 'react-router-dom'
-import { fetchBookNow, getBookNow, reserveBookNow } from '../../api/api'
+import { fetchBookNow, getBookNow} from '../../api/api'
+import {useNavigate} from 'react-router-dom'
 import HeaderForm from '../HeaderForm/HeaderForm'
 import {
     MdBalcony, MdWifi, MdOutlineWaves, MdOutlineSafetyDivider, MdBathtub, MdIron, MdFitnessCenter,
@@ -48,6 +49,7 @@ const Table = ({ passedData }) => {
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
     const [reserved, setReserved] = useState({})
+    const navigator = useNavigate();
 
     const ref = useRef();
 
@@ -104,6 +106,7 @@ const Table = ({ passedData }) => {
     const handleForm = (e) => {
         e.preventDefault();
         console.log(reserved);
+        navigator('/Booking')
         /* reserveBookNow(reserved); */
     }
 
@@ -115,7 +118,7 @@ const Table = ({ passedData }) => {
 
     return (
         <>
-            <h2 className="title" ref={ref}></h2>
+            <h2 className="title" ref={ref}>{ }</h2>
             <HeaderForm />
             <form>
                 <table className="table">
@@ -173,13 +176,26 @@ const Table = ({ passedData }) => {
                                     </td>
                                     <td className="tableCells">
                                         <select name="" id="" className="tableSelect" onChange={(e) => handleChange(e, room.room_name)}>
-                                            <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
-                                            <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
-                                            <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
-                                            <option value="3">3 &nbsp; &nbsp; &nbsp; ({3 * room.cost_per_day}$)</option>
-                                            <option value="4">4 &nbsp; &nbsp; &nbsp; ({4 * room.cost_per_day}$)</option>
-                                            <option value="5">5 &nbsp; &nbsp; &nbsp; ({5 * room.cost_per_day}$)</option>
-                                            <option value="6">6 &nbsp; &nbsp; &nbsp; ({6 * room.cost_per_day}$)</option>
+                                            {
+                                                room.vacant_count > 6 ? 
+                                                <>
+                                                    <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
+                                                    <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
+                                                    <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
+                                                    <option value="3">3 &nbsp; &nbsp; &nbsp; ({3 * room.cost_per_day}$)</option>
+                                                    <option value="4">4 &nbsp; &nbsp; &nbsp; ({4 * room.cost_per_day}$)</option>
+                                                    <option value="5">5 &nbsp; &nbsp; &nbsp; ({5 * room.cost_per_day}$)</option>
+                                                    <option value="6">6 &nbsp; &nbsp; &nbsp; ({6 * room.cost_per_day}$)</option>
+                                                </> :
+
+                                                <>
+                                                    {
+                                                        [...Array(room.vacant_count)].map(number => (
+                                                            <option value={number}>{number} &nbsp; &nbsp; &nbsp; ({number * room.cost_per_day}$)</option>
+                                                        ))
+                                                    }
+                                                </>
+                                            }
                                         </select>
                                     </td>
 
