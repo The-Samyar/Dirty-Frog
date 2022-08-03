@@ -15,7 +15,7 @@ from . import models
 @api_view(('GET',))
 def FeaturedRooms_component(request):
     room_types = models.RoomType.objects.filter(Q(room_name='Premium King') | Q(room_name='Premium Royal') | Q(room_name='Premium Sea View'))
-    room_types_serialized = RoomTypeSerializer(room_types, many=True)
+    room_types_serialized = RoomTypeSerializer(room_types, many=True, fields=('room_name', 'cost_per_day','description', 'room_pictures'))
 
     return Response(room_types_serialized.data)
     # for item in room_types_serialized.data:
@@ -33,6 +33,7 @@ def FeaturedRooms_component(request):
 def Testimonials_component(request):
     reviews = models.Review.objects.all().order_by('rate')[:9]
     reviews_serialized = ReviewSerializer(reviews, many=True)
+    print(reviews_serialized.data)
     return Response(reviews_serialized.data)
     
     # for item in reviews_serialized.data:
@@ -158,3 +159,17 @@ def BookNow(request):
         print(response)
 
         return Response(data = response)
+
+
+@api_view(("GET",))
+def Rooms(request, room_name=None):
+    if room_name:
+        room = models.RoomType.objects.get(room_name=room_name)
+        serialized_rooms = RoomTypeSerializer(room)
+
+    else:
+        rooms = models.RoomType.objects.all()
+        serialized_rooms = RoomTypeSerializer(rooms, many=True, fields=("room_name", "room_pictures"))
+
+    return Response(serialized_rooms.data)
+

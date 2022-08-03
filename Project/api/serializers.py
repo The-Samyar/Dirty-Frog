@@ -17,12 +17,34 @@ class BookRoomSerializer(serializers.Serializer):
     # room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
     services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
 
-class RoomTypeSerializer(serializers.ModelSerializer):
+class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+    """
+    A ModelSerializer that takes an additional `fields` argument that
+    controls which fields should be displayed.
+    """
+
+    def __init__(self, *args, **kwargs):
+        # Don't pass the 'fields' arg up to the superclass
+        fields = kwargs.pop('fields', None)
+
+        # Instantiate the superclass normally
+        super().__init__(*args, **kwargs)
+
+        if fields is not None:
+            # Drop any fields that are not specified in the `fields` argument.
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
+
+class RoomTypeSerializer(DynamicFieldsModelSerializer):
     room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
+    services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
 
     class Meta:
         model = models.RoomType
-        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures']
+        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures', 'services']
         # fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'services']
 
 class ReviewSerializer(serializers.ModelSerializer):
