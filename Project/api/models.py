@@ -75,7 +75,7 @@ class Booking(models.Model):
         return self._total_cost
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.user.first_name} {self.user.last_name} | Room Number: {self.room_number}"
 
 # -----------------------------------
 
