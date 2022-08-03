@@ -2,7 +2,7 @@ import json
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from datetime import date
+from datetime import date, datetime, timedelta
 from django.db.models import Sum, Q, Count, F
 from datetime import datetime
 from http import HTTPStatus
@@ -64,26 +64,50 @@ def Stats_component(request):
 
 @api_view(("GET","POST"))
 def BookNow(request):
+    
     if request.method == 'GET':
+        today = datetime.now().date()
+        tomorrow = datetime.now().date() + timedelta(days=1)
+        total_guests='1'
+
+        booked_rooms = models.Booking.objects.exclude(
+            check_out__lte=today
+            ).exclude(
+                Q(check_in__lt=today, check_out__lte=today) | Q(check_in__gte=tomorrow, check_out__gt=tomorrow)
+                ).values_list('room_number', flat=True)
+
         rooms = models.RoomType.objects.annotate(
-            vacant_count=Count('roomvacancy', filter=Q(roomvacancy__is_vacant=True))
-            ).filter(vacant_count__gte=1)
+                vacant_count=Count(
+                    'room', filter=~Q(room__room_number__in=list(booked_rooms)) if booked_rooms else None
+                    )
+                ).filter(
+                    vacant_count__gte=1,
+                    capacity__gte = int(total_guests)
+                    )
 
         returned_serialized = BookRoomSerializer(rooms, many=True)
-
         return Response(returned_serialized.data)
     elif request.method == 'POST':
         serialized_data = HeaderFormSerializer(data=request.data)
-        print(json.dumps(request.data))
+
         if serialized_data.is_valid():
             print("VALID")
             valid_data = serialized_data.validated_data
 
             total_guests = valid_data['adults'] + valid_data['children']
+            check_in = valid_data['checkIn']
+            check_out = valid_data['checkOut']
+            yesterday = datetime.now().date() - timedelta(days = 1)
 
+            booked_rooms = models.Booking.objects.exclude(
+                check_out__lte=yesterday
+                ).exclude(
+                    Q(check_in__lt=check_in, check_out__lte=check_in) | Q(check_in__gte=check_out, check_out__gt=check_out)
+                    ).values_list('room_number', flat=True)
+            
             rooms = models.RoomType.objects.annotate(
                     vacant_count=Count(
-                        'roomvacancy', filter=Q(roomvacancy__is_vacant=True)
+                        'room', filter=~Q(room__room_number__in=list(booked_rooms))
                         )
                     ).filter(
                         vacant_count__gte=1,
