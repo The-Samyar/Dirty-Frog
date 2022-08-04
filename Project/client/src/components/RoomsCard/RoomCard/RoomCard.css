@@ -1,0 +1,25 @@
+.RoomCardContainer{
+    width:70%;
+    margin: 0px auto;
+    box-sizing: border-box;
+    padding: 20px;
+    min-height:50vh;
+    border-radius: 5px;
+    background-color:#c9c2c0 ;
+    color: #232531;
+}
+
+.RoomCardTitle{
+    font-size: 1.3rem;
+}
+
+.roomCardInfo{
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.roomCardIcon{
+    margin-right: 20px;
+}

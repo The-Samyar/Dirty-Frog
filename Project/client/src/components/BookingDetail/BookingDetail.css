@@ -1,13 +1,101 @@
 .BookingDetailContainer{
-    width: 80%;
+    width: 70%;
     text-align: left;
-    margin: 20px auto;
     border: 1px solid #c4c4c4;
+    margin: 20px auto;
+    min-height: 50vh;
+}
+
+.BookingDetailHeader{
     box-sizing: border-box;
-    padding: 20px;
+    padding: 10px 20px;
+    background-color: rgba(27, 27, 48, 0.9);
+    color:rgb(242, 233, 228);
+    width: 100%;
+    height: 30%;
 }
 
 .BookingDetailTitle {
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.bookingInfo , .bookingRoomsSummary{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+}
+
+.date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+}
+
+.checkIn , .checkOut , .bookingRoomCount{
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.checkIn{
+    border-right: 1px solid #c4c4c4;
+}
+
+.checkOut {
+    margin-left: 20px;
+}
+
+.BookingInfoTitle{
+    margin-right: 20px;
+
+}
+
+hr{
+    border: 1px solid #c4c4c4;
+    height: 0px;
+    background-color: #c4c4c4;
+}
+
+.bookingRoomCount , .bookingRoomHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.bookingRoomCount:not(:last-child){
+    border-bottom: 1px solid #ebe9e9;
+}
+
+.bookingRoomHeader{
+    background-color: rgba(31, 31, 44, 0.9);
+    color: rgb(242, 233, 228);
+}
+
+.roomName{
+    font-size: 1.2rem;
+    width: 30%;
+}
+
+.roomCount:first-child {
+    font-size: 1.2;
+}
+
+.roomCount{
+    width: 50%;
+}
+
+.btnDetail{
+    border: none;
+    padding: 20px 30px;
+    background-color: rgba(27, 27, 48, 0.9);
+    color: rgb(242, 233, 228);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
 }
