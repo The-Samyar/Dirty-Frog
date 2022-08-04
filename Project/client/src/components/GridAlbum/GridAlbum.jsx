@@ -1,16 +1,32 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { getRoomsSummary } from '../../api/api'
 import './GridAlbum.css'
 
 const GridAlbum = () => {
+
+    const [Rooms, setRooms] = useState(null);
+
+    useEffect(() => {
+        const getRooms = async () => {
+            const { data } = await getRoomsSummary();
+            console.log(data)
+
+            setRooms(data);
+        }
+
+        getRooms();
+    }, [])
+
+
     return (
-        <div className="albumContainer">
+       Rooms && <div className="albumContainer">
             <div className="albumGridContainer">
                 <div className="item" id="item1">
-                    <span>item</span>
+                    <span>{Rooms[0].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/1" >Show Room</Link>
+                            <Link to={`/room/${Rooms[0].room_name}/`} >Show Room</Link>
                         </div>
                     </div>
                 </div>
@@ -94,7 +110,7 @@ const GridAlbum = () => {
                             <Link to="/room/10" >Show Room</Link>
                         </div>
                     </div>
-                    m</div>
+                </div>
 
 
             </div>

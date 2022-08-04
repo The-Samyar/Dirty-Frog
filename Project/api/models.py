@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
-from numpy import empty
+""" from numpy import empty """
 
 #  ------Tables related to rooms------
 class RoomType(models.Model):

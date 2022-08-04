@@ -106,8 +106,7 @@ const Table = ({ passedData }) => {
     const handleForm = (e) => {
         e.preventDefault();
         console.log(reserved);
-        navigator('/Booking')
-        /* reserveBookNow(reserved); */
+        /* navigator('/Booking') */
     }
 
     const handleChange = (e, roomName) => {

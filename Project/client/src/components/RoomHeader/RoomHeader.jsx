@@ -2,7 +2,7 @@ import React from 'react'
 import './RoomHeader.css'
 import Navbar from '../Navbar/Navbar'
 
-const RoomHeader = ({ id }) => {
+const RoomHeader = ({ name , cost , capacity }) => {
     return (
         <div className="roomContainer">
             <Navbar />
@@ -10,19 +10,19 @@ const RoomHeader = ({ id }) => {
                 <span className="roomInfo">
                     Room Name
                     <span className="innerInfo">
-                        King Room
+                        {name}
                     </span>
                 </span>
                 <span className="roomInfo">
                     Cost per Night
                     <span className="innerInfo">
-                        124 $
+                        {cost} $
                     </span>
                 </span>
                 <span className="roomInfo">
-                    Size
+                    Capacity
                     <span className="innerInfo">
-                        3
+                        {capacity}
                     </span>
                 </span>
                 <button className="roomButton">Book Now</button>

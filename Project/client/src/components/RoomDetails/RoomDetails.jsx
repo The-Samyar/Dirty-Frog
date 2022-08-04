@@ -1,18 +1,13 @@
 import React from 'react'
 import './RoomDetails.css'
 
-const RoomDetails = () => {
+const RoomDetails = ({description}) => {
     return (
         <section className="contianer">
             <div className="overview">
                 <h3 className="titleDetails">Room Overview</h3>
                 <p className="overviewDetail">
-                    The Superior Rooms pay tribute to fashion and craftsmanship. The rooms are approximately 19m2 with views of Rue
-                    d'Alger and Jardin des Tuileries. The selection and pairing of materials has been carefully chosen to give you a
-                    cool experience. The super soft bed topper is simply extravagant! Every room is different but the colour palette
-                    uses unique and expertly matched hues. An openwork brass screen separates the bathroom from the bedroom. This
-                    original feature helps make every room your very own cosy and peaceful haven. Bathrobes, slippers and SOTHYS
-                    toiletries are provided in the bathroom to pamper you.
+                    {description}
                 </p>
             </div>
 
