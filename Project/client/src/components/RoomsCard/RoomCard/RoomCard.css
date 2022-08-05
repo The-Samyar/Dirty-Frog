@@ -1,25 +1,56 @@
-.RoomCardContainer{
-    width:70%;
+.RoomCardContainer {
+    width: 70%;
     margin: 0px auto;
     box-sizing: border-box;
     padding: 20px;
-    min-height:50vh;
+    min-height: 50vh;
     border-radius: 5px;
-    background-color:#c9c2c0 ;
-    color: #232531;
+    background: linear-gradient(to left top,rgba(27, 27, 48, 0.9) , rgba(198,191,190 , 0.5));
+    color: rgba(26, 37, 53, 0.9);
 }
 
-.RoomCardTitle{
+.RoomCardTitle {
     font-size: 1.3rem;
 }
 
-.roomCardInfo{
+.roomCardInfo {
     display: flex;
     align-items: center;
     font-size: 1.1rem;
     margin-bottom: 20px;
 }
 
-.roomCardIcon{
+.roomCardIcon {
     margin-right: 20px;
+}
+
+.roomServices , .guestsNumber {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.roomServiceItem {
+    color: rgb(242, 233, 228);
+    background-color: rgba(27, 27, 48, 0.9);
+    margin-right: 10px;
+    margin-top: 10px;
+    display: flex;
+    box-sizing: border-box;
+    padding: 5px;
+    align-items: center;
+    min-width: 200px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+}
+
+.roomServiceIcon {
+    width: 30px;
+    height: 30px;
+}
+
+.guestTitle{
+    margin-right: 10px;
+    font-size: 1.1rem;
 }
