@@ -1,0 +1,80 @@
+.BookingSummaryCard{
+    width:50%;
+    margin: 10px auto;
+    border: 1px solid #c4c4c4;
+    min-height: 200px;
+    box-sizing: border-box;
+}
+
+.BookingSummaryHeader{
+    background-color: rgba(27, 27, 48, 0.9);
+    padding: 20px;
+    color: rgb(242, 233, 228);
+}
+
+.BookingSummaryInfo{
+    background-color: #f8f8f8;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prices{
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.signlePrice{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.priceTitle{
+    font-size: 1.1rem;
+    width: 50%;
+}
+
+.priceQuantity {
+    width: 50%;
+    font-size: 1.2rem;
+}
+
+.total{
+    width: 100%;
+    background: linear-gradient(to right bottom, rgba(1, 1, 27, 0.7) , rgba(1, 1, 37, 0.6));
+    color: rgb(242, 233, 228 , 1);
+    box-sizing: border-box;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.total:hover {
+    transform: translateX(5px);
+}
+
+.totalPriceTitle , .totalPrice{
+    font-size: 1.4rem;
+}
+
+.note{
+    margin: 10px;
+}
+
+.finalReserve{
+    border:none;
+    padding: 15px 20px;
+    background-color: rgba(27, 27, 48, 0.9);
+    color:rgb(242, 233, 228);
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 5px;
+}

@@ -1,100 +1,116 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { getRoomsSummary } from '../../api/api'
 import './GridAlbum.css'
 
 const GridAlbum = () => {
+
+    const [Rooms, setRooms] = useState(null);
+
+    useEffect(() => {
+        const getRooms = async () => {
+            const { data } = await getRoomsSummary();
+            console.log(data)
+
+            setRooms(data);
+        }
+
+        getRooms();
+    }, [])
+
+
     return (
-        <div className="albumContainer">
+       Rooms && <div className="albumContainer">
             <div className="albumGridContainer">
                 <div className="item" id="item1">
-                    <span>item</span>
+                    <span>{Rooms[0].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/1" >Show Room</Link>
+                            <Link to={`/room/${Rooms[0].room_name}/`} >Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item2">
-                    <span>item</span>
+                    <span>{Rooms[1].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/2" >Show Room</Link>
+                            <Link to={`/room/${Rooms[1].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item3">
-                    <span>item</span>
+                    <span>{Rooms[2].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/3" >Show Room</Link>
+                            <Link to={`/room/${Rooms[2].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item4">
-                    <span>item</span>
+                    <span>{Rooms[3].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/4" >Show Room</Link>
+                            <Link to={`/room/${Rooms[3].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item5">
-                    <span>item</span>
+                    <span>{Rooms[4].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/5" >Show Room</Link>
+                            <Link to={`/room/${Rooms[4].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item6">
-                    <span>item</span>
+                    <span>{Rooms[5].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/6" >Show Room</Link>
+                            <Link to={`/room/${Rooms[5].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item7">
-                    <span>item</span>
+                    <span>{Rooms[6].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/7" >Show Room</Link>
+                            <Link to={`/room/${Rooms[6].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item8">
-                    <span>item</span>
+                    <span>{Rooms[7].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/8" >Show Room</Link>
+                            <Link to={`/room/${Rooms[7].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item9">
-                    <span>item</span>
+                    <span>{Rooms[8].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/9" >Show Room</Link>
+                            <Link to={`/room/${Rooms[8].room_name}/`}>Show Room</Link>
                         </div>
                     </div>
                 </div>
 
                 <div className="item" id="item10">
-                    <span>item</span>
+                    <span>{Rooms[9].room_name}</span>
                     <div className="itemOverlay">
                         <div className="overlayBtn">
-                            <Link to="/room/10" >Show Room</Link>
+                            <Link to={`/room/${Rooms[9].room_name}/`} >Show Room</Link>
                         </div>
                     </div>
-                    m</div>
+                </div>
 
 
             </div>

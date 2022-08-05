@@ -14,7 +14,7 @@ import { IoMdSnow } from 'react-icons/io'
 import { FaGlassCheers, FaSwimmer, FaMountain, FaWind } from 'react-icons/fa'
 import './Table.css'
 
-const Icon = ({ item }) => {
+export const Icon = ({ item }) => {
     const map1 = new Map([
         [1, IoMdSnow],
         [2, MdBalcony],
@@ -106,8 +106,7 @@ const Table = ({ passedData }) => {
     const handleForm = (e) => {
         e.preventDefault();
         console.log(reserved);
-        navigator('/Booking')
-        /* reserveBookNow(reserved); */
+        /* navigator('/Booking') */
     }
 
     const handleChange = (e, roomName) => {

@@ -1,19 +1,34 @@
-import React from 'react'
+import React ,{useState , useEffect} from 'react'
 import Footer from '../components/Footer/Footer'
 import { useParams } from 'react-router-dom'
+import { getRoomDetails } from '../api/api'
 import RoomHeader from '../components/RoomHeader/RoomHeader'
 import RoomSummary from '../components/RoomSummary/RoomSummary'
 import RoomDetails from '../components/RoomDetails/RoomDetails'
 
 const RoomPage = () => {
 
-  let {id} = useParams()
-  console.log(id);
+  const [Room, setRoom] = useState(null)
+  let {name} = useParams()
+
+  useEffect(() => {
+    const getRoom = async () =>{
+      const {data} = await getRoomDetails(name);
+      console.log(data)
+      setRoom(data)
+    }
+
+    getRoom();
+  }, [])
+  
+
+
+  
   return (
-    <div>
-      <RoomHeader id={id} />
+    Room && <div>
+      <RoomHeader name={Room.room_name} cost={Room.cost_per_day} capacity={Room.capacity} />
       <RoomSummary />
-      <RoomDetails />
+      <RoomDetails description={Room.description}/>
       <Footer />
     </div>
   )

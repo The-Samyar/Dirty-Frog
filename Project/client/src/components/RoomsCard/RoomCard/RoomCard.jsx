@@ -16,6 +16,37 @@ const RoomCard = () => {
             <div className="roomCardInfo">
                 <MdOutlineRoomService  className="roomCardIcon"/> 24-hour front desk – Help whenever you need it!
             </div>
+
+            <div className="roomServices">
+                <div className="roomServiceItem">
+                    <MdOutlineRoomService className="roomServiceIcon" /> Room Service
+                </div>
+                <div className="roomServiceItem">
+                    <MdOutlineRoomService className="roomServiceIcon" /> Room Service
+                </div>
+                <div className="roomServiceItem">
+                    <MdOutlineRoomService className="roomServiceIcon" /> Room Service
+                </div>
+                <div className="roomServiceItem">
+                    <MdOutlineRoomService className="roomServiceIcon" /> Room Service
+                </div>
+                <div className="roomServiceItem">
+                    <MdOutlineRoomService className="roomServiceIcon" /> Room Service
+                </div>
+                <div className="roomServiceItem">
+                    <MdOutlineRoomService className="roomServiceIcon" /> Room Service
+                </div>
+            </div>
+
+            <div className="guestsNumber">
+                <h4 className="guestTitle">Number of guests:</h4>
+                <span>2</span>
+            </div>
+
+            <div className="guestsNumber">
+                <h4 className="guestTitle">Full guest name: </h4>
+                <span>John Doe</span>
+            </div>
         </div>
     )
 }

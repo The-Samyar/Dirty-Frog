@@ -10,3 +10,7 @@ export const getBookNow = () => API.get('/BookNow/');
 export const reserveBookNow = (data) => API.post('/BookNow/' , data);
 export const sendSignUpData = (data) => API.post('/SignUp/', data);
 export const sendSignInData = (data) => API.post('/SignIn/', data);
+export const getRoomsSummary = () => API.get('/Rooms/');
+export const getRoomDetails = (data) => API.get(`/Rooms/${data}/`)
+export const fetchReserveInfo = (data) => API.post('/Booking/' , data);
+export const sendReservationData = (data) => API.post('/Booking/' , data);
