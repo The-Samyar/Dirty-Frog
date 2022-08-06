@@ -1,7 +1,7 @@
 import React from 'react'
 import './BookingDetail.css'
 
-const BookingDetail = () => {
+const BookingDetail = ({ rooms, checkIn, checkOut }) => {
   return (
     <section className="BookingDetailContainer">
       <div className="BookingDetailHeader">
@@ -13,12 +13,12 @@ const BookingDetail = () => {
           <div className="date">
             <div className="checkIn">
               <h4 className="BookingInfoTitle">Check In:</h4>
-              <span className="checkDate">Sun 21 Aug 2022</span>
+              <span className="checkDate">{checkIn}</span>
             </div>
 
             <div className="checkOut">
               <h4 className="BookingInfoTitle">Check Out:</h4>
-              <span className="checkDate">Tue 6 Sept 2022</span>
+              <span className="checkDate">{checkOut}</span>
             </div>
           </div>
 
@@ -37,14 +37,14 @@ const BookingDetail = () => {
                 <h5 className="roomName">Room Name</h5>
                 <h5 className="roomCount">Number of room(s)</h5>
               </div>
-              <div className="bookingRoomCount">
-                <h5 className="roomName">Villa</h5>
-                <span className="roomCount">1</span>
-              </div>
-              <div className="bookingRoomCount">
-                <h5 className="roomName">Medium King</h5>
-                <span className="roomCount">2</span>
-              </div>
+              {
+                rooms.map((room) => (
+                  <div className="bookingRoomCount">
+                    <h5 className="roomName">{room.roomName}</h5>
+                    <span className="roomCount">{room.count}</span>
+                  </div>
+                ))
+              }
             </div>
           </div>
 
