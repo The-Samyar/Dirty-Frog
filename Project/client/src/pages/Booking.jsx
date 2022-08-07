@@ -45,7 +45,7 @@ const Booking = () => {
           break;
 
         default:
-          rooms.push({ roomName: item[0], count: item[1] });
+          rooms.push({ roomName: item[0].replace(/%20/g, " "), count: item[1] });
           console.log(rooms);
 
       }
@@ -53,7 +53,7 @@ const Booking = () => {
     }
 
     setInfo({checkIn , checkOut , children ,adults ,rooms});
-  }, [window.location.href])
+  }, [])
 
 
   console.log(info);
@@ -62,8 +62,8 @@ const Booking = () => {
     <div>
       <Navbar covered />
       <BookingDetail rooms={info?.rooms} checkIn={info?.checkIn} checkOut={info?.checkOut} />
-      <RoomsCard />
-      <BookingSummary />
+      <RoomsCard rooms={info?.rooms} />
+      <BookingSummary rooms={info?.rooms} />
       <Footer />
     </div>
   )

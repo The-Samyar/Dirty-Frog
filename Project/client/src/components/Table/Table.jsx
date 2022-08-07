@@ -44,11 +44,11 @@ export const Icon = ({ item }) => {
     return selectedIcon ? selectedIcon() : null
 }
 
-const Table = ({ passedData }) => {
+const Table = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
-    const [reserved, setReserved] = useState({rooms:[]})
+    const [reserved, setReserved] = useState({ rooms: [] })
     const navigator = useNavigate();
 
     const ref = useRef();
@@ -72,9 +72,9 @@ const Table = ({ passedData }) => {
 
                 const { data } = await fetchBookNow(readyData);
                 const { Error, Data } = data
-                console.log(Error)
+                /* console.log(Error)
                 console.log(Data)
-                console.log(Data.length);
+                console.log(Data.length); */
                 if (Data.length > 0) {
 
                     setRecomended(Data)
@@ -89,7 +89,7 @@ const Table = ({ passedData }) => {
 
             if (!checkIn) {
                 const { data } = await getBookNow();
-                console.log(data);
+                /* console.log(data); */
                 setRecomended(data);
             }
 
@@ -105,33 +105,36 @@ const Table = ({ passedData }) => {
     }, [searchParams])
 
 
-    console.log(recommended);
-    console.log(reserved);
+    /* console.log(recommended);
+    console.log(reserved); */
 
     const handleForm = (e) => {
         e.preventDefault();
-        console.log(reserved);
+        /* console.log(reserved); */
 
         if (reserved?.checkIn) {
-            
-            var listOfRooms = '';
-            for (let index = 0; index < reserved.rooms.length; index++) {
-                listOfRooms += '&'+Object.keys(reserved.rooms[index])+'='+ Object.values(reserved.rooms[index])
+
+            if (reserved?.rooms.length > 0) {
+                var listOfRooms = '';
+                for (let index = 0; index < reserved.rooms.length; index++) {
+                    listOfRooms += '&' + Object.keys(reserved.rooms[index]) + '=' + Object.values(reserved.rooms[index])
+                }
+
+                const url = `/Booking?checkIn=${reserved?.checkIn}&checkOut=${reserved?.checkOut}&adults=`
+                    + `${reserved?.adults}&children=${reserved?.children}${listOfRooms} `
+                navigator(url);
+            }else{
+                ref.current.textContent = 'No room has selected'
             }
-
-            listOfRooms = listOfRooms.replaceAll(' ' , '_')
-
-            const url = `/Booking?checkIn=${reserved?.checkIn}&checkOut=${reserved?.checkOut}&adults=`
-            +`${reserved?.adults}&children=${reserved?.children}${listOfRooms} `
-            console.log(url);
-            navigator(url);
+        } else {
+            ref.current.textContent = 'There is no checkIn or checkOut value'
         }
     }
 
     const handleChange = (e, roomName) => {
-        console.log(e.target.value, roomName);
+        /* console.log(e.target.value, roomName); */
 
-        setReserved({ ...reserved, rooms: [...reserved.rooms,  {[roomName]: e.target.value}] });
+        setReserved({ ...reserved, rooms: [...reserved.rooms, { [roomName]: e.target.value }] });
     }
 
     return (
