@@ -1,22 +1,22 @@
-import React , {useState , useEffect} from 'react'
-import {sendReservationData , fetchReserveInfo} from '../../api/api'
+import React, { useState, useEffect } from 'react'
+import { sendReservationData, fetchReserveInfo } from '../../api/api'
 import { useSearchParams } from 'react-router-dom'
 import './BookingSummary.css'
 
-const BookingSummary = () => {
+const BookingSummary = ({ rooms }) => {
 
     let [searchParams, setSearchParams] = useSearchParams();
-    const [userData , setUserData] = useState({checkIn: '' , checkOut : '' , rooms:[] , adults: '' , children: ''})
+    const [userData, setUserData] = useState({ checkIn: '', checkOut: '', rooms: [], adults: '', children: '' })
 
     useEffect(() => {
 
-        const getData = async() => {
+        const getData = async () => {
 
         }
 
         getData();
 
-    } , [searchParams])
+    }, [searchParams])
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -30,15 +30,14 @@ const BookingSummary = () => {
 
             <div className="BookingSummaryInfo">
                 <div className="prices">
-                    <div className="signlePrice">
-                        <h4 className="priceTitle">Medium King</h4>
-                        <span className="priceQuantity">$ 120</span>
-                    </div>
-
-                    <div className="signlePrice">
-                        <h4 className="priceTitle">Villa</h4>
-                        <span className="priceQuantity">$ 200</span>
-                    </div>
+                    {
+                        rooms?.map((room) => (
+                            <div className="signlePrice" key={room.roomName}>
+                                <h4 className="priceTitle">{room.roomName}</h4>
+                                <span className="priceQuantity">$ 120</span>
+                            </div>
+                        ))
+                    }
 
                     <div className="signlePrice">
                         <h4 className="priceTitle">9 % VAT</h4>

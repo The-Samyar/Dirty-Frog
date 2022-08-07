@@ -99,3 +99,8 @@ hr{
     font-size: 0.9rem;
     cursor: pointer;
 }
+
+.btnDetail a{
+    color:rgb(242, 233, 228);
+    text-decoration: none;
+}

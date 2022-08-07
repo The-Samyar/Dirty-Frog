@@ -1,7 +1,14 @@
 import React from 'react'
 import './BookingDetail.css'
+import {Link} from 'react-router-dom'
 
 const BookingDetail = ({ rooms, checkIn, checkOut }) => {
+
+  const checkInDate = new Date(checkIn).toDateString();
+  const checkOutDate = new Date(checkOut).toDateString();
+  const diffTime = Math.abs(new Date(checkOut) - new Date(checkIn));
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
   return (
     <section className="BookingDetailContainer">
       <div className="BookingDetailHeader">
@@ -13,18 +20,18 @@ const BookingDetail = ({ rooms, checkIn, checkOut }) => {
           <div className="date">
             <div className="checkIn">
               <h4 className="BookingInfoTitle">Check In:</h4>
-              <span className="checkDate">{checkIn}</span>
+              <span className="checkDate">{checkInDate}</span>
             </div>
 
             <div className="checkOut">
               <h4 className="BookingInfoTitle">Check Out:</h4>
-              <span className="checkDate">{checkOut}</span>
+              <span className="checkDate">{checkOutDate}</span>
             </div>
           </div>
 
           <div className="summaryInfo">
             <h4 className="BookingInfoTitle">Total length of stay:</h4>
-            <span className="totalLength">16 nights</span>
+            <span className="totalLength">{diffDays} nights</span>
           </div>
 
           <br />
@@ -38,8 +45,8 @@ const BookingDetail = ({ rooms, checkIn, checkOut }) => {
                 <h5 className="roomCount">Number of room(s)</h5>
               </div>
               {
-                rooms.map((room) => (
-                  <div className="bookingRoomCount">
+                rooms?.map((room) => (
+                  <div className="bookingRoomCount" key={room.roomName}>
                     <h5 className="roomName">{room.roomName}</h5>
                     <span className="roomCount">{room.count}</span>
                   </div>
@@ -48,7 +55,9 @@ const BookingDetail = ({ rooms, checkIn, checkOut }) => {
             </div>
           </div>
 
-          <button className="btnDetail">Change Your Selection</button>
+          <button className="btnDetail">
+            <Link to="/BookNow">Change Your Selection</Link>
+          </button>
         </div>
       </div>
     </section>
