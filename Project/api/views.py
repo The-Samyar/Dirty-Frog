@@ -164,8 +164,11 @@ def BookNow(request):
 @api_view(("GET",))
 def Rooms(request, room_name=None):
     if room_name:
+        # Convert slug to string
+        room_name = room_name.replace('-', ' ')
+
         room = models.RoomType.objects.get(room_name=room_name)
-        serialized_rooms = RoomTypeSerializer(room)
+        serialized_rooms = RoomTypeSerializer(room, context={"minimised_services": True})
 
     else:
         rooms = models.RoomType.objects.all()

@@ -40,12 +40,21 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 class RoomTypeSerializer(DynamicFieldsModelSerializer):
     room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
-    services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
+    # services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
+    services = serializers.SerializerMethodField()
 
     class Meta:
         model = models.RoomType
+        # fields = '__all__'
         fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures', 'services']
-        # fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'services']
+
+    def get_services(self, obj):
+        queryset = [service.services_full_info for service in models.RoomService.objects.filter(room_name = obj.room_name)]
+        if self.context.get("minimised_services"):
+            return queryset[:6]
+        else:
+            return queryset
+
 
 class ReviewSerializer(serializers.ModelSerializer):
 
