@@ -27,7 +27,7 @@ const RoomPage = () => {
   return (
     Room && <div>
       <RoomHeader name={Room.room_name} cost={Room.cost_per_day} capacity={Room.capacity} />
-      <RoomSummary />
+      <RoomSummary services={Room.services} />
       <RoomDetails description={Room.description}/>
       <Footer />
     </div>
