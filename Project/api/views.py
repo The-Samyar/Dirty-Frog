@@ -1,7 +1,9 @@
 import json
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 from datetime import date, datetime, timedelta
 from django.db.models import Sum, Q, Count, F
 from datetime import datetime

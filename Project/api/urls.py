@@ -1,7 +1,10 @@
 from . import views
 from django.urls import path, re_path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 app_name = 'api'
+
 
 urlpatterns = [
     path('FeaturedRooms/', views.FeaturedRooms_component, name='FeaturedRooms'),
@@ -11,5 +14,7 @@ urlpatterns = [
     path('BookNow/', views.BookNow, name='BookNow'),
     path('Rooms/', views.Rooms, name='Rooms'),
     path('Rooms/<room_name>/', views.Rooms),
-    path('BookingInfo/',views.BookingInfo, name='Booking')
+    path('BookingInfo/',views.BookingInfo, name='Booking'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh', TokenRefreshView.as_view(), name='token_refresh')
 ]
