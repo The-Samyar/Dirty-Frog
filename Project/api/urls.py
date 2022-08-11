@@ -11,4 +11,5 @@ urlpatterns = [
     path('BookNow/', views.BookNow, name='BookNow'),
     path('Rooms/', views.Rooms, name='Rooms'),
     path('Rooms/<room_name>/', views.Rooms),
+    path('BookingInfo/',views.BookingInfo, name='Booking')
 ]
