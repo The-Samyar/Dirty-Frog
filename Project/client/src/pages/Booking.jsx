@@ -1,4 +1,5 @@
 import React, { useEffect , useState } from 'react'
+import {fetchReserveInfo} from '../api/api'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
 import BookingDetail from '../components/BookingDetail/BookingDetail'
@@ -49,10 +50,15 @@ const Booking = () => {
           console.log(rooms);
 
       }
+        setInfo(checkIn , checkOut , rooms)
+    }
+
+    const getData = async() => {
+      /* const {data} = await fetchReserveInfo({rooms}) */
 
     }
 
-    setInfo({checkIn , checkOut , children ,adults ,rooms});
+    getData()
   }, [])
 
 
