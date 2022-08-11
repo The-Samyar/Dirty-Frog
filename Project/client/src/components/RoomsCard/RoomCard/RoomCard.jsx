@@ -3,11 +3,11 @@ import {MdOutlineRoomService} from 'react-icons/md'
 import {GiConfirmed} from 'react-icons/gi'
 import './RoomCard.css'
 
-const RoomCard = () => {
+const RoomCard = ({room}) => {
     return (
         <div className="RoomCardContainer">
             <div className="innerRoomCard">
-                <h4 className="RoomCardTitle">Medium King</h4>
+                <h4 className="RoomCardTitle">{room.roomName}</h4>
             </div>
 
             <div className="roomCardInfo">

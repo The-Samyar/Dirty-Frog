@@ -2,11 +2,14 @@ import React from 'react'
 import RoomCard from './RoomCard/RoomCard'
 import './RoomsCard.css'
 
-const RoomsCard = () => {
+const RoomsCard = ({rooms}) => {
   return (
     <div className="RoomsCard">
-      <RoomCard />
-      <RoomCard />
+      {
+        rooms?.map(room => (
+          <RoomCard room={room} key={room.roomName} />
+        ))
+      }
     </div>
   )
 }

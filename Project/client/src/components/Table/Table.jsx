@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react'
 import { useEffect } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import { useSearchParams } from 'react-router-dom'
-import { fetchBookNow, getBookNow} from '../../api/api'
-import {useNavigate} from 'react-router-dom'
+import { fetchBookNow, getBookNow } from '../../api/api'
+import { useNavigate } from 'react-router-dom'
 import HeaderForm from '../HeaderForm/HeaderForm'
 import {
     MdBalcony, MdWifi, MdOutlineWaves, MdOutlineSafetyDivider, MdBathtub, MdIron, MdFitnessCenter,
@@ -44,11 +44,11 @@ export const Icon = ({ item }) => {
     return selectedIcon ? selectedIcon() : null
 }
 
-const Table = ({ passedData }) => {
+const Table = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
-    const [reserved, setReserved] = useState({})
+    const [reserved, setReserved] = useState({ rooms: [] })
     const navigator = useNavigate();
 
     const ref = useRef();
@@ -65,11 +65,16 @@ const Table = ({ passedData }) => {
             const readyData = { checkIn, checkOut, rooms, adults, children }
 
             if (readyData.rooms !== null) {
+
+                if (readyData.checkIn) {
+                    setReserved({ ...reserved, checkIn, checkOut, children, adults });
+                }
+
                 const { data } = await fetchBookNow(readyData);
                 const { Error, Data } = data
-                console.log(Error)
+                /* console.log(Error)
                 console.log(Data)
-                console.log(Data.length);
+                console.log(Data.length); */
                 if (Data.length > 0) {
 
                     setRecomended(Data)
@@ -84,7 +89,7 @@ const Table = ({ passedData }) => {
 
             if (!checkIn) {
                 const { data } = await getBookNow();
-                console.log(data);
+                /* console.log(data); */
                 setRecomended(data);
             }
 
@@ -100,19 +105,36 @@ const Table = ({ passedData }) => {
     }, [searchParams])
 
 
-    console.log(recommended);
-    console.log(reserved);
+    /* console.log(recommended);
+    console.log(reserved); */
 
     const handleForm = (e) => {
         e.preventDefault();
-        console.log(reserved);
-        /* navigator('/Booking') */
+        /* console.log(reserved); */
+
+        if (reserved?.checkIn) {
+
+            if (reserved?.rooms.length > 0) {
+                var listOfRooms = '';
+                for (let index = 0; index < reserved.rooms.length; index++) {
+                    listOfRooms += '&' + Object.keys(reserved.rooms[index]) + '=' + Object.values(reserved.rooms[index])
+                }
+
+                const url = `/Booking?checkIn=${reserved?.checkIn}&checkOut=${reserved?.checkOut}&adults=`
+                    + `${reserved?.adults}&children=${reserved?.children}${listOfRooms} `
+                navigator(url);
+            }else{
+                ref.current.textContent = 'No room has selected'
+            }
+        } else {
+            ref.current.textContent = 'There is no checkIn or checkOut value'
+        }
     }
 
     const handleChange = (e, roomName) => {
-        console.log(e.target.value, roomName);
+        /* console.log(e.target.value, roomName); */
 
-        setReserved({ ...reserved, [roomName]: e.target.value });
+        setReserved({ ...reserved, rooms: [...reserved.rooms, { [roomName]: e.target.value }] });
     }
 
     return (
@@ -176,24 +198,24 @@ const Table = ({ passedData }) => {
                                     <td className="tableCells">
                                         <select name="" id="" className="tableSelect" onChange={(e) => handleChange(e, room.room_name)}>
                                             {
-                                                room.vacant_count > 6 ? 
-                                                <>
-                                                    <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
-                                                    <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
-                                                    <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
-                                                    <option value="3">3 &nbsp; &nbsp; &nbsp; ({3 * room.cost_per_day}$)</option>
-                                                    <option value="4">4 &nbsp; &nbsp; &nbsp; ({4 * room.cost_per_day}$)</option>
-                                                    <option value="5">5 &nbsp; &nbsp; &nbsp; ({5 * room.cost_per_day}$)</option>
-                                                    <option value="6">6 &nbsp; &nbsp; &nbsp; ({6 * room.cost_per_day}$)</option>
-                                                </> :
+                                                room.vacant_count > 6 ?
+                                                    <>
+                                                        <option value="0">0 &nbsp; &nbsp; &nbsp; ({0 * room.cost_per_day}$)</option>
+                                                        <option value="1">1 &nbsp; &nbsp; &nbsp; ({1 * room.cost_per_day}$)</option>
+                                                        <option value="2">2 &nbsp; &nbsp; &nbsp; ({2 * room.cost_per_day}$)</option>
+                                                        <option value="3">3 &nbsp; &nbsp; &nbsp; ({3 * room.cost_per_day}$)</option>
+                                                        <option value="4">4 &nbsp; &nbsp; &nbsp; ({4 * room.cost_per_day}$)</option>
+                                                        <option value="5">5 &nbsp; &nbsp; &nbsp; ({5 * room.cost_per_day}$)</option>
+                                                        <option value="6">6 &nbsp; &nbsp; &nbsp; ({6 * room.cost_per_day}$)</option>
+                                                    </> :
 
-                                                <>
-                                                    {
-                                                        [...Array(room.vacant_count)].map(number => (
-                                                            <option value={number}>{number} &nbsp; &nbsp; &nbsp; ({number * room.cost_per_day}$)</option>
-                                                        ))
-                                                    }
-                                                </>
+                                                    <>
+                                                        {
+                                                            [...Array(room.vacant_count)].map(number => (
+                                                                <option value={number}>{number} &nbsp; &nbsp; &nbsp; ({number * room.cost_per_day}$)</option>
+                                                            ))
+                                                        }
+                                                    </>
                                             }
                                         </select>
                                     </td>
