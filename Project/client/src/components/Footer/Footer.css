@@ -65,3 +65,46 @@
     border-radius: 5px;
     height: 100%;
 }
+
+@media screen and (max-width:768px) {
+    .footerContainer{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .informationItem{
+        text-align: center;
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .informationIcon{
+        margin-bottom: 20px;
+    }
+
+    .footerItem{
+        width: 90%;
+        text-align: center;
+    }
+
+    .Title{
+        width: 100%;
+        text-align: center;
+    }
+
+    .linksContainer {
+        width: 90%;
+    }
+
+    .linksContainer .links{
+        text-align: center;
+        width: 100%;
+    }
+
+    .mapContainer {
+        width: 90%;
+        border-radius: 5px;
+        height: 90%;
+        margin: 0px auto;
+    }
+}
