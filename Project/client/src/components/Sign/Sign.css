@@ -89,3 +89,9 @@ span a {
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+@media screen and (max-width: 768px){
+    .innerContainer {
+        height: 93.5vh;
+    }
+}

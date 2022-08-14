@@ -158,7 +158,7 @@ const Table = () => {
                         {recommended &&
                             recommended?.map((room, index) => (
                                 <tr key={index}>
-                                    <td className="tableCells">
+                                    <td className="tableCells" id="tempHeader">
                                         <h4 className="titleRoom">
                                             {room.room_name}
                                         </h4>
