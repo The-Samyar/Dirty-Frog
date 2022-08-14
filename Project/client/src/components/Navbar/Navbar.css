@@ -120,6 +120,7 @@
         height: 30px;
         box-sizing: border-box;
         padding: 5px;
+        z-index: 3;
     }
 
 

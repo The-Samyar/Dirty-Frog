@@ -45,3 +45,30 @@
     color: rgba(27, 27, 48, 1);
     background-color: rgb(242, 233, 228);
 }
+
+@media screen and (max-width: 768px){
+    .menu{
+        flex-wrap: wrap;
+        font-size: 1.1rem;
+    }
+
+    .roomInfoTitle{
+
+        border-bottom:2px solid rgb(242, 233, 228);
+        padding-bottom: 5px;
+    }
+
+    .roomInfo{
+        width: 40%;
+        margin-top: 20px;
+    }
+    
+    .innerInfo{
+        font-size: 1.2rem;
+    }
+
+    .roomButton{
+        width: 40%;
+        margin-top:20px
+    }
+}
