@@ -1,7 +1,9 @@
 import json
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 from datetime import date, datetime, timedelta
 from django.db.models import Sum, Q, Count, F
 from datetime import datetime
@@ -10,6 +12,7 @@ from http import HTTPStatus
 from .serializers import *
 from . import models
 
+from django.contrib.auth.models import User
 
 
 @api_view(('GET',))
@@ -176,3 +179,16 @@ def Rooms(request, room_name=None):
 
     return Response(serialized_rooms.data)
 
+
+@api_view(("POST",))
+def BookingInfo(request):
+    if request.method == 'POST':
+        room_names = request.data["room"]
+
+        rooms = models.RoomType.objects.filter(room_name__in=room_names)
+        serialized = RoomTypeSerializer(
+            rooms,
+            fields=('room_name', 'cost_per_day', 'capacity', 'services'),
+            context={"minimised_services" : True},
+            many=True)
+        return Response(serialized.data)
