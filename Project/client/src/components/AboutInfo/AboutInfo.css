@@ -52,3 +52,32 @@
     font-size: 1.2rem;
     letter-spacing:1px;
 }
+
+@media screen and (max-width: 768px){
+    .description h3{
+        font-size: 1.5rem;
+        margin: 0px auto;
+    }
+    
+    .AboutContainer {
+        height: initial;
+        flex-wrap: wrap;
+    }
+
+    .leftSection , .rightSection{
+        width: 100%;
+    }
+
+    .leftSection .colored{
+        background-color: transparent;
+        width: 80%;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+
+    .leftSection .colored img{
+        width: 130%;
+        height: 100%;
+        transform: none;
+    }
+}

@@ -1,6 +1,6 @@
 .AboutRoomContainer{
     width:100%;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .title {
@@ -58,4 +58,35 @@
     text-decoration: none;
     color:rgb(242, 233, 228);
     font-size: 1rem;
+}
+
+@media screen and (max-width: 768px){
+    .title{
+        font-size: 1.2rem;
+        width: 80%;
+        margin: 0px auto;
+    }
+    .AboutCard{
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .leftSide{
+        width: 100%;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .rightSide{
+        border-radius: 0px 0px 10px 10px;
+        transform: translateY(-6px);
+        border-top: 5px solid rgba(27, 27, 48, 1);
+        border-left: none;
+    } 
+
+    .leftSide img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px 10px 0px 0px;
+    }
 }
