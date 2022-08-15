@@ -123,14 +123,13 @@ def BookNow(request):
 
             if rooms:
                 if free_space >=  total_guests:
+                    returned_serialized = BookRoomSerializer(rooms, many=True)
                     if vacant_count >= valid_data['rooms']:
-                        returned_serialized = BookRoomSerializer(rooms, many=True)
                         response = {
                             "Error" : "No error",
                             "Data" : returned_serialized.data}
 
                     else:
-                        returned_serialized = BookRoomSerializer(rooms, many=True)
                         response = {
                             "Error" : "Vacant rooms are lesser than the number of rooms requested",
                             "Data" : returned_serialized.data
@@ -181,6 +180,7 @@ def Rooms(request, room_name=None):
 
 
 @api_view(("POST",))
+# @permission_classes([IsAuthenticated])
 def BookingInfo(request):
     if request.method == 'POST':
         room_names = request.data["room"]
@@ -192,3 +192,20 @@ def BookingInfo(request):
             context={"minimised_services" : True},
             many=True)
         return Response(serialized.data)
+
+@api_view(('POST',))
+def SignUp(request):
+    if request.method == 'POST':
+        serialized = UserRegisterSerializer(data=request.data)
+        if serialized.is_valid():
+            validated = serialized.validated_data
+            if validated['check'] == "True" and validated['password'] == validated['confirm_password']:
+                new_user = User.objects.create_user(username=validated['username'], password=validated['password'], first_name=validated['first_name'], last_name=validated['last_name'])
+                new_user.save()
+                response = {'message': 'success'}
+            else:
+                response = {'message': 'error'}
+        else:
+            response = {'message': 'error, data not valid'}
+
+        return Response(response)
