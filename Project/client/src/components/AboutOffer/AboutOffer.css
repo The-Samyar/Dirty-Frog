@@ -1,5 +1,5 @@
 .AboutOfferContainer{
-    height: 80vh;
+    min-height: 80vh;
     width: 100%;
 }
 
@@ -72,4 +72,21 @@
 
 .sections:hover .overlay{
     height: 100%;
+}
+
+@media screen and (max-width: 768px){
+    .title{
+        font-size: 1.2rem;
+        width: 80%;
+        margin: 0px auto;
+    }
+    
+    .offerings{
+        flex-wrap: wrap;
+    }
+
+    .sections{
+        width: 100%;
+        margin: 20px 0px;
+    }
 }
