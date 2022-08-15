@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from . import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 class RoomPictureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,6 +37,7 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
             existing = set(self.fields)
             for field_name in existing - allowed:
                 self.fields.pop(field_name)
+
 
 
 class RoomTypeSerializer(DynamicFieldsModelSerializer):
@@ -141,3 +143,25 @@ class HeaderFormSerializer(serializers.Serializer):
             raise serializers.ValidationError(errors)
             
         return data
+
+
+class BookingModelSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = models.Booking
+        fields = ('id', 'check_in', 'check_out', 'adults_count', 'children_count')
+
+class UserRegisterSerializer(DynamicFieldsModelSerializer):
+    TERMS_AND_CONDITONS_CHOICES = [
+        ('True'),
+        ('False')
+    ]
+    
+    confirm_password = serializers.CharField()
+
+    check = serializers.ChoiceField(choices=TERMS_AND_CONDITONS_CHOICES)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'password', 'confirm_password', 'check')
+
+
