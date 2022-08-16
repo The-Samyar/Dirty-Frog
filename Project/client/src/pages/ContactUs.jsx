@@ -1,14 +1,18 @@
-import React from 'react'
-import Footer from '../components/Footer/Footer'
+import React, { Suspense } from 'react'
 import ContactHeader from '../components/ContactHeader/ContactHeader'
-import ContactMain from '../components/ContactMain/ContactMain'
+const ContactMain = React.lazy(() => import('../components/ContactMain/ContactMain'))
+const Footer = React.lazy(() => import('../components/Footer/Footer'))
 
 const ContactUs = () => {
   return (
     <div>
       <ContactHeader />
-      <ContactMain />
-      <Footer />
+      <Suspense fallback={<div>Loading ...</div>}>
+        <ContactMain />
+      </Suspense>
+      <Suspense fallback={<div>Loading ...</div>}>
+        <Footer />
+      </Suspense>
     </div>
   )
 }

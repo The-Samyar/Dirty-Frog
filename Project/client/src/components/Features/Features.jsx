@@ -1,7 +1,6 @@
 import React , {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBus , faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import 'font-awesome/css/font-awesome.min.css';
 import './Features.css'
 
 export const Features = () => {

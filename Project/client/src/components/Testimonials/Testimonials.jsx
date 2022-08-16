@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import IMG from '../images/person1.jpg'
+import IMG from '../images/person1.webp'
 import Rating from '@mui/material/Rating';
 import { fetchTestimonials } from '../../api/api'
 import Box from '@mui/material/Box';
