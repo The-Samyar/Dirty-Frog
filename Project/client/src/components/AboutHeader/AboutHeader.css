@@ -3,7 +3,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 100%;
-    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/hotel.jpg');
+    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/hotel.webp');
     color: rgb(242, 233, 228);
 }
 

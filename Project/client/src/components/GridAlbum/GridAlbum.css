@@ -70,14 +70,14 @@
     grid-column-end: line2;
     grid-row-start: row1-start;
     grid-row-end: 3;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room1.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room1.webp);
 }
 
 #item2 {
     grid-column-start: 1;
     grid-column-end: line2;
     grid-row-start: third-line;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room2.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room2.webp);
     grid-row-end: 6;
 }
 
@@ -86,7 +86,7 @@
     grid-column-end: line3;
     grid-row-start: row1-start;
     grid-row-end: 3;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room3.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room3.webp);
 }
 
 #item4 {
@@ -94,7 +94,7 @@
     grid-column-end: line2;
     grid-row-start: third-line;
     grid-row-end: 6;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room4.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room4.webp);
 }
 
 #item5 {
@@ -102,7 +102,7 @@
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 1;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room5.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room5.webp);
 }
 
 #item6 {
@@ -110,7 +110,7 @@
     grid-column-end: 5;
     grid-row-start: 2;
     grid-row-end: 3;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room6.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room6.webp);
 }
 
 #item7 {
@@ -118,7 +118,7 @@
     grid-column-end: 5;
     grid-row-start: 4;
     grid-row-end: 6;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room7.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room7.webp);
 }
 
 #item8 {
@@ -126,7 +126,7 @@
     grid-column-end: 5;
     grid-row-start: 3;
     grid-row-end: 4;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room8.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room8.webp);
 }
 
 #item9 {
@@ -142,7 +142,7 @@
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room10.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url(../../../public/images/room10.webp);
 }
 
 @media screen and (max-width: 768px) {

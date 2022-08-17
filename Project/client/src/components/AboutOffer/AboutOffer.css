@@ -32,19 +32,19 @@
 }
 
 #section1 {
-    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/rest.jpg');
+    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/rest.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
 #section2 {
-    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/pool.jpg');
+    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/pool.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
 #section3 {
-    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/bar.jpg');
+    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/bar.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }

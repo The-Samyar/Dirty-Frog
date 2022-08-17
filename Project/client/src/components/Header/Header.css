@@ -1,5 +1,5 @@
 .headerContainer {
-    background-image: linear-gradient(rgba(27, 27, 48, 0.9) , rgba(34, 34, 59, 4)) ,url(../images/cover3.jpg);
+    background-image: linear-gradient(rgba(27, 27, 48, 0.9) , rgba(34, 34, 59, 4)) ,url(../../../public/images/cover3.webp);
     height: 100vh;
     width: 100%;
     background-position: center;

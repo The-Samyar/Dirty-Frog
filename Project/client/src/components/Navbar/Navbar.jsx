@@ -1,16 +1,18 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import './Navbar.css'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { VscThreeBars } from 'react-icons/vsc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { AiOutlineHome } from 'react-icons/ai'
+import { MdOutlineBedroomChild } from 'react-icons/md'
+import { RiHotelLine, RiContactsLine } from 'react-icons/ri'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = ({ covered }) => {
 
   const [visibility, setVisibility] = useState(false);
   const [open, setOpen] = useState(false);
-  const ref = useRef();
   const checkScroll = () => {
     if (window.scrollY >= 500 && !visibility) {
       setVisibility(true);
@@ -30,20 +32,32 @@ const Navbar = ({ covered }) => {
     <>
       <nav className="navigation" style={{ backgroundColor: covered ? 'rgba(27, 27, 48, 0.9)' : null }}>
 
-        <VscThreeBars onClick={() => {setOpen(!open); console.log(open)}} className="menuIcon" />
+        <VscThreeBars onClick={() => { setOpen(!open); console.log(open) }} className="menuIcon" />
         <div className={open ? "containerNav2" : "containerNav"}>
           <ul className="navItems">
             <li className="navItem">
-              <Link to="/" className="navItemLinks">Home</Link>
+              <Link to="/" className="navItemLinks">
+                <AiOutlineHome className="navIcon" />
+                Home
+              </Link>
             </li>
             <li className="navItem">
-              <Link to="/rooms" className="navItemLinks">Rooms</Link>
+              <Link to="/rooms" className="navItemLinks">
+                <MdOutlineBedroomChild className="navIcon" />
+                Rooms
+              </Link>
             </li>
             <li className="navItem">
-              <Link to="/aboutUs" className="navItemLinks">About Us</Link>
+              <Link to="/aboutUs" className="navItemLinks">
+                <RiHotelLine className="navIcon" />
+                About Us
+              </Link>
             </li>
             <li className="navItem">
-              <Link to="/contactUs" className="navItemLinks">Contact Us</Link>
+              <Link to="/contactUs" className="navItemLinks">
+                <RiContactsLine className="navIcon" />
+                Contact Us
+              </Link>
             </li>
             <li className="navItem">
               <Link to="/bookNow" className="navItemLinks special">Book Now</Link>
