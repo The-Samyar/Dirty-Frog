@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import IMG from '../images/person1.webp'
 import Rating from '@mui/material/Rating';
 import { fetchTestimonials } from '../../api/api'
+import {AiOutlineLeft , AiOutlineRight} from 'react-icons/ai'
 import Box from '@mui/material/Box';
 import './Testimonials.css'
 
@@ -128,8 +129,8 @@ const Testimonials = () => {
                         ))
                     }
                 </div>
-                <i className="fa fa-angle-right rightIcon" onClick={handleRight}></i>
-                <i className="fa fa-angle-left leftIcon" onClick={handleLeft}></i>
+                <AiOutlineRight className="rightIcon" onClick={handleRight}></AiOutlineRight>
+                <AiOutlineLeft className="leftIcon"  onClick={handleLeft}></AiOutlineLeft>
             </div>
         </section>
     )
