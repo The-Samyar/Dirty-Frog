@@ -209,3 +209,97 @@ def SignUp(request):
             response = {'message': 'error, data not valid'}
 
         return Response(response)
+
+@api_view(("POST",))
+# @permission_classes([IsAuthenticated])
+def Booking(request):
+    if request.method == 'POST':
+        serialized = BookingModelSerializer(data=request.data)
+        if serialized.is_valid():
+            validated = serialized.validated_data
+            user = User.objects.get(username="samyar80")
+            print("VALID")
+            print(validated)
+
+            room_info = validated["room_info"]
+
+            today = datetime.now().date()
+            booked_ids = models.Booking.objects.exclude(
+                check_out__lte=today
+                ).exclude(
+                    Q(check_in__lt=validated["check_in"], check_out__lte=validated["check_in"]) | Q(check_in__gte=validated["check_out"], check_out__gt=validated["check_out"])
+                    )
+
+            booked_rooms = models.BookedRoom.objects.filter(booking_id__in=booked_ids)
+
+            available_rooms = {}
+
+            error = False
+
+            for room in room_info:
+                specific_booked_rooms = booked_rooms.filter(Q(room_number__room_name=room["room_name"]))
+                vacant_rooms = models.Room.objects.filter(room_name=room["room_name"]).filter(~Q(room_number__in=specific_booked_rooms))
+                if len(vacant_rooms) >= int(room["count"]):
+                    available_rooms[f"{room['room_name']}"] = vacant_rooms[:room["count"]]
+                else:
+                    error = True
+                    break
+            
+            if not error:
+                total_cost = 0
+                booking_id = models.Booking(
+                    user=user,
+                    check_in=validated["check_in"],
+                    check_out=validated["check_out"],
+                    adults_count=validated["adults_count"],
+                    children_count=validated["children_count"]
+                    )
+                booking_id.save()
+                for room in available_rooms:
+                    for room_number in available_rooms[room]:
+                        booked = models.BookedRoom(
+                            room_number=room_number,
+                            booking_id=booking_id)
+                        booked.save()
+                        total_cost += int(room_number.room_name.cost_per_day)
+
+                booking_id._total_cost = total_cost
+                booking_id.save()
+                message = {"message" : "successful"}
+
+            else:
+                message = {"message" : "unsuccessful"}
+        else:
+            message = {"message": "invalid data"}
+
+        return Response(message)
+
+
+# For testing
+'''
+{
+"username" : "samyar80",
+"password" : "Akbar1234",
+"confirmPassword" : "Akbar1234",
+"firstName" : "Samyar",
+"lastName" : "Afsharian",
+"check" : "True"
+}
+
+{
+"check_in" : "2022-08-17",
+"check_out" : "2022-08-17",
+"adults_count" : 2,
+"children_count" : 2,
+"room_info" : [{
+"room_name" : "Villa",
+"count" : 2
+}
+,
+{
+"room_name" : "Small King",
+"count" : 1
+}
+]
+}
+'''

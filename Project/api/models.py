@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
+from .models import *
 """ from numpy import empty """
 
 #  ------Tables related to rooms------
@@ -55,7 +56,7 @@ class Room(models.Model):
 #  ----Tables related to bookings----
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
+    # room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
     check_in = models.DateField()
     check_out = models.DateField()
     adults_count = models.IntegerField()
@@ -64,18 +65,17 @@ class Booking(models.Model):
     # Read-only field - automatically calculated
     _total_cost = models.IntegerField(blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        stay_length = datetime.strptime(str(self.check_out), "%Y-%m-%d") - datetime.strptime(str(self.check_in), "%Y-%m-%d")
-        print(f"{stay_length.days}")
-        self._total_cost = self.room_number.room_name.cost_per_day * stay_length.days
-        super(Booking, self).save(*args, **kwargs)
-
     @property
     def total_cost(self):
         return self._total_cost
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name} | Room Number: {self.room_number}"
+        return f"{self.id} | Booked by {self.user.first_name} {self.user.last_name}"
+
+
+class BookedRoom(models.Model):
+    room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
+    booking_id = models.ForeignKey(Booking, on_delete=models.CASCADE)
 
 # -----------------------------------
 
