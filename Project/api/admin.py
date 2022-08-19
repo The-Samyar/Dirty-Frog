@@ -18,3 +18,5 @@ admin.site.register(models.Booking, BookingAdmin)
 admin.site.register(models.UserInfo)
 
 admin.site.register(models.Review)
+
+admin.site.register(models.BookedRoom)

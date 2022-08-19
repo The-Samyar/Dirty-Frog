@@ -123,14 +123,13 @@ def BookNow(request):
 
             if rooms:
                 if free_space >=  total_guests:
+                    returned_serialized = BookRoomSerializer(rooms, many=True)
                     if vacant_count >= valid_data['rooms']:
-                        returned_serialized = BookRoomSerializer(rooms, many=True)
                         response = {
                             "Error" : "No error",
                             "Data" : returned_serialized.data}
 
                     else:
-                        returned_serialized = BookRoomSerializer(rooms, many=True)
                         response = {
                             "Error" : "Vacant rooms are lesser than the number of rooms requested",
                             "Data" : returned_serialized.data
@@ -181,6 +180,7 @@ def Rooms(request, room_name=None):
 
 
 @api_view(("POST",))
+# @permission_classes([IsAuthenticated])
 def BookingInfo(request):
     if request.method == 'POST':
         room_names = request.data["room"]
@@ -192,3 +192,114 @@ def BookingInfo(request):
             context={"minimised_services" : True},
             many=True)
         return Response(serialized.data)
+
+@api_view(('POST',))
+def SignUp(request):
+    if request.method == 'POST':
+        serialized = UserRegisterSerializer(data=request.data)
+        if serialized.is_valid():
+            validated = serialized.validated_data
+            if validated['check'] == "True" and validated['password'] == validated['confirm_password']:
+                new_user = User.objects.create_user(username=validated['username'], password=validated['password'], first_name=validated['first_name'], last_name=validated['last_name'])
+                new_user.save()
+                response = {'message': 'success'}
+            else:
+                response = {'message': 'error'}
+        else:
+            response = {'message': 'error, data not valid'}
+
+        return Response(response)
+
+@api_view(("POST",))
+# @permission_classes([IsAuthenticated])
+def Booking(request):
+    if request.method == 'POST':
+        serialized = BookingModelSerializer(data=request.data)
+        if serialized.is_valid():
+            validated = serialized.validated_data
+            user = User.objects.get(username="samyar80")
+            print("VALID")
+            print(validated)
+
+            room_info = validated["room_info"]
+
+            today = datetime.now().date()
+            booked_ids = models.Booking.objects.exclude(
+                check_out__lte=today
+                ).exclude(
+                    Q(check_in__lt=validated["check_in"], check_out__lte=validated["check_in"]) | Q(check_in__gte=validated["check_out"], check_out__gt=validated["check_out"])
+                    )
+
+            booked_rooms = models.BookedRoom.objects.filter(booking_id__in=booked_ids)
+
+            available_rooms = {}
+
+            error = False
+
+            for room in room_info:
+                specific_booked_rooms = booked_rooms.filter(Q(room_number__room_name=room["room_name"]))
+                vacant_rooms = models.Room.objects.filter(room_name=room["room_name"]).filter(~Q(room_number__in=specific_booked_rooms))
+                if len(vacant_rooms) >= int(room["count"]):
+                    available_rooms[f"{room['room_name']}"] = vacant_rooms[:room["count"]]
+                else:
+                    error = True
+                    break
+            
+            if not error:
+                total_cost = 0
+                booking_id = models.Booking(
+                    user=user,
+                    check_in=validated["check_in"],
+                    check_out=validated["check_out"],
+                    adults_count=validated["adults_count"],
+                    children_count=validated["children_count"]
+                    )
+                booking_id.save()
+                for room in available_rooms:
+                    for room_number in available_rooms[room]:
+                        booked = models.BookedRoom(
+                            room_number=room_number,
+                            booking_id=booking_id)
+                        booked.save()
+                        total_cost += int(room_number.room_name.cost_per_day)
+
+                booking_id._total_cost = total_cost
+                booking_id.save()
+                message = {"message" : "successful"}
+
+            else:
+                message = {"message" : "unsuccessful"}
+        else:
+            message = {"message": "invalid data"}
+
+        return Response(message)
+
+
+# For testing
+'''
+{
+"username" : "samyar80",
+"password" : "Akbar1234",
+"confirmPassword" : "Akbar1234",
+"firstName" : "Samyar",
+"lastName" : "Afsharian",
+"check" : "True"
+}
+
+{
+"check_in" : "2022-08-17",
+"check_out" : "2022-08-17",
+"adults_count" : 2,
+"children_count" : 2,
+"room_info" : [{
+"room_name" : "Villa",
+"count" : 2
+}
+,
+{
+"room_name" : "Small King",
+"count" : 1
+}
+]
+}
+'''
