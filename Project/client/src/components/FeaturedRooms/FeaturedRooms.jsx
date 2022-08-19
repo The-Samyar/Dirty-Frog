@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
 import './FeaturedRooms.css'
 import { fetchFeaturedRooms } from '../../api/api'
-// import IMG1 from '../images/room1.jpg'
-// import IMG2 from '../images/room2.jpg'
-// import IMG3 from '../images/room3.jpg'
-
 
 const FeaturedRooms = () => {
 

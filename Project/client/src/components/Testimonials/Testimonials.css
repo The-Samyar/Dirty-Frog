@@ -30,12 +30,14 @@
     justify-content: space-around;
 }
 
-.rightIcon {
-    font-size: 2.2rem;
+.rightIcon  {
+    font-size: 1rem;
     background-color: rgba(27, 27, 48, 0.9);
     color: rgb(242, 233, 228);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    box-sizing: border-box;
+    padding: 5px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,11 +49,13 @@
 }
 
 .leftIcon {
-    font-size: 2.2rem;
+    font-size: 1rem;
     background-color: rgba(27, 27, 48, 0.9);
     color: rgb(242, 233, 228);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    box-sizing: border-box;
+    padding: 5px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,4 +136,27 @@
 .card p {
     margin-top: 30px;
     font-size: 1.2rem;
+}
+
+@media screen and (max-width: 768px){
+    .testimonialsContainer {
+        padding: 0;
+    }
+
+    .leftIcon , .rightIcon {
+        display: none;
+    }
+
+    .innerSlider{
+        width: 100%;
+    }
+
+    .testimonials {
+        flex-wrap: wrap;
+        justify-content:baseline;
+    }
+
+    .card{
+        width: 35%;
+    }
 }

@@ -8,19 +8,19 @@ const RoomHeader = ({ name , cost , capacity }) => {
             <Navbar />
             <div className="menu">
                 <span className="roomInfo">
-                    Room Name
+                    <span className="roomInfoTitle">Room Name</span>
                     <span className="innerInfo">
                         {name}
                     </span>
                 </span>
                 <span className="roomInfo">
-                    Cost per Night
+                <span className="roomInfoTitle">Cost Per Night</span>
                     <span className="innerInfo">
                         {cost} $
                     </span>
                 </span>
                 <span className="roomInfo">
-                    Capacity
+                    <span className="roomInfoTitle">Capacity</span>
                     <span className="innerInfo">
                         {capacity}
                     </span>

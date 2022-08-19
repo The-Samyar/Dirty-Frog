@@ -70,3 +70,13 @@
     font-size: 1rem;
     padding: 0px 10px 10px 0px;
 }
+
+@media screen and (max-width: 768px) {
+    .featuredRoomContainer{
+        width: 100%;
+    }
+
+    .featuredRoom{
+        width: 100%;
+    }
+}

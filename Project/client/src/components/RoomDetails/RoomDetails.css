@@ -50,7 +50,6 @@
 }
 
 .ruleTitle{
-    widows: 50%;
     font-size: 1.2rem;
 }
 
@@ -73,3 +72,24 @@
     margin-top: 10px;
 }
 
+@media screen and (max-width: 768px){
+
+    .contianer{
+        width: 90%;
+    }
+
+    .ruleContainer{
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        padding: 10px 0px;
+    }
+
+    .ruleTitle{
+        width: 100%;
+    }
+
+    .ruleDetail{
+        text-align: center;
+    }
+}

@@ -3,7 +3,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 100%;
-    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/hotel.jpg');
+    background-image: linear-gradient(rgba(27, 27, 48, 0.5) , rgba(34, 34, 59, 0.4)) , url('../images/hotel.webp');
     color: rgb(242, 233, 228);
 }
 
@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80vh;
+    height: 100%;
     display: flex;
     flex-direction: column
 }
@@ -26,4 +26,20 @@
     font-size: 1.5rem;
     margin-top: -10px;
     letter-spacing: 1px;
+}
+
+@media screen and (max-width: 768px) {
+    .title{
+        font-size: 1.2rem;
+        width: 80%;
+        margin: 0px auto;
+    }
+    
+    .AboutHeaderContainer div h1 {
+        font-size: 2rem;
+    }
+
+    .AboutHeaderContainer div span{
+        font-size: 1.1rem;
+    }
 }
