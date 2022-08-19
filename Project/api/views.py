@@ -74,11 +74,14 @@ def BookNow(request):
         tomorrow = datetime.now().date() + timedelta(days=1)
         total_guests='1'
 
-        booked_rooms = models.Booking.objects.exclude(
+        booked_ids = models.Booking.objects.exclude(
             check_out__lte=today
             ).exclude(
                 Q(check_in__lt=today, check_out__lte=today) | Q(check_in__gte=tomorrow, check_out__gt=tomorrow)
-                ).values_list('room_number', flat=True)
+                )
+
+        booked_rooms = models.BookedRoom.objects.filter(booking_id__in=booked_ids).values_list('room_number', flat=True)
+
 
         rooms = models.RoomType.objects.annotate(
                 vacant_count=Count(
@@ -103,11 +106,14 @@ def BookNow(request):
             check_out = valid_data['checkOut']
             yesterday = datetime.now().date() - timedelta(days = 1)
 
-            booked_rooms = models.Booking.objects.exclude(
+            booked_ids = models.Booking.objects.exclude(
                 check_out__lte=yesterday
                 ).exclude(
                     Q(check_in__lt=check_in, check_out__lte=check_in) | Q(check_in__gte=check_out, check_out__gt=check_out)
-                    ).values_list('room_number', flat=True)
+                    )
+
+            booked_rooms = models.BookedRoom.objects.filter(booking_id__in=booked_ids).values_list('room_number', flat=True)
+
             
             rooms = models.RoomType.objects.annotate(
                     vacant_count=Count(
@@ -217,7 +223,7 @@ def Booking(request):
         serialized = BookingModelSerializer(data=request.data)
         if serialized.is_valid():
             validated = serialized.validated_data
-            user = User.objects.get(username="samyar80")
+            user = User.objects.get(username="akbar")
             print("VALID")
             print(validated)
 
@@ -237,7 +243,7 @@ def Booking(request):
             error = False
 
             for room in room_info:
-                specific_booked_rooms = booked_rooms.filter(Q(room_number__room_name=room["room_name"]))
+                specific_booked_rooms = booked_rooms.filter(Q(room_number__room_name=room["room_name"])).values_list("room_number", flat=True)
                 vacant_rooms = models.Room.objects.filter(room_name=room["room_name"]).filter(~Q(room_number__in=specific_booked_rooms))
                 if len(vacant_rooms) >= int(room["count"]):
                     available_rooms[f"{room['room_name']}"] = vacant_rooms[:room["count"]]
