@@ -77,6 +77,9 @@ class BookedRoom(models.Model):
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
     booking_id = models.ForeignKey(Booking, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"Booking ID {self.booking_id}"
+
 # -----------------------------------
 
 #  ---Table for user's info---
