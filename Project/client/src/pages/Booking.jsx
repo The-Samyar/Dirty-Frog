@@ -9,6 +9,7 @@ import BookingSummary from '../components/BookingSummary/BookingSummary'
 const Booking = () => {
 
   const [info , setInfo] = useState({})
+  const [roomData , setRoomData] = useState()
 
   useEffect(() => {
     const url = window.location.href;
@@ -19,20 +20,20 @@ const Booking = () => {
     const params = url.slice(rootUrlLength + 1)
 
     const values = params.split('&');
-    let checkIn, checkOut, adults, children, rooms = [];
+    let check_in, check_out, adults, children, rooms = [] ,roomsName = [];
     for (const key in values) {
       var item = values[key];
       item = item.split('=');
 
       switch (item[0]) {
         case 'checkIn':
-          checkIn = item[1];
-          console.log(checkIn);
+          check_in = item[1];
+          console.log(check_in);
           break;
 
         case 'checkOut':
-          checkOut = item[1];
-          console.log(checkOut);
+          check_out = item[1];
+          console.log(check_out);
           break;
 
         case 'adults':
@@ -46,16 +47,19 @@ const Booking = () => {
           break;
 
         default:
-          rooms.push({ roomName: item[0].replace(/%20/g, " "), count: item[1] });
+          roomsName.push(item[0].replace(/%20/g, " "));
+          rooms.push({ room_name: item[0].replace(/%20/g, " "), count: item[1] });
           console.log(rooms);
 
       }
-        setInfo(checkIn , checkOut , rooms)
+        setInfo({check_in , check_out , rooms , adults , children})
     }
 
     const getData = async() => {
-      /* const {data} = await fetchReserveInfo({rooms}) */
-
+      console.log(roomsName);
+      const {data} = await fetchReserveInfo({room : roomsName});
+      console.log(data)
+      setRoomData(data)
     }
 
     getData()
@@ -63,13 +67,15 @@ const Booking = () => {
 
 
   console.log(info);
+  console.log(info.check_in);
+  console.log(roomData)
 
   return (
     <div>
       <Navbar covered />
-      <BookingDetail rooms={info?.rooms} checkIn={info?.checkIn} checkOut={info?.checkOut} />
-      <RoomsCard rooms={info?.rooms} />
-      <BookingSummary rooms={info?.rooms} />
+      <BookingDetail rooms={info?.rooms} checkIn={info?.check_in} checkOut={info?.check_out} />
+      <RoomsCard rooms={roomData} guests={Number(info?.adults) + Number(info?.children)}/>
+      <BookingSummary rooms={roomData} info={info} />
       <Footer />
     </div>
   )

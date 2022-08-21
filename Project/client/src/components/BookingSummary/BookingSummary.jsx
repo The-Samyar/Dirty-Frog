@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { sendReservationData, fetchReserveInfo } from '../../api/api'
-import { useSearchParams } from 'react-router-dom'
 import './BookingSummary.css'
 
-const BookingSummary = ({ rooms }) => {
+const BookingSummary = ({ rooms , info }) => {
 
-    let [searchParams, setSearchParams] = useSearchParams();
-    const [userData, setUserData] = useState({ checkIn: '', checkOut: '', rooms: [], adults: '', children: '' })
+    console.log(info);
+    const [userData, setUserData] = useState();
+    const [totalCost , setTotalCost] = useState({total: 0  , tax : 0});
+    console.log(userData)
+
+    useEffect(() => {
+        setUserData({check_in: info.check_in , check_out: info.check_out , adults: info.adults , children: info.children , room: info.rooms})
+    } , [info])
 
     useEffect(() => {
 
-        const getData = async () => {
+        const rooms = info?.rooms
+        const sum = rooms?.reduce((sum, singleRoom) => {
+            console.log('rooms are:', rooms);
+            console.log('current iteration' , singleRoom);
+            const currentRoom = rooms?.find(currentRoomItem => currentRoomItem.room_name === singleRoom.room_name)
+            console.log(currentRoom);
+            console.log(singleRoom.cost_per_day)
+            return sum + (Number(singleRoom.cost_per_day) * Number(currentRoom.count))
+        } , 0)
+        console.log(sum);
+        setTotalCost({total: sum + (0.09 * sum) + 10 , tax: 0.09 * sum})
+    } , [rooms , info])
 
-        }
-
-        getData();
-
-    }, [searchParams])
+    useEffect(() => {
+        
+    } , [totalCost])
 
     const handleClick = (e) => {
         e.preventDefault();
+        console.log(userData)
     }
 
     return (
@@ -32,16 +47,16 @@ const BookingSummary = ({ rooms }) => {
                 <div className="prices">
                     {
                         rooms?.map((room) => (
-                            <div className="signlePrice" key={room.roomName}>
-                                <h4 className="priceTitle">{room.roomName}</h4>
-                                <span className="priceQuantity">$ 120</span>
+                            <div className="signlePrice" key={room.room_name}>
+                                <h4 className="priceTitle">{room.room_name}</h4>
+                                <span className="priceQuantity">$ {room.cost_per_day}</span>
                             </div>
                         ))
                     }
 
                     <div className="signlePrice">
                         <h4 className="priceTitle">9 % VAT</h4>
-                        <span className="priceQuantity">$ 17</span>
+                        <span className="priceQuantity">$ {totalCost.tax}</span>
                     </div>
 
                     <div className="signlePrice">
@@ -51,7 +66,7 @@ const BookingSummary = ({ rooms }) => {
 
                     <div className="total">
                         <h4 className="totalPriceTitle">Total Price:</h4>
-                        <span className="totalPrice">$ 347</span>
+                        <span className="totalPrice">$ {totalCost.total}</span>
                     </div>
                 </div>
 
