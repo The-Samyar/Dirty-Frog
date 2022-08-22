@@ -3,7 +3,7 @@ import './BookingDetail.css'
 import {Link} from 'react-router-dom'
 
 const BookingDetail = ({ rooms, checkIn, checkOut }) => {
-
+console.log(checkIn)
   const checkInDate = new Date(checkIn).toDateString();
   const checkOutDate = new Date(checkOut).toDateString();
   const diffTime = Math.abs(new Date(checkOut) - new Date(checkIn));
@@ -46,8 +46,8 @@ const BookingDetail = ({ rooms, checkIn, checkOut }) => {
               </div>
               {
                 rooms?.map((room) => (
-                  <div className="bookingRoomCount" key={room.roomName}>
-                    <h5 className="roomName">{room.roomName}</h5>
+                  <div className="bookingRoomCount" key={room.room_name}>
+                    <h5 className="roomName">{room.room_name}</h5>
                     <span className="roomCount">{room.count}</span>
                   </div>
                 ))

@@ -77,6 +77,7 @@ hr{
     color: rgb(242, 233, 228);
 }
 
+
 .roomName{
     font-size: 1.2rem;
     width: 30%;
@@ -103,4 +104,30 @@ hr{
 .btnDetail a{
     color:rgb(242, 233, 228);
     text-decoration: none;
+}
+
+@media screen and (max-width: 768px){
+    .BookingDetailContainer{
+        width: 90%;
+    }
+
+    .BookingDetailTitle{
+        font-size: 1.2rem;
+    }
+
+    .bookingRoomsSummary{
+        padding: 0;
+    }
+
+    .roomName{
+        font-size: 1rem;
+    }
+    
+    .roomCount:first-child {
+        font-size: 1;
+    }
+
+    .btnDetail{
+        padding: 10px 20px;
+    }
 }
