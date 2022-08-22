@@ -14,7 +14,9 @@ urlpatterns = [
     path('BookNow/', views.BookNow, name='BookNow'),
     path('Rooms/', views.Rooms, name='Rooms'),
     path('Rooms/<room_name>/', views.Rooms),
-    path('BookingInfo/',views.BookingInfo, name='Booking'),
+    path('BookingInfo/',views.BookingInfo, name='BookingInfo'),
+    path('Booking/',views.Booking, name='Booking'),
+    path('SignUp', views.SignUp, name='SignUp'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh', TokenRefreshView.as_view(), name='token_refresh')
 ]
