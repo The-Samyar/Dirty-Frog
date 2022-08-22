@@ -1,40 +1,47 @@
 import React, { useState, useEffect } from 'react'
-import { sendReservationData, fetchReserveInfo } from '../../api/api'
+import { sendReservationData } from '../../api/api'
 import './BookingSummary.css'
 
 const BookingSummary = ({ rooms , info }) => {
 
-    console.log(info);
     const [userData, setUserData] = useState();
-    const [totalCost , setTotalCost] = useState({total: 0  , tax : 0});
-    console.log(userData)
-
+    const [totalCost , setTotalCost] = useState({total: 0  , tax : 0 , eachRoomTotalCost: []});
+    
+    
     useEffect(() => {
-        setUserData({check_in: info.check_in , check_out: info.check_out , adults: info.adults , children: info.children , room: info.rooms})
+        setUserData({check_in: info.check_in , check_out: info.check_out , adults_count: info.adults , children_count: info.children , rooms: info.rooms})
     } , [info])
-
+    
     useEffect(() => {
-
-        const rooms = info?.rooms
-        const sum = rooms?.reduce((sum, singleRoom) => {
-            console.log('rooms are:', rooms);
-            console.log('current iteration' , singleRoom);
+        
+        var eachRoomTotalCost = [];
+        const roomsData = info?.rooms
+        const sum = roomsData?.reduce((sum, singleRoom) => {
+            
             const currentRoom = rooms?.find(currentRoomItem => currentRoomItem.room_name === singleRoom.room_name)
-            console.log(currentRoom);
-            console.log(singleRoom.cost_per_day)
-            return sum + (Number(singleRoom.cost_per_day) * Number(currentRoom.count))
+            const costPerDay = Number(currentRoom?.cost_per_day);
+            const roomCount = Number(singleRoom?.count);
+            const total = (costPerDay * roomCount);
+
+            eachRoomTotalCost.push(total); 
+            
+            return sum + total;
         } , 0)
-        console.log(sum);
-        setTotalCost({total: sum + (0.09 * sum) + 10 , tax: 0.09 * sum})
+
+        setTotalCost({total: sum + (0.09 * sum) + 10 , tax: 0.09 * sum , eachRoomTotalCost})
     } , [rooms , info])
 
     useEffect(() => {
         
     } , [totalCost])
 
-    const handleClick = (e) => {
+    const handleClick = async(e) => {
         e.preventDefault();
-        console.log(userData)
+        console.log(userData);
+
+        const {data} = await sendReservationData(userData);
+        console.log(data);
+
     }
 
     return (
@@ -46,10 +53,12 @@ const BookingSummary = ({ rooms , info }) => {
             <div className="BookingSummaryInfo">
                 <div className="prices">
                     {
-                        rooms?.map((room) => (
+                        rooms?.map((room , index) => (
                             <div className="signlePrice" key={room.room_name}>
                                 <h4 className="priceTitle">{room.room_name}</h4>
-                                <span className="priceQuantity">$ {room.cost_per_day}</span>
+                                <span className="priceQuantity">$ {
+                                    totalCost.eachRoomTotalCost[index]
+                                }</span>
                             </div>
                         ))
                     }

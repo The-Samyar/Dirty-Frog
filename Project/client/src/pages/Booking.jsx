@@ -13,10 +13,10 @@ const Booking = () => {
 
   useEffect(() => {
     const url = window.location.href;
-    console.log(url);
+    /* console.log(url); */
     const rootUrl = window.location.origin + '/Booking'
     const rootUrlLength = rootUrl.length
-    console.log(rootUrlLength);
+    /* console.log(rootUrlLength); */
     const params = url.slice(rootUrlLength + 1)
 
     const values = params.split('&');
@@ -28,47 +28,42 @@ const Booking = () => {
       switch (item[0]) {
         case 'checkIn':
           check_in = item[1];
-          console.log(check_in);
+          /* console.log(check_in); */
           break;
 
         case 'checkOut':
           check_out = item[1];
-          console.log(check_out);
+          /* console.log(check_out); */
           break;
 
         case 'adults':
           adults = item[1];
-          console.log(adults);
+          /* console.log(adults); */
           break;
 
         case 'children':
           children = item[1];
-          console.log(children);
+          /* console.log(children); */
           break;
 
         default:
           roomsName.push(item[0].replace(/%20/g, " "));
           rooms.push({ room_name: item[0].replace(/%20/g, " "), count: item[1] });
-          console.log(rooms);
+         /*  console.log(rooms); */
 
       }
         setInfo({check_in , check_out , rooms , adults , children})
     }
 
     const getData = async() => {
-      console.log(roomsName);
+      /* console.log(roomsName); */
       const {data} = await fetchReserveInfo({room : roomsName});
-      console.log(data)
+      /* console.log(data) */
       setRoomData(data)
     }
 
     getData()
   }, [])
-
-
-  console.log(info);
-  console.log(info.check_in);
-  console.log(roomData)
 
   return (
     <div>

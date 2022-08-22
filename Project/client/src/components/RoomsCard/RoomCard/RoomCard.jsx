@@ -19,8 +19,8 @@ const RoomCard = ({ room , guest }) => {
             </div>
 
             <div className="roomServices">
-                {
-                    room.services.map((service, index) => <span key={index}>{
+                { 
+                    room.services.map((service, index) => <span key={Object.values(service)[0]}>{
                         Object.keys(service).map(item => {
                             return (
                                 <div className="roomServiceItem">

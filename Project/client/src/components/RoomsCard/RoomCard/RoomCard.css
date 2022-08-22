@@ -55,3 +55,18 @@
     margin-right: 10px;
     font-size: 1.1rem;
 }
+
+@media screen and (max-width: 768px){
+
+    .RoomCardContainer , .roomServiceItem , .roomServices{
+        width: 100%;
+    }
+
+    .roomServiceItem{
+        justify-content: center;
+    }
+
+    .roomServiceItem span {
+        margin-left: 20px;
+    }
+}
