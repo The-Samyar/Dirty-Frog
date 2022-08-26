@@ -149,11 +149,11 @@ class BookingRoomInfoSerializer(serializers.Serializer):
     count = serializers.IntegerField()
 
 class BookingModelSerializer(DynamicFieldsModelSerializer):
-    room_info = BookingRoomInfoSerializer(many=True)
+    rooms = BookingRoomInfoSerializer(many=True)
 
     class Meta:
         model = models.Booking
-        fields = ('check_in', 'check_out', 'adults_count', 'children_count', 'room_info')
+        fields = ('check_in', 'check_out', 'adults_count', 'children_count', 'rooms')
 
 class UserRegisterSerializer(DynamicFieldsModelSerializer):
     TERMS_AND_CONDITONS_CHOICES = [
