@@ -132,7 +132,7 @@ def BookNow(request):
                     returned_serialized = BookRoomSerializer(rooms, many=True)
                     if vacant_count >= valid_data['rooms']:
                         response = {
-                            "Error" : "No error",
+                            "Error" : "",
                             "Data" : returned_serialized.data}
 
                     else:
@@ -189,7 +189,7 @@ def Rooms(request, room_name=None):
 # @permission_classes([IsAuthenticated])
 def BookingInfo(request):
     if request.method == 'POST':
-        room_names = request.data["room"]
+        room_names = request.data["rooms"]
 
         rooms = models.RoomType.objects.filter(room_name__in=room_names)
         serialized = RoomTypeSerializer(
@@ -227,7 +227,7 @@ def Booking(request):
             print("VALID")
             print(validated)
 
-            room_info = validated["room_info"]
+            rooms = validated["rooms"]
 
             today = datetime.now().date()
             booked_ids = models.Booking.objects.exclude(
@@ -242,11 +242,11 @@ def Booking(request):
 
             error = False
 
-            for room in room_info:
-                specific_booked_rooms = booked_rooms.filter(Q(room_number__room_name=room["room_name"])).values_list("room_number", flat=True)
-                vacant_rooms = models.Room.objects.filter(room_name=room["room_name"]).filter(~Q(room_number__in=specific_booked_rooms))
+            for room in rooms:
+                specific_booked_rooms = booked_rooms.filter(Q(room_number__room_name=room["roomName"])).values_list("room_number", flat=True)
+                vacant_rooms = models.Room.objects.filter(room_name=room["roomName"]).filter(~Q(room_number__in=specific_booked_rooms))
                 if len(vacant_rooms) >= int(room["count"]):
-                    available_rooms[f"{room['room_name']}"] = vacant_rooms[:room["count"]]
+                    available_rooms[f"{room['roomName']}"] = vacant_rooms[:room["count"]]
                 else:
                     error = True
                     break
@@ -276,7 +276,7 @@ def Booking(request):
             else:
                 message = {"message" : "unsuccessful"}
         else:
-            message = {"message": "invalid data"}
+            message = {"message": "serialized.errors"}
 
         return Response(message)
 
@@ -297,7 +297,7 @@ def Booking(request):
 "check_out" : "2022-08-17",
 "adults_count" : 2,
 "children_count" : 2,
-"room_info" : [{
+"rooms" : [{
 "room_name" : "Villa",
 "count" : 2
 }
