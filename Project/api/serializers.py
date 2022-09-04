@@ -157,8 +157,8 @@ class BookingModelSerializer(DynamicFieldsModelSerializer):
 
 class UserRegisterSerializer(DynamicFieldsModelSerializer):
     TERMS_AND_CONDITONS_CHOICES = [
-        ('True'),
-        ('False')
+        (True),
+        (False)
     ]
     
     confirm_password = serializers.CharField()
