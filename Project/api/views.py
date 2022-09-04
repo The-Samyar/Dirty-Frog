@@ -85,7 +85,7 @@ def BookNow(request):
 
         rooms = models.RoomType.objects.annotate(
                 vacant_count=Count(
-                    'room', filter=~Q(room__room_number__in=list(booked_rooms)) if booked_rooms else None
+                    'room', filter=~Q(room__room_number__in=booked_rooms) if booked_rooms else None
                     )
                 ).filter(
                     vacant_count__gte=1,
@@ -207,15 +207,18 @@ def SignUp(request):
         serialized = UserRegisterSerializer(data=request.data)
         if serialized.is_valid():
             validated = serialized.validated_data
-            if validated['check'] == "True" and validated['password'] == validated['confirm_password']:
+
+            print("###################")
+            print(validated)
+            if validated['check'] == True and validated['password'] == validated['confirm_password']:
                 new_user = User.objects.create_user(username=validated['username'], password=validated['password'], first_name=validated['first_name'], last_name=validated['last_name'])
                 new_user.save()
                 response = {'message': 'success'}
             else:
                 response = {'message': 'error'}
         else:
-            response = {'message': 'error, data not valid'}
-
+            response = {'message': f'{serialized.errors}'}
+        print(response)
         return Response(response)
 
 @api_view(("POST",))
@@ -225,7 +228,7 @@ def Booking(request):
         serialized = BookingModelSerializer(data=request.data)
         if serialized.is_valid():
             validated = serialized.validated_data
-            user = User.objects.get(username="akbar")
+            user = User.objects.get(username="admin")
             print("VALID")
             print(validated)
 
@@ -278,7 +281,7 @@ def Booking(request):
             else:
                 message = {"message" : "unsuccessful"}
         else:
-            message = {"message": "serialized.errors"}
+            message = {"message": f"{serialized.errors}"}
 
         return Response(message)
 

@@ -5,10 +5,10 @@ import { sendSignUpData, sendSignInData } from '../../api/api'
 import './Sign.css'
 const Sign = ({ signUp }) => {
 
-    const [SignData, setSignData] = useState({ username: '', password: '', confirmPassword: '', firstName: '', lastName: '', check: '' })
+    const [SignData, setSignData] = useState({ username: '', password: '', confirm_password: '', first_name: '', last_name: '', check: '' })
     const [submit, setSubmit] = useState(false);
     const [loginData, setLoginData] = useState({ username: '', password: '' })
-    var inputList = { username: '', password: '', confirmPassword: '', firstName: '', lastName: '', check: '' }
+    var inputList = { username: '', password: '', confirm_password: '', first_name: '', last_name: '', check: '' }
 
     const style = { border: '2px solid red' }
     const style2 = { border: '2px solid rgba(27, 27, 48, 0.726)' }
@@ -57,17 +57,24 @@ const Sign = ({ signUp }) => {
             setSubmit({
                 username: inputList.username,
                 password: inputList.password,
-                confirmPassword: inputList.confirmPassword,
-                firstName: inputList.firstName,
-                lastName: inputList.lastName
+                confirm_password: inputList.confirm_password,
+                first_name: inputList.first_name,
+                last_name: inputList.last_name
             });
         } else {
             if(signUp){
                 console.log(SignData);
-                /* sendSignUpData(SignData); */
+                sendSignUpData(SignData);  
             }else{
                 console.log(loginData);
-                /* sendSignInData(loginData) */
+                const akbar = async (loginData) =>{
+                    var {data} = await sendSignInData(loginData)
+                    console.log(data)
+                    return data
+                } 
+                var data2 = akbar(loginData)
+
+                // console.log(data2);
             }
             
             
@@ -99,16 +106,16 @@ const Sign = ({ signUp }) => {
                             <input type="text"
                                 className="inputs"
                                 placeholder="First Name"
-                                onChange={(e) => setSignData({ ...SignData, firstName: e.target.value })}
-                                style={submit.firstName === true ? style : null}
+                                onChange={(e) => setSignData({ ...SignData, first_name: e.target.value })}
+                                style={submit.first_name === true ? style : null}
                                 onFocus={() => { errorRef.current.textContent = ''; setSubmit(false); }}
                             />
 
                             <input type="text"
                                 className="inputs"
                                 placeholder="Last Name"
-                                onChange={(e) => setSignData({ ...SignData, lastName: e.target.value })}
-                                style={submit.lastName === true ? style : null}
+                                onChange={(e) => setSignData({ ...SignData, last_name: e.target.value })}
+                                style={submit.last_name === true ? style : null}
                                 onFocus={() => { errorRef.current.textContent = ''; setSubmit(false); }}
                             />
 
@@ -123,8 +130,8 @@ const Sign = ({ signUp }) => {
                             <input type="password"
                                 className="inputs"
                                 placeholder="Confirm Password"
-                                onChange={(e) => setSignData({ ...SignData, confirmPassword: e.target.value })}
-                                style={submit.confirmPassword === true ? style : null}
+                                onChange={(e) => setSignData({ ...SignData, confirm_password: e.target.value })}
+                                style={submit.confirm_password === true ? style : null}
                                 onFocus={() => { errorRef.current.textContent = ''; setSubmit(false); }}
                             />
 
