@@ -7,6 +7,8 @@ import BookNow from "./pages/BookNow";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Booking from "./pages/Booking";
+import Profile from "./pages/Profile";
+import Logout from "./pages/Logout";
 import {BrowserRouter , Routes , Route} from 'react-router-dom'
 import RoomPage from './pages/RoomPage'
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/signUp" element={<SignUp />}></Route>
           <Route path="/Booking" element={<Booking />}></Route>
           <Route path="/Booking?/*" element={<Booking />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/logout" element={<Logout />}></Route>
           <Route path="/*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
