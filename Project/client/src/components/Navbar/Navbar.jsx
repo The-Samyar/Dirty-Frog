@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect , useContext } from 'react'
 import './Navbar.css'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -8,11 +8,15 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { MdOutlineBedroomChild } from 'react-icons/md'
 import { RiHotelLine, RiContactsLine } from 'react-icons/ri'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from '../../context'
 
 const Navbar = ({ covered }) => {
 
   const [visibility, setVisibility] = useState(false);
   const [open, setOpen] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('access'));
+  console.log(token)
+
   const checkScroll = () => {
     if (window.scrollY >= 500 && !visibility) {
       setVisibility(true);
@@ -62,17 +66,32 @@ const Navbar = ({ covered }) => {
             <li className="navItem">
               <Link to="/bookNow" className="navItemLinks special">Book Now</Link>
             </li>
-            <li className="navItem">
-              <Link to="/signIn" className="navItemLinks">Sign In</Link>
-            </li>
-            <li className="navItem">
-              <Link to="/signUp" className="navItemLinks">Sign Up</Link>
-            </li>
-          </ul>
-        </div>
+            {
+              token ? 
+              
+              <>
+                      <li className = "navItem">
+                        <Link to = "/logout" className = "navItemLinks">Log Out</Link>
+                      </li>
+                      <li className="navItem">
+                        <Link to="/profile" className="navItemLinks">Profile</Link>
+                      </li>
+              </>
+                :
+                  <>
+                      <li className = "navItem">
+                        <Link to = "/signIn" className = "navItemLinks">Sign In</Link>
+                      </li>
+                      <li className="navItem">
+                        <Link to="/signUp" className="navItemLinks">Sign Up</Link>
+                      </li>
+                  </>
+            }
+    </ul>
+        </div >
 
-      </nav>
-      <FontAwesomeIcon icon={faArrowUp} className="toTopIcon" onClick={scrollToTop} style={{ display: visibility ? 'block' : 'none' }} />
+      </nav >
+  <FontAwesomeIcon icon={faArrowUp} className="toTopIcon" onClick={scrollToTop} style={{ display: visibility ? 'block' : 'none' }} />
     </>
 
 

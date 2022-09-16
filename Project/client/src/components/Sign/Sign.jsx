@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState , useContext } from 'react'
 import Navbar from '../Navbar/Navbar'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import { sendSignUpData, sendSignInData } from '../../api/api'
+import {AuthContext} from '../../context'
 import './Sign.css'
 const Sign = ({ signUp }) => {
 
@@ -9,6 +10,9 @@ const Sign = ({ signUp }) => {
     const [submit, setSubmit] = useState(false);
     const [loginData, setLoginData] = useState({ username: '', password: '' })
     var inputList = { username: '', password: '', confirm_password: '', first_name: '', last_name: '', check: '' }
+
+    const navigator = useNavigate();
+    const token = useContext(AuthContext);
 
     const style = { border: '2px solid red' }
     const style2 = { border: '2px solid rgba(27, 27, 48, 0.726)' }
@@ -69,12 +73,16 @@ const Sign = ({ signUp }) => {
                 console.log(loginData);
                 const akbar = async (loginData) =>{
                     var {data} = await sendSignInData(loginData)
-                    console.log(data)
-                    return data
+                    console.log(data.access);
+                    console.log(data.refresh);
+                    localStorage.setItem('access' , data.access)
+                    localStorage.setItem('refresh' , data.refresh)
+                    /* token.dispath({type : "set"}) */
                 } 
-                var data2 = akbar(loginData)
+                
+                akbar(loginData)
+                navigator('/')
 
-                // console.log(data2);
             }
             
             
