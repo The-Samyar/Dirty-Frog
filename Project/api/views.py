@@ -285,6 +285,33 @@ def Booking(request):
 
         return Response(message)
 
+@api_view(('GET', 'POST'))
+def ProfileData(request):
+
+    user = User.objects.get(username='Akbar')
+
+    if request.method == 'GET':
+        json_response = {
+            'first_name' : user.first_name,
+            'last_name' : user.last_name,
+            'email' : user.email,
+            'dob' : user.userinfo.dob,
+            'gender' : user.userinfo.dob,
+            'phone_number' : user.userinfo.phone_number,
+            'is_checked' : user.userinfo.is_checked,
+            'profile_picture' : user.userinfo.profile_picture,
+        }
+
+        return Response(json_response)
+    
+    elif request.method == 'POST':
+        pass
+
+
+
+
+
+
 
 # For testing
 '''
