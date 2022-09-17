@@ -1,0 +1,138 @@
+.profileSideBarContainer{
+    flex: 2;
+    margin: 10px;
+    min-height: 80vh;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.profileSideBarCard{
+    box-sizing: border-box;
+    background-color: rgb(242, 233, 228);
+    width: 100%;
+    height: 80%;
+    color: rgba(27, 27, 48, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 2px rgba(242, 233, 228, 0.7);
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.profileSideBarUpload{
+    margin-top: 5px;
+    box-sizing: border-box;
+    background-color: rgb(242, 233, 228);
+    width: 100%;
+    height: 20%;
+    color: rgba(27, 27, 48, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 2px rgba(242, 233, 228, 0.7);
+    display: flex;
+    flex-direction: column;
+}
+
+.innerProfileCard{
+    height: 60%;
+    margin: auto 0px;
+    /* border: 1px solid blue; */
+    width: 100%;
+}
+
+.profileImgContainer{
+    width: 100px;
+    height: 100px;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileImgContainer img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid rgba(27, 27, 48, 0.9);
+}
+
+.profileInfo{
+    height: calc(100% - 100px);
+    text-align: center;
+    font-size: 1rem;
+}
+
+.profileUserName{
+    font-size: 1.5rem;
+    margin: 10px 0px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.profileName{
+    display: flex;
+    align-items: center;
+    max-width: 70%;
+    /* border: 1px solid red; */
+    margin: 0px auto;
+    text-align: center;
+    justify-content: center;
+}
+
+.Name {
+    margin: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.furtherInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.email{
+    margin-bottom: 5px;
+}
+
+.uploadTitle{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    height: 30%;
+    /* border: 1px solid blue; */
+}
+
+.uploadIcon input {
+    display: none;
+}
+
+.uploadSection{
+    height: 70%;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+}
+
+.uploadIcon svg {
+    width: 30px;
+    height: 30px;
+}
+
+.uploadDesc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: baseline;
+    margin-left: 20px;
+    font-size: 0.8rem;
+    text-align: left;
+}
