@@ -18,5 +18,6 @@ urlpatterns = [
     path('Booking/',views.Booking, name='Booking'),
     path('SignUp/', views.SignUp, name='SignUp'),
     path('SignIn/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh', TokenRefreshView.as_view(), name='token_refresh')
+    path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('profile/data/', views.ProfileData, name='ProfileData')
 ]
