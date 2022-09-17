@@ -1,0 +1,13 @@
+.profileContainer {
+    background:linear-gradient(rgb(17, 17, 31) , rgba(23, 23, 41, 0.932));
+    color: rgb(242, 233, 228)
+}
+
+.mainProfile {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect , useContext } from 'react'
+import React /* { useEffect , useContext } */ from 'react'
 import './Navbar.css'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { MdOutlineBedroomChild } from 'react-icons/md'
 import { RiHotelLine, RiContactsLine } from 'react-icons/ri'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from '../../context'
+/* import { AuthContext } from '../../context' */
 
 const Navbar = ({ covered }) => {
 
