@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from datetime import date, datetime, timedelta
 from django.db.models import Sum, Q, Count, F
+from django.contrib.auth.hashers import check_password, make_password
 from datetime import datetime
 from http import HTTPStatus
 
@@ -328,7 +329,23 @@ def ProfileData(request):
         return Response("Success")
 
 
+@api_view(('POST',))
+def ChangePassword(request):
+    if request.method == 'POST':
+        if request.data['password'] == request.data['confirm_password']:
+            user = User.objects.get(username='akbar')
+            
+            if check_password(request.data['password'], user.password):
+                response = "Choose a new password"
+            else:
+                user.set_password(request.data['password'])
+                user.save()
+                response = "Success"
 
+        else:
+            response = "Passwords don't match"
+
+        return Response(response)
 
 
 
