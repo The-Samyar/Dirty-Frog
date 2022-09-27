@@ -288,25 +288,44 @@ def Booking(request):
 @api_view(('GET', 'POST'))
 def ProfileData(request):
 
-    user = User.objects.get(username='Akbar')
+    user = User.objects.get(username='akbar')
+
+    user_info = {
+        'first_name' : user.first_name,
+        'last_name' : user.last_name,
+        'username' : user.username,
+        'email' : user.email,
+        'dob' : f"{user.userinfo.dob}",
+        'gender' : user.userinfo.gender,
+        'phone_number' : user.userinfo.phone_number,
+        'is_checked' : user.userinfo.is_checked,
+        'profile_picture' : user.userinfo.profile_picture,
+    }
 
     if request.method == 'GET':
-        json_response = {
-            'first_name' : user.first_name,
-            'last_name' : user.last_name,
-            'email' : user.email,
-            'dob' : user.userinfo.dob,
-            'gender' : user.userinfo.dob,
-            'phone_number' : user.userinfo.phone_number,
-            'is_checked' : user.userinfo.is_checked,
-            'profile_picture' : user.userinfo.profile_picture,
-        }
-
-        return Response(json_response)
+        return Response(user_info)
     
     elif request.method == 'POST':
-        pass
+        print("Changed fields:")
+        for row in request.data:
+            if user_info[row] != request.data[row]:
+                print(f"{row} : {user_info[row]} --> {row} : {request.data[row]}")
 
+                # Method 1
+                if hasattr(user, row):
+                    setattr(user, row, request.data[row])
+                    user.save()
+                else:
+                    setattr(user.userinfo, row, request.data[row])
+                    user.userinfo.save()
+
+                # Method 2
+                # setattr(user, row, request.data[row])
+                # user.save()
+                # setattr(user.userinfo, row, request.data[row])
+                # user.userinfo.save()
+
+        return Response("Success")
 
 
 
