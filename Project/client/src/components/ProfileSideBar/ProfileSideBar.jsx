@@ -29,8 +29,8 @@ const ProfileSideBar = () => {
             <div className="profileSideBarUpload">
                 <h6 className="uploadTitle">Select Profile Image</h6>
                 <div className="uploadSection">
-                    <div class="uploadIcon">
-                        <label for="file-input">
+                    <div className="uploadIcon">
+                        <label htmlFor="file-input">
                             <AiOutlinePaperClip />
                         </label>
 

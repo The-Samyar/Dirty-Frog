@@ -14,3 +14,6 @@ export const getRoomsSummary = () => API.get('/Rooms/');
 export const getRoomDetails = (data) => API.get(`/Rooms/${data}/`)
 export const fetchReserveInfo = (data) => API.post('/BookingInfo/' , data);
 export const sendReservationData = (data) => API.post('/Booking/' , data);
+export const getUserData = () => API.get('/User/');
+export const sendChangePassData = (data) => API.post('/ChangePassword/' , data);
+export const sendProfileChange = (data) => API.post('/Profile/' , data);
