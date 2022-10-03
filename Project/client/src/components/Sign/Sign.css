@@ -61,12 +61,12 @@
     margin-left: 10px;
 }
 
-input[type=radio]{
+.radioContainer input[type=radio]{
   /* Hide original inputs */
   visibility: hidden;
   position: absolute;
 }
-input[type=radio] + label:before{
+.radioContainer input[type=radio] + label:before{
   height:12px;
   width:12px;
   margin-right: 5px;
@@ -78,7 +78,7 @@ input[type=radio] + label:before{
   border-radius: 50%;
 }
 
-input[type=radio]:checked + label:before{
+.radioContainer input[type=radio]:checked + label:before{
   background: rgba(30, 30, 54, 0.932);
   border: 2px solid rgba(14, 14, 27, 0.9);
 }
