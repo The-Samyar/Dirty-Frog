@@ -1,11 +1,11 @@
-.profileMainCardContainer{
+.profileMainCardContainer {
     flex: 6;
     margin: 10px;
     min-height: 80vh;
     height: 80vh;
 }
 
-.profileMainCard{
+.profileMainCard {
     box-sizing: border-box;
     background-color: rgb(242, 233, 228);
     width: 100%;
@@ -16,10 +16,10 @@
     box-shadow: 1px 1px 3px 2px rgba(242, 233, 228, 0.7);
     display: flex;
     align-items: center;
-   /*  border: 1px solid red; */
+    /*  border: 1px solid red; */
 }
 
-.ProfileMainInnerCard{
+.ProfileMainInnerCard {
     box-sizing: border-box;
     padding: 20px;
     display: flex;
@@ -30,8 +30,8 @@
     /* border: 1px solid blue; */
 }
 
-.cardTabsContainer{
-    width:100%;
+.cardTabsContainer {
+    width: 100%;
     height: 50px;
     box-sizing: border-box;
     padding: 5px;
@@ -42,19 +42,19 @@
     align-items: center;
 }
 
-.cardTabs{
+.cardTabs {
     display: flex;
     align-items: center;
     width: 80%;
-   /*  border: 1px solid red; */
+    /*  border: 1px solid red; */
     list-style: none;
     margin: 0;
     padding: 0;
     font-size: 0.9rem;
 }
 
-.cardTabItem{
-   /*  border: 1px solid blue; */
+.cardTabItem {
+    /*  border: 1px solid blue; */
     margin: 5px;
     cursor: pointer;
     font-weight: 500;
@@ -64,45 +64,44 @@
     border-radius: 5px;
 }
 
-.activeTab{
-    color:rgb(242, 233, 228);
+.activeTab {
+    color: rgb(242, 233, 228);
     background-color: rgba(27, 27, 48, 0.9);
 }
 
-.profileForm{
-/*     border: 1px solid red; */
+.profileForm {
+    /*     border: 1px solid red; */
     height: calc(100% - 50px);
     box-sizing: border-box;
 }
 
-.profileFormTitle{
+.profileFormTitle {
     font-size: 1.3rem;
     font-weight: 600;
     width: 100%;
-    height: 50px;
     margin: 0;
     box-sizing: border-box;
     margin-top: 10px;
 }
 
-.profileFormInputs{
+.profileFormInputs {
     width: 100%;
-    height: calc(100% - 60px);
+    /* height: calc(100% - 60px); */
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     /* border: 1px solid blue; */
 }
 
-.profileInputItem{
+.profileInputItem {
     width: 45%;
     margin: 10px 10px 10px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* border: 1px solid red; */
 }
 
-.profileInputItem:nth-child(2n){
+.profileInputItem:nth-child(2n) {
     margin-left: 30px;
 }
 
@@ -111,24 +110,139 @@
     font-size: 1.1rem;
 }
 
-.profileInputItem input{
+.profileInputItem input[type="text"] , .profileInputItem input[type="date"] {
     background-color: rgb(219, 212, 208);
-    color:rgba(27, 27, 48, 0.9);
+    color: rgba(27, 27, 48, 0.9);
     outline: none;
-    border: none;
     padding: 10px 5px;
     font-size: 1rem;
     border-radius: 5px;
 }
 
-.profileBtn{
+.profileBtn {
     background-color: rgba(27, 27, 48, 0.9);
     color: rgb(242, 233, 228);
-    width: 100%;
+    width: 40%;
     padding: 10px 30px;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 5px;
     outline: none;
     border: none;
+}
+
+.radioProfileContainer {
+
+    display: flex;
+    justify-content: center;
+    width: 45%;
+    height: 60px;
+    font-size: 1.1rem;
+    flex-direction: column;
+}
+
+.profileInputRadioContainer {
+    margin-top: 10px;
+}
+
+.radioLabel {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 3px;
+}
+
+/* Hide the browser's default radio button */
+.radioLabel input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: rgb(219, 212, 208);
+    border-radius: 50%;
+
+}
+
+/* On mouse-over, add a grey background color */
+.radioLabel:hover input~.checkmark {
+    background-color: rgb(219, 212, 208);
+}
+
+/* When the radio button is checked, add a blue background */
+.radioLabel input:checked~.checkmark {
+    background-color: rgba(27, 27, 48, 0.9);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radioLabel input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radioLabel .checkmark:after {
+    top: 6px;
+    left: 6.5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgb(219, 212, 208);
+}
+
+.profileFormPasswords {
+    height: calc(50% - 60px);
+    /* border: 1px solid red; */
+}
+
+.profilePassItem {
+    width: 60%;
+    /* border: 1px solid blue; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
+
+.profilePassItem label{
+    font-weight: 600;
+}
+
+.profilePassItem input[type="password"] {
+    background-color: rgb(219, 212, 208);
+    color: rgba(27, 27, 48, 0.9);
+    outline: none;
+    padding: 10px 5px;
+    font-size: 1rem;
+    border-radius: 5px;
+    width: 60%;
+}
+
+.profileFormBtn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
 }
