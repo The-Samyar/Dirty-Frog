@@ -6,6 +6,8 @@ const ProfileMainCard = () => {
 
     const EDIT_PROFILE = 'Edit Profile'
     const EDIT_PASSWORD = 'Edit Password'
+    const History = 'Reserve History'
+
 
     const [activeTab, setActiveTab] = useState(EDIT_PROFILE);
     const [enableEdit, setEnableEdit] = useState(false);
@@ -35,14 +37,31 @@ const ProfileMainCard = () => {
 
     }, [])
 
+    console.log(activeTab);
+
     const handleEdit = (e) => {
         e.preventDefault();
         setEnableEdit(true)
         ref.current.focus();
     }
 
-    const handleTabChange = () => {
-        activeTab === EDIT_PROFILE ? setActiveTab(EDIT_PASSWORD) : setActiveTab(EDIT_PROFILE)
+    const handleTabChange = (tab) => {
+        /* activeTab === EDIT_PROFILE ? setActiveTab(EDIT_PASSWORD) : setActiveTab(EDIT_PROFILE) */
+
+        switch (tab) {
+            case EDIT_PROFILE:
+                setActiveTab(EDIT_PROFILE);
+                break;
+            case EDIT_PASSWORD:
+                setActiveTab(EDIT_PASSWORD);
+                break;
+            case History:
+                setActiveTab(History);
+                break;
+            default:
+                return;
+        }
+
         setEnableEdit(false)
     }
 
@@ -64,12 +83,16 @@ const ProfileMainCard = () => {
                 <div className="ProfileMainInnerCard">
                     <div className="cardTabsContainer">
                         <ul className="cardTabs">
-                            <li className={`cardTabItem ${activeTab === EDIT_PROFILE ? "activeTab" : ""}`} onClick={() => handleTabChange()}>
+                            <li className={`cardTabItem ${activeTab === EDIT_PROFILE ? "activeTab" : ""}`} onClick={() => handleTabChange(EDIT_PROFILE)}>
                                 Edit Information
                             </li>
 
-                            <li className={`cardTabItem ${activeTab === EDIT_PASSWORD ? "activeTab" : ""}`} onClick={() => handleTabChange()}>
+                            <li className={`cardTabItem ${activeTab === EDIT_PASSWORD ? "activeTab" : ""}`} onClick={() => handleTabChange(EDIT_PASSWORD)}>
                                 Change Password
+                            </li>
+
+                            <li className={`cardTabItem ${activeTab === History ? "activeTab" : ""}`} onClick={() => handleTabChange(History)}>
+                                Reserve History
                             </li>
                         </ul>
                     </div>
@@ -127,35 +150,97 @@ const ProfileMainCard = () => {
                                     <button className="profileBtn" onClick={(e) => handleChangeInfo(e)}>Save Changes</button>
                                     <button className="profileBtn" onClick={(e) => handleEdit(e)}>Edit Information</button>
                                 </div>
-                            </form> :
-
+                            </form> : null}
+                    {
+                        activeTab === EDIT_PASSWORD ?
                             <form className="profileForm">
                                 <h5 className="profileFormTitle">Change Password</h5>
                                 <div className="profileFormPasswords">
                                     <div className="profilePassItem">
                                         <label htmlFor="oldPassword">Old Password</label>
                                         <input type="password" name="old_password" id="oldPassword"
-                                        disabled={!enableEdit} 
-                                        onChange={(e) => setPasswordFormData({ ...passwordFormData, old_password: e.target.value })} />
+                                            disabled={!enableEdit}
+                                            onChange={(e) => setPasswordFormData({ ...passwordFormData, old_password: e.target.value })} />
                                     </div>
                                     <div className="profilePassItem">
                                         <label htmlFor="newPassword">New Password</label>
-                                        <input type="password" name="new_password" id="newPassword" 
-                                        disabled={!enableEdit} 
-                                        onChange={(e) => setPasswordFormData({ ...passwordFormData, new_password: e.target.value })} />
+                                        <input type="password" name="new_password" id="newPassword"
+                                            disabled={!enableEdit}
+                                            onChange={(e) => setPasswordFormData({ ...passwordFormData, new_password: e.target.value })} />
                                     </div>
                                     <div className="profilePassItem">
                                         <label htmlFor="confirm_new_password">Confirm New Password</label>
-                                        <input type="password" name="confirm_new_password" id="confirm_new_password" 
-                                        disabled={!enableEdit} 
-                                        onChange={(e) => setPasswordFormData({ ...passwordFormData, confirm_new_password: e.target.value })} />
+                                        <input type="password" name="confirm_new_password" id="confirm_new_password"
+                                            disabled={!enableEdit}
+                                            onChange={(e) => setPasswordFormData({ ...passwordFormData, confirm_new_password: e.target.value })} />
                                     </div>
                                 </div>
                                 <div className="profileFormBtn">
                                     <button className="profileBtn" onClick={(e) => handlePasswordForm(e)}>Save Changes</button>
                                     <button className="profileBtn" onClick={(e) => handleEdit(e)}>Edit Information</button>
                                 </div>
-                            </form>
+                            </form> : null
+                    }
+
+                    {
+                        activeTab === History ?
+
+                            <div className="profileHistory">
+                                <h5 className="profileFormTitle">Reserve History</h5>
+
+                                <div className="innerProfileHistory">
+                                    <table className="profileTable">
+                                        <thead className="profileTableHeader">
+                                            <tr>
+                                                <th className="profileTableHeaderCell">Date</th>
+                                                <th className="profileTableHeaderCell">No.Room</th>
+                                                <th className="profileTableHeaderCell">Room Type</th>
+                                                <th className="profileTableHeaderCell">Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="profileTableBody">
+                                            <tr className="profileTableRow">
+                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                <td className="profileTableBodyCell">202</td>
+                                                <td className="profileTableBodyCell">Medium Royal</td>
+                                                <td className="profileTableBodyCell">$ 184.4</td>
+                                            </tr>
+                                            <tr className="profileTableRow">
+                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                <td className="profileTableBodyCell">202</td>
+                                                <td className="profileTableBodyCell">Medium Royal</td>
+                                                <td className="profileTableBodyCell">$ 184.4</td>
+                                            </tr>
+                                            <tr className="profileTableRow">
+                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                <td className="profileTableBodyCell">202</td>
+                                                <td className="profileTableBodyCell">Medium Royal</td>
+                                                <td className="profileTableBodyCell">$ 184.4</td>
+                                            </tr>
+                                            <tr className="profileTableRow">
+                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                <td className="profileTableBodyCell">202</td>
+                                                <td className="profileTableBodyCell">Medium Royal</td>
+                                                <td className="profileTableBodyCell">$ 184.4</td>
+                                            </tr>
+                                            <tr className="profileTableRow">
+                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                <td className="profileTableBodyCell">202</td>
+                                                <td className="profileTableBodyCell">Medium Royal</td>
+                                                <td className="profileTableBodyCell">$ 184.4</td>
+                                            </tr>
+                                            <tr className="profileTableRow">
+                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                <td className="profileTableBodyCell">202</td>
+                                                <td className="profileTableBodyCell">Medium Royal</td>
+                                                <td className="profileTableBodyCell">$ 184.4</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> :
+
+                            null
                     }
                 </div>
             </div>
