@@ -75,8 +75,8 @@ const Sign = ({ signUp }) => {
                     var {data} = await sendSignInData(loginData)
                     console.log(data.access);
                     console.log(data.refresh);
-                    localStorage.setItem('access' , data.access)
-                    localStorage.setItem('refresh' , data.refresh)
+                    localStorage.setItem('access', data.access);
+                    localStorage.setItem('refresh', data.refresh);
                     /* token.dispath({type : "set"}) */
                 } 
                 
