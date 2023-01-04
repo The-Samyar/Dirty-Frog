@@ -169,4 +169,22 @@ class UserRegisterSerializer(DynamicFieldsModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'password', 'confirm_password', 'check')
 
+class ReserveHistorySerializer(DynamicFieldsModelSerializer):
+    check_in = serializers.SerializerMethodField()
+    check_out = serializers.SerializerMethodField()
+    room_type = serializers.SerializerMethodField()
 
+    class Meta:
+        model = models.BookedRoom
+        fields = ['room_number', 'check_in', 'check_out', 'room_type']
+        ordering = ['-room_number']
+
+    def get_check_in(self, obj):
+        print(f"####{obj.booking_id.check_in}####")
+        return obj.booking_id.check_in
+
+    def get_check_out(self, obj):
+        return obj.booking_id.check_out
+
+    def get_room_type(self, obj):
+        return obj.room_number.room_name.room_name
