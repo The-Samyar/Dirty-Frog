@@ -348,6 +348,20 @@ def ChangePassword(request):
         return Response(response)
 
 
+@api_view(('GET',))
+def ReserveHistory(request):
+    if request.method == 'GET':
+        user = User.objects.get(username='akbar')
+        
+        # required fields: check in date - check out date, room number, room type, cost
+
+        serialized = ReserveHistorySerializer(
+            models.BookedRoom.objects.filter(
+                booking_id__in=models.Booking.objects.filter(user = user)
+                ),
+                many=True)
+
+        return Response(serialized.data)
 
 # For testing
 '''
