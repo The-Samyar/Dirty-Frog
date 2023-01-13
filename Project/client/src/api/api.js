@@ -1,6 +1,12 @@
 import axios from 'axios';
 
 const API = axios.create({baseURL: 'http://localhost:8000/api'})
+/* API.interceptors.request.use(req => {
+    if(localStorage.getItem('refresh')){
+        req.headers.Authorization = `Bearer ${localStorage.getItem('refresh')}`;
+    }
+    return req;
+}) */
 
 export const fetchStats = () => API.get('/Stats/');
 export const fetchFeaturedRooms = () => API.get('/FeaturedRooms/');
@@ -14,6 +20,6 @@ export const getRoomsSummary = () => API.get('/Rooms/');
 export const getRoomDetails = (data) => API.get(`/Rooms/${data}/`)
 export const fetchReserveInfo = (data) => API.post('/BookingInfo/' , data);
 export const sendReservationData = (data) => API.post('/Booking/' , data);
-export const getUserData = () => API.get('/User/');
+export const getUserData = () => API.get('/profile/data/');
 export const sendChangePassData = (data) => API.post('/ChangePassword/' , data);
 export const sendProfileChange = (data) => API.post('/Profile/' , data);

@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getUserData, sendProfileChange, sendChangePassData } from '../../api/api'
 import './ProfileMainCard.css'
 
-const ProfileMainCard = () => {
+const ProfileMainCard = ({ profileInfo }) => {
 
     const EDIT_PROFILE = 'Edit Profile'
     const EDIT_PASSWORD = 'Edit Password'
     const History = 'Reserve History'
-
 
     const [activeTab, setActiveTab] = useState(EDIT_PROFILE);
     const [enableEdit, setEnableEdit] = useState(false);
@@ -21,6 +19,8 @@ const ProfileMainCard = () => {
         gender: '',
         birth_date: '',
     })
+    console.log(profileInfo);
+    console.log(profileFormData);
 
     const [passwordFormData, setPasswordFormData] = useState({
         old_password: '',
@@ -29,15 +29,16 @@ const ProfileMainCard = () => {
     })
 
     useEffect(() => {
-        const getData = async () => {
-            /* const {data} = await getUserData(); */
-        }
-
-        getData();
-
-    }, [])
-
-    console.log(activeTab);
+        setProfileFormData({
+            first_name: profileInfo?.first_name,
+            last_name: profileInfo?.last_name,
+            email: profileInfo?.email,
+            phone: profileInfo?.phone_number,
+            username: profileInfo?.username,
+            gender: profileInfo?.gender,
+            birth_date: profileInfo?.dob,
+        })
+    }, [profileInfo])
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -46,7 +47,6 @@ const ProfileMainCard = () => {
     }
 
     const handleTabChange = (tab) => {
-        /* activeTab === EDIT_PROFILE ? setActiveTab(EDIT_PASSWORD) : setActiveTab(EDIT_PROFILE) */
 
         switch (tab) {
             case EDIT_PROFILE:
@@ -104,34 +104,35 @@ const ProfileMainCard = () => {
                                 <div className="profileFormInputs">
                                     <div className="profileInputItem">
                                         <label htmlFor="firstName">First Name</label>
-                                        <input type="text" ref={ref} name="first_name" id="firstName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, first_name: e.target.value })} />
+                                        <input type="text" defaultValue={profileInfo?.first_name} ref={ref} name="first_name" id="firstName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, first_name: e.target.value })} />
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="lastName">Last Name</label>
-                                        <input type="text" name="last_name" id="lastName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, last_name: e.target.value })} />
+                                        <input type="text" defaultValue={profileInfo?.last_name} name="last_name" id="lastName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, last_name: e.target.value })} />
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="email">Email</label>
-                                        <input type="text" name="email" id="email" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, email: e.target.value })} />
+                                        <input type="text" defaultValue={profileInfo?.email} name="email" id="email" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, email: e.target.value })} />
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="Phone">Phone</label>
-                                        <input type="text" name="phone" id="Phone" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, phone: e.target.value })} />
+                                        <input type="text" defaultValue={profileInfo?.phone_number} name="phone" id="Phone" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, phone: e.target.value })} />
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="userName">Username</label>
-                                        <input type="text" name="username" id="userName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, username: e.target.value })} />
+                                        <input type="text" defaultValue={profileInfo?.username} name="username" id="userName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, username: e.target.value })} />
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="userName">Birth Date</label>
-                                        <input type="date" name="username" id="userName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, birth_date: e.target.value })} />
+                                        <input type="date" name="username" defaultValue={profileInfo?.dob} id="userName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, birth_date: e.target.value })} />
                                     </div>
                                     <div className="radioProfileContainer">
 
                                         <label htmlFor="male" className="radioLabel">Male
                                             <input className="profileRadioInput" name="gender" type="radio" value="male" id="male"
                                                 disabled={!enableEdit}
-                                                onChange={(e) => setProfileFormData({ ...profileFormData, gender: e.target.value })} />
+                                                onChange={(e) => setProfileFormData({ ...profileFormData, gender: e.target.value })}
+                                                defaultChecked={profileInfo?.gender === "Male" ? true : null} />
                                             <span className="checkmark"></span>
                                         </label>
 
@@ -139,7 +140,8 @@ const ProfileMainCard = () => {
                                         <label htmlFor="female" className="radioLabel">Female
                                             <input className="profileRadioInput" name="gender" type="radio" value="female" id="female"
                                                 disabled={!enableEdit}
-                                                onChange={(e) => setProfileFormData({ ...profileFormData, gender: e.target.value })} />
+                                                onChange={(e) => setProfileFormData({ ...profileFormData, gender: e.target.value })}
+                                                defaultChecked={profileInfo?.gender === "Female" ? true : null} />
                                             <span className="checkmark"></span>
                                         </label>
 
