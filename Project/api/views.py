@@ -229,7 +229,7 @@ def Booking(request):
         serialized = BookingModelSerializer(data=request.data)
         if serialized.is_valid():
             validated = serialized.validated_data
-            user = User.objects.get(username="admin")
+            user = User.objects.get(username="akbar")
             print("VALID")
             print(validated)
 
@@ -291,6 +291,9 @@ def ProfileData(request):
 
     user = User.objects.get(username='akbar')
 
+    today = datetime.now().date()
+    is_checked = models.Booking.objects.filter(user = user, check_in__lte = today, check_out__gte = today)
+
     user_info = {
         'first_name' : user.first_name,
         'last_name' : user.last_name,
@@ -299,7 +302,7 @@ def ProfileData(request):
         'dob' : f"{user.userinfo.dob}",
         'gender' : user.userinfo.gender,
         'phone_number' : user.userinfo.phone_number,
-        'is_checked' : user.userinfo.is_checked,
+        'is_checked' : True if is_checked else False,
         'profile_picture' : user.userinfo.profile_picture,
     }
 
