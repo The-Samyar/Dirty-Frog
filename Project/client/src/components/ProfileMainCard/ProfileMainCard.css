@@ -227,6 +227,7 @@
 
 .profilePassItem label {
     font-weight: 600;
+    width: 40%;
 }
 
 .profilePassItem input[type="password"] {
@@ -285,7 +286,7 @@
 }
 
 .profileTableBody{
-    color: rgba(27, 27, 48, 0.9);
+    color: rgba(27, 27, 48, 1);
     width: 100%;
     border: 1px solid red;
     height: 100%;
@@ -318,5 +319,20 @@
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(rgba(27, 27, 48, 0.7) , rgba(27, 27, 48, 0.9));
     border-radius: 3px;
+  }
+
+  @media (max-width: 1000px) {
+    .profileInputItem{
+        width: 100%;
+    }
+
+    .profileInputItem:nth-child(2n) {
+        margin-left: 0px;
+    }
+
+    .profilePassItem{
+        width: 100%;
+        flex-direction: column;
+    }
   }
 

@@ -1,8 +1,9 @@
-import React from 'react'
 import './ProfileSideBar.css'
 import { AiOutlinePaperClip } from 'react-icons/ai'
 
-const ProfileSideBar = () => {
+
+const ProfileSideBar = ({profileInfo}) => {
+
     return (
         <div className='profileSideBarContainer'>
             <div className="profileSideBarCard">
@@ -12,15 +13,15 @@ const ProfileSideBar = () => {
                     </div>
 
                     <div className="profileInfo">
-                        <h6 className="profileUserName">John_Doe1988</h6>
+                        <h6 className="profileUserName">{profileInfo?.username}</h6>
                         <div className="profileName">
-                            <span className="Name">John</span>
-                            <span className="Name">Doe</span>
+                            <span className="Name">{profileInfo?.first_name}</span>
+                            <span className="Name">{profileInfo?.last_name}</span>
                         </div>
 
                         <div className="furtherInfo">
-                            <span className="email">John_Doe1988@gmail.com</span>
-                            <span className="Phone">09126698585</span>
+                            <span className="email">{profileInfo?.email}</span>
+                            <span className="Phone">{profileInfo?.phone_number}</span>
                         </div>
                     </div>
                 </div>

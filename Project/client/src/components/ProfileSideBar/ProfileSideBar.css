@@ -136,3 +136,11 @@
     font-size: 0.8rem;
     text-align: left;
 }
+
+@media (max-width: 992px) {
+    .profileSideBarContainer{
+        width: 100%;
+        flex: 1;
+        min-height: auto;
+    }
+}
