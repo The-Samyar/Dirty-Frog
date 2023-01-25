@@ -335,18 +335,26 @@ def ProfileData(request):
 @api_view(('POST',))
 def ChangePassword(request):
     if request.method == 'POST':
-        if request.data['password'] == request.data['confirm_password']:
-            user = User.objects.get(username='akbar')
-            
-            if check_password(request.data['password'], user.password):
-                response = "Choose a new password"
-            else:
-                user.set_password(request.data['password'])
-                user.save()
-                response = "Success"
+        user = User.objects.get(username='akbar')
 
-        else:
+        error = 0
+        
+        if not check_password(request.data['old_password'], user.password):
+            error += 1
+            response = "Old password is wrong"
+
+        if request.data['password'] != request.data['confirm_password']:
+            error += 1
             response = "Passwords don't match"
+        
+        if check_password(request.data['password'], user.password):
+            error += 1
+            response = "Choose a new password"
+        
+        if error == 0:    
+            user.set_password(request.data['password'])
+            user.save()
+            response = "Success"
 
         return Response(response)
 
