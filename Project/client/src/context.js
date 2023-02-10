@@ -1,28 +1,75 @@
-import {createContext , useReducer} from 'react'
+import { createContext, useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
+import { sendSignInData , refreshToken } from "./api/api";
+import { useNavigate } from "react-router";
 
-export const AuthContext = createContext()
+const AuthContext = createContext();
 
-const INIT_STATE = {token: localStorage.getItem('access')}
+export default AuthContext;
 
-const AuthReducer = (state , action) => {
-    switch(action.type){
-        case "set": 
-        console.log('enter auth');
-        console.log('localstorage is' , localStorage.getItem('access'));
-        return {token : localStorage.getItem('access') };
+export const AuthContextProvider = ({ children }) => {
+    
+    const navigator = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(() => localStorage.getItem('authToken') ? jwt_decode(localStorage.getItem('authToken')) : null);
+    const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null)
 
-        default: 
-        return state
+    const loginUser = async (userData) => {
+        var { data } = await sendSignInData(userData);
+        console.log(data)
+
+        if(data){
+            setAuthTokens(data);
+            setUser(jwt_decode(data?.access));
+            localStorage.setItem('authTokens' , JSON.stringify(data));
+            navigator('/');
+        }
     }
-}
 
-export const AuthProvider = (props) => {
-    const [state, dispatch] = useReducer(AuthReducer, INIT_STATE)
+    const logoutUser = () => {
+        setAuthTokens(null);
+        setUser(null);
+        localStorage.removeItem('authTokens');
+        navigator('/');
+    }
 
-    return(
-        <AuthContext.Provider value={{state,dispatch}}>
-            {props.children}
+    const updateTokens = async() => {
+        console.log({refresh: authTokens.refresh})
+        const {data} = await refreshToken({refresh: authTokens.refresh});
+        console.log('data in refresh function' , data);
+
+        if(data){
+            setAuthTokens(data);
+            setUser(jwt_decode(data?.access));
+            localStorage.setItem('authTokens' , JSON.stringify(data));
+        }else {
+            logoutUser();
+        }
+    }
+
+    let contextValue = {
+        user: user,
+        loginUser: loginUser,
+        logoutUser: logoutUser,
+    }
+
+    useEffect(() => {
+        let fourMinutes = 60 * 1000 * 4;
+
+        let interval = setInterval(() => {
+            if(authTokens){
+                updateTokens();
+            }
+        } , fourMinutes);
+
+        return () => clearInterval(interval); 
+
+
+    } , [authTokens , loading])
+
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {children}
         </AuthContext.Provider>
     )
 }
-
