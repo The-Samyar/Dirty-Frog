@@ -1,9 +1,9 @@
 import React, { useRef, useState , useContext } from 'react'
 import Navbar from '../Navbar/Navbar'
-import { Link , useNavigate } from 'react-router-dom'
-import { sendSignUpData, sendSignInData } from '../../api/api'
-import {AuthContext} from '../../context'
+import { Link } from 'react-router-dom'
+import { sendSignUpData } from '../../api/api'
 import './Sign.css'
+import AuthContext from '../../context'
 const Sign = ({ signUp }) => {
 
     const [SignData, setSignData] = useState({ username: '', password: '', confirm_password: '', first_name: '', last_name: '', check: '' })
@@ -11,8 +11,8 @@ const Sign = ({ signUp }) => {
     const [loginData, setLoginData] = useState({ username: '', password: '' })
     var inputList = { username: '', password: '', confirm_password: '', first_name: '', last_name: '', check: '' }
 
-    const navigator = useNavigate();
-    const token = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
+    console.log(authContext)
 
     const style = { border: '2px solid red' }
     const style2 = { border: '2px solid rgba(27, 27, 48, 0.726)' }
@@ -70,26 +70,9 @@ const Sign = ({ signUp }) => {
                 console.log(SignData);
                 sendSignUpData(SignData);  
             }else{
-                console.log(loginData);
-                const akbar = async (loginData) =>{
-                    var {data} = await sendSignInData(loginData)
-                    console.log(data.access);
-                    console.log(data.refresh);
-                    localStorage.setItem('access', data.access);
-                    localStorage.setItem('refresh', data.refresh);
-                    /* token.dispath({type : "set"}) */
-                } 
-                
-                akbar(loginData)
-                navigator('/')
-
-            }
-            
-            
+                authContext.loginUser(loginData);
+            }   
         }
-
-
-
     }
 
     return (

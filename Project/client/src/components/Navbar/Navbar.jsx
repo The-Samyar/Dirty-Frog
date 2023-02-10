@@ -1,4 +1,4 @@
-import React /* { useEffect , useContext } */ from 'react'
+import React, { useContext } /* { useEffect , useContext } */ from 'react'
 import './Navbar.css'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -8,14 +8,17 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { MdOutlineBedroomChild } from 'react-icons/md'
 import { RiHotelLine, RiContactsLine } from 'react-icons/ri'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import AuthContext from '../../context'
 /* import { AuthContext } from '../../context' */
 
 const Navbar = ({ covered }) => {
 
   const [visibility, setVisibility] = useState(false);
   const [open, setOpen] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('access'));
-  console.log(token)
+  /* const [token, setToken] = useState(localStorage.getItem('access')); */
+  const {user , logoutUser} = useContext(AuthContext)
+  /* console.log(token) */
+  console.log(user)
 
   const checkScroll = () => {
     if (window.scrollY >= 500 && !visibility) {
@@ -67,11 +70,11 @@ const Navbar = ({ covered }) => {
               <Link to="/bookNow" className="navItemLinks special">Book Now</Link>
             </li>
             {
-              token ? 
+              user?.user_id ? 
               
               <>
                       <li className = "navItem">
-                        <Link to = "/logout" className = "navItemLinks">Log Out</Link>
+                        <span onClick={logoutUser}>Logout</span>
                       </li>
                       <li className="navItem">
                         <Link to="/profile" className="navItemLinks">Profile</Link>
