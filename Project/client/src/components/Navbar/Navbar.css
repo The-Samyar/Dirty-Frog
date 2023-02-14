@@ -18,6 +18,10 @@
     align-items: center;
 }
 
+.navItem span{
+    cursor: pointer;
+}
+
 .navItemLinks {
     color: rgb(242, 233, 228);
     text-decoration: none;

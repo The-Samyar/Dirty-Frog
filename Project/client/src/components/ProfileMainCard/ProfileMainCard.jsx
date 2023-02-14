@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { getReservationHistory } from '../../api/api'
 import './ProfileMainCard.css'
 
 const ProfileMainCard = ({ profileInfo }) => {
@@ -9,6 +10,7 @@ const ProfileMainCard = ({ profileInfo }) => {
 
     const [activeTab, setActiveTab] = useState(EDIT_PROFILE);
     const [enableEdit, setEnableEdit] = useState(false);
+    const [history, setHistory] = useState(null);
     const ref = useRef();
     const [profileFormData, setProfileFormData] = useState({
         first_name: '',
@@ -39,6 +41,20 @@ const ProfileMainCard = ({ profileInfo }) => {
             birth_date: profileInfo?.dob,
         })
     }, [profileInfo])
+
+    useEffect(() => {
+
+        const getHistoryData = async () => {
+            if (activeTab === History) {
+                const { data } = await getReservationHistory();
+                console.log(data);
+                setHistory(data);
+            }
+        }
+
+        getHistoryData();
+
+    }, [activeTab])
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -195,48 +211,46 @@ const ProfileMainCard = ({ profileInfo }) => {
                                         <thead className="profileTableHeader">
                                             <tr>
                                                 <th className="profileTableHeaderCell">Date</th>
-                                                <th className="profileTableHeaderCell">No.Room</th>
-                                                <th className="profileTableHeaderCell">Room Type</th>
+                                                <th className="profileTableHeaderCell">Room(s)</th>
                                                 <th className="profileTableHeaderCell">Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody className="profileTableBody">
-                                            <tr className="profileTableRow">
+                                            {
+                                                console.log(history) ,
+                                                history?.map(singleHistory => 
+                                                    <tr className="profileTableRow">
+                                                        <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
+                                                        <td className="profileTableBodyCell">202</td>
+                                                        <td className="profileTableBodyCell">$ 184.4</td>
+                                                    </tr>
+                                                )
+                                            }
+                                            {/* <tr className="profileTableRow">
                                                 <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
                                                 <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">Medium Royal</td>
                                                 <td className="profileTableBodyCell">$ 184.4</td>
                                             </tr>
                                             <tr className="profileTableRow">
                                                 <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
                                                 <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">Medium Royal</td>
                                                 <td className="profileTableBodyCell">$ 184.4</td>
                                             </tr>
                                             <tr className="profileTableRow">
                                                 <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
                                                 <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">Medium Royal</td>
                                                 <td className="profileTableBodyCell">$ 184.4</td>
                                             </tr>
                                             <tr className="profileTableRow">
                                                 <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
                                                 <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">Medium Royal</td>
                                                 <td className="profileTableBodyCell">$ 184.4</td>
                                             </tr>
                                             <tr className="profileTableRow">
                                                 <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
                                                 <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">Medium Royal</td>
                                                 <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr>
-                                            <tr className="profileTableRow">
-                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">Medium Royal</td>
-                                                <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr>
+                                            </tr> */}
                                         </tbody>
                                     </table>
                                 </div>

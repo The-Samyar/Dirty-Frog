@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const API = axios.create({baseURL: 'http://localhost:8000/api'})
 API.interceptors.request.use(req => {
-    if(localStorage.getItem('refresh')){
-        req.headers.Authorization = `Bearer ${localStorage.getItem('refresh')}`;
+    if(localStorage.getItem('authTokens')?.access){
+        req.headers.Authorization = `Bearer ${localStorage.getItem('authTokens')?.access}`;
     }
     return req;
 })
@@ -23,4 +23,5 @@ export const sendReservationData = (data) => API.post('/Booking/' , data);
 export const getUserData = () => API.get('/profile/data/');
 export const sendChangePassData = (data) => API.post('/ChangePassword/' , data);
 export const sendProfileChange = (data) => API.post('/Profile/' , data);
+export const getReservationHistory = () => API.get('/profile/reserve-history/');
 export const refreshToken = (refresh) => API.post('/token/refresh' , refresh);
