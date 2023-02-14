@@ -68,7 +68,7 @@ const Sign = ({ signUp }) => {
         } else {
             if(signUp){
                 console.log(SignData);
-                sendSignUpData(SignData);  
+                sendSignUpData(SignData).then(res => res.data?.message === 'success' ? authContext.loginUser(SignData) : null);
             }else{
                 authContext.loginUser(loginData);
             }   
