@@ -366,9 +366,15 @@ def ReserveHistory(request):
         
         # required fields: check in date - check out date, room number, room type, cost
 
+        # serialized = ReserveHistorySerializer(
+        #     models.BookedRoom.objects.filter(
+        #         booking_id__in=models.Booking.objects.filter(user = user)
+        #         ),
+        #         many=True)
+
         serialized = ReserveHistorySerializer(
-            models.BookedRoom.objects.filter(
-                booking_id__in=models.Booking.objects.filter(user = user)
+            models.Booking.objects.filter(
+                user=user
                 ),
                 many=True)
 

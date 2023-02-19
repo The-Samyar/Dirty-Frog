@@ -169,22 +169,52 @@ class UserRegisterSerializer(DynamicFieldsModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'password', 'confirm_password', 'check')
 
-class ReserveHistorySerializer(DynamicFieldsModelSerializer):
-    check_in = serializers.SerializerMethodField()
-    check_out = serializers.SerializerMethodField()
-    room_type = serializers.SerializerMethodField()
+class BookedRoomSerializer(serializers.Serializer):
+    room = serializers.SerializerMethodField()
 
-    class Meta:
-        model = models.BookedRoom
-        fields = ['room_number', 'check_in', 'check_out', 'room_type']
-        ordering = ['-room_number']
+    def get_room(self, obj):
+        return f"{obj.room_number.room_number} - {obj.room_number.room_name.room_name}"
 
-    def get_check_in(self, obj):
-        print(f"####{obj.booking_id.check_in}####")
-        return obj.booking_id.check_in
+class ReserveHistorySerializer(serializers.Serializer):
+    booking_id = serializers.SerializerMethodField()
+    date = serializers.SerializerMethodField()
+    rooms = serializers.SerializerMethodField()
+    cost = serializers.SerializerMethodField()
 
-    def get_check_out(self, obj):
-        return obj.booking_id.check_out
 
-    def get_room_type(self, obj):
-        return obj.room_number.room_name.room_name
+    # room_number = serializers.SerializerMethodField()
+    # check_in = serializers.SerializerMethodField()
+    # check_out = serializers.SerializerMethodField()
+    # room_type = serializers.SerializerMethodField()
+
+    # class Meta:
+    #     model = models.BookedRoom
+    #     fields = ['room_number', 'check_in', 'check_out', 'room_type']
+    #     ordering = ['-room_number']
+
+    def get_booking_id(self, obj):
+        return obj.id
+
+    def get_date(self, obj):
+        return f"{obj.check_in} - {obj.check_out}"
+
+    def get_rooms(self, obj):
+        rooms = obj.bookedroom_set.all()
+        serialized = BookedRoomSerializer(rooms, many=True)
+        return serialized.data
+
+    def get_cost(self, obj):
+        return obj.total_cost
+
+    # def get_room_number(self, obj):
+    #     return obj.room_number.room_number
+
+    # def get_check_in(self, obj):
+
+    #     return obj.booking_id.check_in
+
+    # def get_check_out(self, obj):
+    #     return obj.booking_id.check_out
+
+    # def get_room_type(self, obj):
+    #     return obj.room_number.room_name.room_name
