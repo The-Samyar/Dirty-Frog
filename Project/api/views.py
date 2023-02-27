@@ -329,6 +329,44 @@ def ProfileData(request):
                 # setattr(user.userinfo, row, request.data[row])
                 # user.userinfo.save()
 
+        return Response("Information was successfully edited")
+
+@api_view(('POST',))
+def ProfileImage(request):
+
+    #   Preferred way of uploading image:
+    #   <form method="POST" action="" enctype='multipart/form-data'>
+    #     {% csrf_token %}
+    #     <input type="submit"></input>
+    #     {{ form }}
+    #   </form>
+
+    # from django.core.files.images import ImageFile
+
+    from PIL import Image
+    from pathlib import Path
+
+    if request.method == 'POST':
+        user = User.objects.get(username='hamid')
+        files = request.FILES
+        print(files)
+        files_image = request.FILES['image']
+        print(files_image)
+
+        image_address = f"client/public/images/users/{user.username}/"
+        try:
+            Path(image_address).mkdir(parents=True)
+        except FileExistsError:
+            pass
+
+        image = Image.open(files_image)
+        image.save(image_address + "profile.jpg")
+        image.close()
+
+        instance = models.UserInfo.objects.get(user_id=user)
+        instance.profile_picture = (image_address + "profile.jpg")
+        instance.save()
+
         return Response("Success")
 
 
