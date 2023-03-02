@@ -1,8 +1,17 @@
 import './ProfileSideBar.css'
 import { AiOutlinePaperClip } from 'react-icons/ai'
+import { sendProfileImage } from '../../api/api';
 
 
 const ProfileSideBar = ({profileInfo}) => {
+
+    const handleSendingImage = async(e) => {
+        const formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        const {data} = await sendProfileImage(formData);
+        console.log(data);
+    }
 
     return (
         <div className='profileSideBarContainer'>
@@ -35,7 +44,7 @@ const ProfileSideBar = ({profileInfo}) => {
                             <AiOutlinePaperClip />
                         </label>
 
-                        <input id="file-input" type="file" />
+                        <input id="file-input" type="file" onChange={(e) => handleSendingImage(e)} />
                     </div>
 
                     <div className="uploadDesc">
