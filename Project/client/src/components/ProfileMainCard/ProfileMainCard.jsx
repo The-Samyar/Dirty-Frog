@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getReservationHistory } from '../../api/api'
+import { getReservationHistory, sendChangePassData } from '../../api/api'
 import './ProfileMainCard.css'
 
 const ProfileMainCard = ({ profileInfo }) => {
@@ -11,6 +11,7 @@ const ProfileMainCard = ({ profileInfo }) => {
     const [activeTab, setActiveTab] = useState(EDIT_PROFILE);
     const [enableEdit, setEnableEdit] = useState(false);
     const [history, setHistory] = useState(null);
+    const [activeReview, setActiveReview] = useState(false);
     const ref = useRef();
     const [profileFormData, setProfileFormData] = useState({
         first_name: '',
@@ -56,6 +57,10 @@ const ProfileMainCard = ({ profileInfo }) => {
 
     }, [activeTab])
 
+    const closeAddReview =  () => {
+        setActiveReview(false)
+    }
+
     const handleEdit = (e) => {
         e.preventDefault();
         setEnableEdit(true)
@@ -87,10 +92,14 @@ const ProfileMainCard = ({ profileInfo }) => {
         console.log(profileFormData)
     }
 
-    const handlePasswordForm = (e) => {
+    const handlePasswordForm = async(e) => {
         e.preventDefault();
+        console.log(passwordFormData);
 
-        console.log(passwordFormData)
+        if(passwordFormData.new_password === passwordFormData.confirm_new_password){
+            const {data} = await sendChangePassData(passwordFormData);
+            console.log(data);
+        }
     }
 
     return (
@@ -210,9 +219,11 @@ const ProfileMainCard = ({ profileInfo }) => {
                                     <table className="profileTable">
                                         <thead className="profileTableHeader">
                                             <tr>
+                                                <th className="profileTableHeaderCell">Booking Id</th>
                                                 <th className="profileTableHeaderCell">Date</th>
                                                 <th className="profileTableHeaderCell">Room(s)</th>
                                                 <th className="profileTableHeaderCell">Cost</th>
+                                                <th className="profileTableHeaderCell">Review</th>
                                             </tr>
                                         </thead>
                                         <tbody className="profileTableBody">
@@ -220,9 +231,11 @@ const ProfileMainCard = ({ profileInfo }) => {
                                                 console.log(history) ,
                                                 history?.map(singleHistory => 
                                                     <tr className="profileTableRow">
-                                                        <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                        <td className="profileTableBodyCell">202</td>
-                                                        <td className="profileTableBodyCell">$ 184.4</td>
+                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>{singleHistory.booking_id}</td>
+                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>{singleHistory.date}</td>
+                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>{singleHistory.rooms.map(room => <><span>{room.room}</span><br /></>)}</td>
+                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>$ {singleHistory.cost}</td>
+                                                        <td className="profileTableBodyCell"> <button className="addReviewBtn" onClick={() => setActiveReview(true)}>Add Review</button></td>
                                                     </tr>
                                                 )
                                             }
@@ -230,29 +243,13 @@ const ProfileMainCard = ({ profileInfo }) => {
                                                 <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
                                                 <td className="profileTableBodyCell">202</td>
                                                 <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr>
-                                            <tr className="profileTableRow">
-                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr>
-                                            <tr className="profileTableRow">
-                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr>
-                                            <tr className="profileTableRow">
-                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr>
-                                            <tr className="profileTableRow">
-                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">$ 184.4</td>
-                                            </tr> */}
+                                        </tr>*/}
                                         </tbody>
                                     </table>
+
+                                    <div className="addReviewCard" style={activeReview ? {opacity: '1'} : {opacity: '0'}}>
+
+                                    </div>
                                 </div>
                             </div> :
 

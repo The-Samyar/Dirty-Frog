@@ -21,7 +21,9 @@ export const getRoomDetails = (data) => API.get(`/Rooms/${data}/`)
 export const fetchReserveInfo = (data) => API.post('/BookingInfo/' , data);
 export const sendReservationData = (data) => API.post('/Booking/' , data);
 export const getUserData = () => API.get('/profile/data/');
-export const sendChangePassData = (data) => API.post('/ChangePassword/' , data);
-export const sendProfileChange = (data) => API.post('/Profile/' , data);
+export const sendChangePassData = (data) => API.post('/profile/change-password/' , data);
+export const sendProfileChange = (data) => API.post('/profile/' , data);
+export const sendProfileImage = (data) => API.post('/profile/data/image' , data);
 export const getReservationHistory = () => API.get('/profile/reserve-history/');
 export const refreshToken = (refresh) => API.post('/token/refresh' , refresh);
+export const addReviewToUser = (data) => API.post('/profile/addReview' , data);
