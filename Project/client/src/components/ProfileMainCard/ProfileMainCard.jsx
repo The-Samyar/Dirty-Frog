@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { getReservationHistory, sendChangePassData } from '../../api/api'
+import { AiFillCloseCircle } from 'react-icons/ai'
+import Rating from '@mui/material/Rating'
 import './ProfileMainCard.css'
 
 const ProfileMainCard = ({ profileInfo }) => {
@@ -22,8 +24,6 @@ const ProfileMainCard = ({ profileInfo }) => {
         gender: '',
         birth_date: '',
     })
-    console.log(profileInfo);
-    console.log(profileFormData);
 
     const [passwordFormData, setPasswordFormData] = useState({
         old_password: '',
@@ -57,8 +57,9 @@ const ProfileMainCard = ({ profileInfo }) => {
 
     }, [activeTab])
 
-    const closeAddReview =  () => {
-        setActiveReview(false)
+    const closeAddReview = (e) => {
+        if (e.target.className !== "addReviewBtn")
+            setActiveReview(false);
     }
 
     const handleEdit = (e) => {
@@ -92,12 +93,12 @@ const ProfileMainCard = ({ profileInfo }) => {
         console.log(profileFormData)
     }
 
-    const handlePasswordForm = async(e) => {
+    const handlePasswordForm = async (e) => {
         e.preventDefault();
         console.log(passwordFormData);
 
-        if(passwordFormData.new_password === passwordFormData.confirm_new_password){
-            const {data} = await sendChangePassData(passwordFormData);
+        if (passwordFormData.new_password === passwordFormData.confirm_new_password) {
+            const { data } = await sendChangePassData(passwordFormData);
             console.log(data);
         }
     }
@@ -212,11 +213,11 @@ const ProfileMainCard = ({ profileInfo }) => {
                     {
                         activeTab === History ?
 
-                            <div className="profileHistory">
+                            <div className="profileHistory" >
                                 <h5 className="profileFormTitle">Reserve History</h5>
 
                                 <div className="innerProfileHistory">
-                                    <table className="profileTable">
+                                    <table className="profileTable" onClick={(e) => closeAddReview(e)}>
                                         <thead className="profileTableHeader">
                                             <tr>
                                                 <th className="profileTableHeaderCell">Booking Id</th>
@@ -226,16 +227,15 @@ const ProfileMainCard = ({ profileInfo }) => {
                                                 <th className="profileTableHeaderCell">Review</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="profileTableBody">
+                                        <tbody className="profileTableBody" >
                                             {
-                                                console.log(history) ,
-                                                history?.map(singleHistory => 
+                                                history?.map(singleHistory =>
                                                     <tr className="profileTableRow">
-                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>{singleHistory.booking_id}</td>
-                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>{singleHistory.date}</td>
-                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>{singleHistory.rooms.map(room => <><span>{room.room}</span><br /></>)}</td>
-                                                        <td className="profileTableBodyCell" onClick={() => closeAddReview()}>$ {singleHistory.cost}</td>
-                                                        <td className="profileTableBodyCell"> <button className="addReviewBtn" onClick={() => setActiveReview(true)}>Add Review</button></td>
+                                                        <td className="profileTableBodyCell" >{singleHistory.booking_id}</td>
+                                                        <td className="profileTableBodyCell" >{singleHistory.date}</td>
+                                                        <td className="profileTableBodyCell" >{singleHistory.rooms.map(room => <><span>{room.room}</span><br /></>)}</td>
+                                                        <td className="profileTableBodyCell" >$ {singleHistory.cost}</td>
+                                                        <td className="profileTableBodyCell" > <button className="addReviewBtn" onClick={() => setActiveReview(true)}>Add Review</button></td>
                                                     </tr>
                                                 )
                                             }
@@ -247,8 +247,31 @@ const ProfileMainCard = ({ profileInfo }) => {
                                         </tbody>
                                     </table>
 
-                                    <div className="addReviewCard" style={activeReview ? {opacity: '1'} : {opacity: '0'}}>
+                                    <div className="addReviewCard" style={activeReview ? { display: 'initial' } : { display: 'none' }}>
+                                        <div className="addReviewCardContainer">
+                                            <div className="addReviewCardHeader">
+                                                <h4 className="addReviewTitle">Write a review</h4>
+                                                <div className="addReviewCardCloseIcon">
+                                                    <AiFillCloseCircle style={{ width: '100%', height: '100%' }} onClick={(e) => closeAddReview(e)} />
+                                                </div>
+                                            </div>
 
+                                            <div className="addReviewContent">
+                                                <div className="addReviewInputContainer">
+                                                    <label htmlFor="rating" className="addReviewLabel">Rating</label>
+                                                    <Rating id="rating" className="ratingComp"></Rating>
+                                                </div>
+
+                                                <div className="addReviewTextContainer">
+                                                    <label htmlFor="review" className="addReviewLabel">Review</label>
+                                                    <textarea name="review" id="review" className="addReviewTextarea"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div className="addReviewCardFooter">
+                                                <button className="addReviewBtn">Send</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div> :
