@@ -347,11 +347,8 @@ def ProfileImage(request):
     from pathlib import Path
 
     if request.method == 'POST':
-        user = User.objects.get(username='hamid')
-        files = request.FILES
-        print(files)
-        files_image = request.FILES['image']
-        print(files_image)
+        user = User.objects.get(username='akbar')
+        files_image = request.FILES['file']
 
         image_address = f"client/public/images/users/{user.username}/"
         try:
@@ -360,11 +357,11 @@ def ProfileImage(request):
             pass
 
         image = Image.open(files_image)
-        image.save(image_address + "profile.jpg")
+        image.save(image_address + "profile.webp")
         image.close()
 
         instance = models.UserInfo.objects.get(user_id=user)
-        instance.profile_picture = (image_address + "profile.jpg")
+        instance.profile_picture = (image_address + "profile.webp")
         instance.save()
 
         return Response("Success")
@@ -381,16 +378,16 @@ def ChangePassword(request):
             error += 1
             response = "Old password is wrong"
 
-        if request.data['password'] != request.data['confirm_password']:
+        if request.data['new_password'] != request.data['confirm_new_password']:
             error += 1
             response = "Passwords don't match"
         
-        if check_password(request.data['password'], user.password):
+        if check_password(request.data['new_password'], user.password):
             error += 1
             response = "Choose a new password"
         
         if error == 0:    
-            user.set_password(request.data['password'])
+            user.set_password(request.data['new_password'])
             user.save()
             response = "Success"
 

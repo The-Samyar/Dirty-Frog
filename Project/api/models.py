@@ -90,7 +90,7 @@ class UserInfo(models.Model):
     dob = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=6 ,blank=True, null=True)
     # profile_picture = models.ImageField(upload_to='')
-    profile_picture = models.CharField(max_length=40)
+    profile_picture = models.CharField(max_length=40, default="")
 
     def __str__(self):
         return self.user_id.username
