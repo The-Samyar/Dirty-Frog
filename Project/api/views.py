@@ -274,6 +274,8 @@ def Booking(request):
                             booking_id=booking_id)
                         booked.save()
                         total_cost += int(room_number.room_name.cost_per_day) * ((validated["check_out"] - validated["check_in"]).days)
+                
+                total_cost = (total_cost * 1.09) + 10
 
                 booking_id._total_cost = total_cost
                 booking_id.save()
