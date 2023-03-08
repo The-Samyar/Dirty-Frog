@@ -23,4 +23,5 @@ urlpatterns = [
     path('profile/data/image', views.ProfileImage),
     path('profile/change-password/', views.ChangePassword, name='ChangePassword'),
     path('profile/reserve-history/', views.ReserveHistory, name='ReserveHistory'),
+    path('profile/reserve-history/review/', views.BookingReview, name='BookingReview'),
 ]
