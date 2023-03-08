@@ -273,7 +273,7 @@ def Booking(request):
                             room_number=room_number,
                             booking_id=booking_id)
                         booked.save()
-                        total_cost += int(room_number.room_name.cost_per_day) * ((validated["check_out"] - validated["check_in"]).days)
+                        total_cost += float(room_number.room_name.cost_per_day) * ((validated["check_out"] - validated["check_in"]).days)
                 
                 total_cost = (total_cost * 1.09) + 10
 
@@ -416,6 +416,24 @@ def ReserveHistory(request):
                 many=True)
 
         return Response(serialized.data)
+
+
+@api_view(('POST', ))
+def BookingReview(request):
+    user = User.objects.get(username='akbar')
+    if request.method == 'POST':
+        reservation = models.Booking.objects.get(id=request.data['bookingId'])
+        if reservation.user == user:
+            if 0 <= request.data['rating'] <= 5:
+                reservation.user_review = request.data['review']
+                reservation.user_rating = request.data['rating']
+                reservation.save()
+                return Response("Success")
+            else:
+                return Response("Rating must be between 0 to 5")
+        else:
+            return Response("The submitted review belongs to a booking from some other user")
+
 
 # For testing
 '''

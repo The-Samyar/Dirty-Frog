@@ -61,9 +61,11 @@ class Booking(models.Model):
     check_out = models.DateField()
     adults_count = models.IntegerField()
     children_count = models.IntegerField()
+    user_review = models.TextField(null=True, blank=True)
+    user_rating = models.IntegerField(null=True, blank=True)
 
     # Read-only field - automatically calculated
-    _total_cost = models.IntegerField(blank=True, null=True)
+    _total_cost = models.FloatField(blank=True, null=True)
 
     @property
     def total_cost(self):

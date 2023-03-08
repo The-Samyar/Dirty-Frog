@@ -180,6 +180,8 @@ class ReserveHistorySerializer(serializers.Serializer):
     date = serializers.SerializerMethodField()
     rooms = serializers.SerializerMethodField()
     cost = serializers.SerializerMethodField()
+    review = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     # room_number = serializers.SerializerMethodField()
     # check_in = serializers.SerializerMethodField()
@@ -205,6 +207,11 @@ class ReserveHistorySerializer(serializers.Serializer):
     def get_cost(self, obj):
         return obj.total_cost
 
+    def get_review(self, obj):
+        return obj.user_review
+
+    def get_rating(self, obj):
+        return obj.user_rating
     # def get_room_number(self, obj):
     #     return obj.room_number.room_number
 
