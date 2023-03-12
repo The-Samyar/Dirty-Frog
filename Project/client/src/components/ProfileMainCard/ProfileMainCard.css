@@ -331,7 +331,6 @@
     background-color: rgba(27, 27, 48, 1);
     color: rgb(242, 233, 228);
     cursor: pointer;
-    margin: auto;
     display: block;
     padding: 5px 10px;
     border-radius: 10px;
@@ -362,6 +361,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.addReviewCardFooter {
+    height: 20%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .addReviewTitle {
@@ -406,16 +412,18 @@
     height: auto;
     display: flex;
     flex-direction: column;
+    height: 60%;
     margin-top: 20px;
 }
 
 .addReviewTextarea{
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    box-sizing: border-box; /* Safari/Chrome, other WebKit */
     outline: none;
     resize: none;
     margin-top: 10px;
     font-size: 1rem;
     width: 100% !important;
+    height: 100% !important;
 }
 
 
