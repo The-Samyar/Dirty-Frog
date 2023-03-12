@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getReservationHistory, sendChangePassData } from '../../api/api'
+import { addReviewToUser, ChangeUserData, getReservationHistory, sendChangePassData } from '../../api/api'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import Rating from '@mui/material/Rating'
 import './ProfileMainCard.css'
@@ -13,16 +13,17 @@ const ProfileMainCard = ({ profileInfo }) => {
     const [activeTab, setActiveTab] = useState(EDIT_PROFILE);
     const [enableEdit, setEnableEdit] = useState(false);
     const [history, setHistory] = useState(null);
-    const [activeReview, setActiveReview] = useState(false);
+    const [activeReview, setActiveReview] = useState({ rating: 0, review: '' });
+    const [review, setReview] = useState({ rating: 0, review: '' });
     const ref = useRef();
     const [profileFormData, setProfileFormData] = useState({
         first_name: '',
         last_name: '',
         email: '',
-        phone: '',
+        phone_number: '',
         username: '',
         gender: '',
-        birth_date: '',
+        dob: '',
     })
 
     const [passwordFormData, setPasswordFormData] = useState({
@@ -36,10 +37,10 @@ const ProfileMainCard = ({ profileInfo }) => {
             first_name: profileInfo?.first_name,
             last_name: profileInfo?.last_name,
             email: profileInfo?.email,
-            phone: profileInfo?.phone_number,
+            phone_number: profileInfo?.phone_number,
             username: profileInfo?.username,
             gender: profileInfo?.gender,
-            birth_date: profileInfo?.dob,
+            dob: profileInfo?.dob,
         })
     }, [profileInfo])
 
@@ -58,8 +59,11 @@ const ProfileMainCard = ({ profileInfo }) => {
     }, [activeTab])
 
     const closeAddReview = (e) => {
-        if (e.target.className !== "addReviewBtn")
-            setActiveReview(false);
+        if (e.target.className !== "addReviewBtn") {
+            setActiveReview({ rating: 0, review: '' });
+            setReview({review: '' , rating: 0 });
+
+        }
     }
 
     const handleEdit = (e) => {
@@ -87,10 +91,13 @@ const ProfileMainCard = ({ profileInfo }) => {
         setEnableEdit(false)
     }
 
-    const handleChangeInfo = (e) => {
+    const handleChangeInfo = async (e) => {
         e.preventDefault();
 
-        console.log(profileFormData)
+        console.log(profileFormData);
+
+        const { data } = await ChangeUserData(profileFormData);
+        console.log(data);
     }
 
     const handlePasswordForm = async (e) => {
@@ -103,6 +110,13 @@ const ProfileMainCard = ({ profileInfo }) => {
         }
     }
 
+    const sendReview = async (e) => {
+
+        console.log({ ...review, bookingId: activeReview?.booking_id });
+        //const { data } = await addReviewToUser();
+    }
+
+    console.log(activeReview?.rating);
     return (
         <div className='profileMainCardContainer'>
             <div className="profileMainCard">
@@ -142,7 +156,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="Phone">Phone</label>
-                                        <input type="text" defaultValue={profileInfo?.phone_number} name="phone" id="Phone" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, phone: e.target.value })} />
+                                        <input type="text" defaultValue={profileInfo?.phone_number} name="phone" id="Phone" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, phone_number: e.target.value })} />
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="userName">Username</label>
@@ -150,7 +164,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                     </div>
                                     <div className="profileInputItem">
                                         <label htmlFor="userName">Birth Date</label>
-                                        <input type="date" name="username" defaultValue={profileInfo?.dob} id="userName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, birth_date: e.target.value })} />
+                                        <input type="date" name="username" defaultValue={profileInfo?.dob} id="userName" disabled={!enableEdit} onChange={(e) => setProfileFormData({ ...profileFormData, dob: e.target.value })} />
                                     </div>
                                     <div className="radioProfileContainer">
 
@@ -235,7 +249,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                                         <td className="profileTableBodyCell" >{singleHistory.date}</td>
                                                         <td className="profileTableBodyCell" >{singleHistory.rooms.map(room => <><span>{room.room}</span><br /></>)}</td>
                                                         <td className="profileTableBodyCell" >$ {singleHistory.cost}</td>
-                                                        <td className="profileTableBodyCell" > <button className="addReviewBtn" onClick={() => setActiveReview(true)}>Add Review</button></td>
+                                                        <td className="profileTableBodyCell" > <button className="addReviewBtn" onClick={() => setActiveReview(singleHistory)}>{singleHistory?.review ? 'Preview' : 'Add Review'}</button></td>
                                                     </tr>
                                                 )
                                             }
@@ -247,7 +261,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                         </tbody>
                                     </table>
 
-                                    <div className="addReviewCard" style={activeReview ? { display: 'initial' } : { display: 'none' }}>
+                                    <div className="addReviewCard" style={activeReview?.booking_id ? { display: 'initial' } : { display: 'none' }}>
                                         <div className="addReviewCardContainer">
                                             <div className="addReviewCardHeader">
                                                 <h4 className="addReviewTitle">Write a review</h4>
@@ -259,17 +273,17 @@ const ProfileMainCard = ({ profileInfo }) => {
                                             <div className="addReviewContent">
                                                 <div className="addReviewInputContainer">
                                                     <label htmlFor="rating" className="addReviewLabel">Rating</label>
-                                                    <Rating id="rating" className="ratingComp"></Rating>
+                                                    <Rating id="rating" className="ratingComp" readOnly={activeReview?.review ? true : false} value={activeReview?.rating ? activeReview.rating : review.rating} onChange={(e) => setReview({ ...review, rating: e.target.value })}></Rating>
                                                 </div>
 
                                                 <div className="addReviewTextContainer">
                                                     <label htmlFor="review" className="addReviewLabel">Review</label>
-                                                    <textarea name="review" id="review" className="addReviewTextarea"></textarea>
+                                                    <textarea name="review" id="review" className="addReviewTextarea" disabled={activeReview?.review ? true : false} value={activeReview?.review && activeReview.review} onChange={(e) => setReview({ ...review, review: e.target.value })}></textarea>
                                                 </div>
                                             </div>
 
                                             <div className="addReviewCardFooter">
-                                                <button className="addReviewBtn">Send</button>
+                                                <button className="addReviewBtn" onClick={(e) => sendReview(e)}>Send</button>
                                             </div>
                                         </div>
                                     </div>
