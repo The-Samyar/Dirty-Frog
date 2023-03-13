@@ -357,11 +357,13 @@ def ProfileImage(request):
             Path(image_address).mkdir(parents=True)
         except FileExistsError:
             pass
+        
 
         image = Image.open(files_image)
         image.save(image_address + "profile.webp")
         image.close()
 
+        image_address = f"./images/users/{user.username}/"
         instance = models.UserInfo.objects.get(user_id=user)
         instance.profile_picture = (image_address + "profile.webp")
         instance.save()
