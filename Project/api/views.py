@@ -212,8 +212,18 @@ def SignUp(request):
             print("###################")
             print(validated)
             if validated['check'] == True and validated['password'] == validated['confirm_password']:
-                new_user = User.objects.create_user(username=validated['username'], password=validated['password'], first_name=validated['first_name'], last_name=validated['last_name'])
+                new_user = User.objects.create_user(
+                    username=validated['username'],
+                    password=validated['password'],
+                    first_name=validated['first_name'],
+                    last_name=validated['last_name']
+                    )
+                
                 new_user.save()
+                new_userinfo = models.UserInfo(
+                    user = new_user
+                )
+                new_userinfo.save()
                 response = {'message': 'success'}
             else:
                 response = {'message': 'error'}
@@ -364,7 +374,7 @@ def ProfileImage(request):
         image.close()
 
         image_address = f"./images/users/{user.username}/"
-        instance = models.UserInfo.objects.get(user_id=user)
+        instance = models.UserInfo.objects.get(user=user)
         instance.profile_picture = (image_address + "profile.webp")
         instance.save()
 

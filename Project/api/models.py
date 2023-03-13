@@ -86,7 +86,7 @@ class BookedRoom(models.Model):
 
 #  ---Table for user's info---
 class UserInfo(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=14 ,blank=True, null=True)
     is_checked = models.BooleanField(default=False)
     dob = models.DateField(blank=True, null=True)
@@ -95,7 +95,7 @@ class UserInfo(models.Model):
     profile_picture = models.CharField(max_length=40, default="")
 
     def __str__(self):
-        return self.user_id.username
+        return self.user.username
 
 
 class Review(models.Model):
