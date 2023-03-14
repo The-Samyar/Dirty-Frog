@@ -59,9 +59,10 @@ const ProfileMainCard = ({ profileInfo }) => {
     }, [activeTab])
 
     const closeAddReview = (e) => {
-        if (e.target.className !== "addReviewBtn") {
+        console.log(e.target.localName)
+        if (e.target.className === "overlay" || (e.target.localName === "path" || e.target.localName === "svg") ) {
             setActiveReview({ rating: 0, review: '' });
-            setReview({review: '' , rating: 0 });
+            setReview({ review: '', rating: 0 });
 
         }
     }
@@ -231,7 +232,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                 <h5 className="profileFormTitle">Reserve History</h5>
 
                                 <div className="innerProfileHistory">
-                                    <table className="profileTable" onClick={(e) => closeAddReview(e)}>
+                                    <table className="profileTable" >
                                         <thead className="profileTableHeader">
                                             <tr>
                                                 <th className="profileTableHeaderCell">Booking Id</th>
@@ -261,29 +262,31 @@ const ProfileMainCard = ({ profileInfo }) => {
                                         </tbody>
                                     </table>
 
-                                    <div className="addReviewCard" style={activeReview?.booking_id ? { display: 'initial' } : { display: 'none' }}>
-                                        <div className="addReviewCardContainer">
-                                            <div className="addReviewCardHeader">
-                                                <h4 className="addReviewTitle">Write a review</h4>
-                                                <div className="addReviewCardCloseIcon">
-                                                    <AiFillCloseCircle style={{ width: '100%', height: '100%' }} onClick={(e) => closeAddReview(e)} />
-                                                </div>
-                                            </div>
-
-                                            <div className="addReviewContent">
-                                                <div className="addReviewInputContainer">
-                                                    <label htmlFor="rating" className="addReviewLabel">Rating</label>
-                                                    <Rating id="rating" className="ratingComp" readOnly={activeReview?.review ? true : false} value={activeReview?.rating ? activeReview.rating : review.rating} onChange={(e) => setReview({ ...review, rating: e.target.value })}></Rating>
+                                    <div className="overlay" style={activeReview?.booking_id ? { display: 'initial' } : { display: 'none' }} onClick={(e) => closeAddReview(e)}>
+                                        <div className="addReviewCard" >
+                                            <div className="addReviewCardContainer">
+                                                <div className="addReviewCardHeader">
+                                                    <h4 className="addReviewTitle">Write a review</h4>
+                                                    <div className="addReviewCardCloseIcon">
+                                                        <AiFillCloseCircle style={{ width: '100%', height: '100%' }} onClick={(e) => closeAddReview(e)} />
+                                                    </div>
                                                 </div>
 
-                                                <div className="addReviewTextContainer">
-                                                    <label htmlFor="review" className="addReviewLabel">Review</label>
-                                                    <textarea name="review" id="review" className="addReviewTextarea" disabled={activeReview?.review ? true : false} value={activeReview?.review && activeReview.review} onChange={(e) => setReview({ ...review, review: e.target.value })}></textarea>
-                                                </div>
-                                            </div>
+                                                <div className="addReviewContent">
+                                                    <div className="addReviewInputContainer">
+                                                        <label htmlFor="rating" className="addReviewLabel">Rating</label>
+                                                        <Rating id="rating" className="ratingComp" readOnly={activeReview?.review ? true : false} value={activeReview?.rating ? activeReview.rating : review.rating} onChange={(e) => setReview({ ...review, rating: e.target.value })}></Rating>
+                                                    </div>
 
-                                            <div className="addReviewCardFooter">
-                                                <button className="addReviewBtn" onClick={(e) => sendReview(e)}>Send</button>
+                                                    <div className="addReviewTextContainer">
+                                                        <label htmlFor="review" className="addReviewLabel">Review</label>
+                                                        <textarea name="review" id="review" className="addReviewTextarea" disabled={activeReview?.review ? true : false} value={activeReview?.review && activeReview.review} onChange={(e) => setReview({ ...review, review: e.target.value })}></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div className="addReviewCardFooter">
+                                                    <button className="addReviewBtn" onClick={(e) => sendReview(e)}>Send</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -18,7 +18,7 @@ const ProfileSideBar = ({profileInfo}) => {
             <div className="profileSideBarCard">
                 <div className="innerProfileCard">
                     <div className="profileImgContainer">
-                        <img src="../images/person1.webp" alt="profileImg" />
+                        <img src={profileInfo?.profile_picture} alt={profileInfo?.username} />
                     </div>
 
                     <div className="profileInfo">

@@ -48,7 +48,7 @@ const Table = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [recommended, setRecomended] = useState([])
-    const [reserved, setReserved] = useState({ rooms: [] })
+    const [reserved, setReserved] = useState({ rooms: new Map() })
     const navigator = useNavigate();
 
     const ref = useRef();
@@ -110,20 +110,21 @@ const Table = () => {
 
     const handleForm = (e) => {
         e.preventDefault();
-        /* console.log(reserved); */
 
         if (reserved?.checkIn) {
 
-            if (reserved?.rooms.length > 0) {
+            if (reserved?.rooms.size > 0) {
                 var listOfRooms = '';
-                for (let index = 0; index < reserved.rooms.length; index++) {
-                    listOfRooms += '&' + Object.keys(reserved.rooms[index]) + '=' + Object.values(reserved.rooms[index])
+                const newReserved = [...reserved.rooms.entries()]
+                console.log(newReserved);
+                for (let index = 0; index < newReserved.length; index++) {
+                    listOfRooms += '&' + newReserved[index][0] + '=' + newReserved[index][1]
                 }
 
                 const url = `/Booking?checkIn=${reserved?.checkIn}&checkOut=${reserved?.checkOut}&adults=`
                     + `${reserved?.adults}&children=${reserved?.children}${listOfRooms} `
                 navigator(url);
-            }else{
+            } else {
                 ref.current.textContent = 'No room has selected'
             }
         } else {
@@ -132,9 +133,15 @@ const Table = () => {
     }
 
     const handleChange = (e, roomName) => {
-        /* console.log(e.target.value, roomName); */
 
-        setReserved({ ...reserved, rooms: [...reserved.rooms, { [roomName]: e.target.value }] });
+        var existingRoom = reserved.rooms.get(roomName);
+        if (existingRoom) {
+            console.log(true);
+            console.log(existingRoom)
+        }
+
+        setReserved({ ...reserved, rooms: reserved.rooms.set(roomName, e.target.value) });
+
     }
 
     return (
