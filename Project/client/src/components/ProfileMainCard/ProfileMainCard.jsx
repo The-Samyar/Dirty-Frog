@@ -113,8 +113,9 @@ const ProfileMainCard = ({ profileInfo }) => {
 
     const sendReview = async (e) => {
 
-        console.log({ ...review, bookingId: activeReview?.booking_id });
-        //const { data } = await addReviewToUser();
+        console.log({ ...review, booking_id: activeReview?.booking_id });
+        const { data } = await addReviewToUser();
+        console.log(data)
     }
 
     console.log(activeReview?.rating);

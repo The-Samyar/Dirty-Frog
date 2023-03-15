@@ -27,4 +27,4 @@ export const sendProfileChange = (data) => API.post('/profile/' , data);
 export const sendProfileImage = (data) => API.post('/profile/data/image' , data);
 export const getReservationHistory = () => API.get('/profile/reserve-history/');
 export const refreshToken = (refresh) => API.post('/token/refresh' , refresh);
-export const addReviewToUser = (data) => API.post('/profile/addReview' , data);
+export const addReviewToUser = (data) => API.post('/profile/reserve-history/review/' , data);
