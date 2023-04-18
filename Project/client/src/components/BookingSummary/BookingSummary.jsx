@@ -3,7 +3,7 @@ import { sendReservationData } from '../../api/api'
 import {useNavigate} from 'react-router-dom'
 import './BookingSummary.css'
 
-const BookingSummary = ({ rooms , info }) => {
+const BookingSummary = ({ rooms , info , diffDays }) => {
 
     const [userData, setUserData] = useState();
     const [totalCost , setTotalCost] = useState({total: 0  , tax : 0 , eachRoomTotalCost: []});
@@ -23,30 +23,22 @@ const BookingSummary = ({ rooms , info }) => {
             const currentRoom = rooms?.find(currentRoomItem => currentRoomItem.room_name === singleRoom.room_name)
             const costPerDay = Number(currentRoom?.cost_per_day);
             const roomCount = Number(singleRoom?.count);
-            const total = (costPerDay * roomCount);
+            const total = (costPerDay * roomCount) * diffDays;
 
             eachRoomTotalCost.push(total); 
-            
             return sum + total;
         } , 0)
 
         setTotalCost({total: sum + (0.09 * sum) + 10 , tax: 0.09 * sum , eachRoomTotalCost})
-    } , [rooms , info])
-
-    useEffect(() => {
-        
-    } , [totalCost])
+    } , [rooms , info , diffDays])
 
     const handleClick = async(e) => {
         e.preventDefault();
-        console.log(userData);
-
         const {data} = await sendReservationData(userData);
         
         if(data.message === "successful"){
             navigator('/');
         }
-
     }
 
     return (

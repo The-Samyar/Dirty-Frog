@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from '../../Table/Table'
+import { Icon } from '../../Table/Icon/Icon'
 import { MdOutlineRoomService } from 'react-icons/md'
 import { GiConfirmed } from 'react-icons/gi'
 import './RoomCard.css'

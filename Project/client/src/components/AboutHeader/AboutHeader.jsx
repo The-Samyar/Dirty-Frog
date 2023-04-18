@@ -8,7 +8,7 @@ const AboutHeader = () => {
         <Navbar />
         <div>
             <h1>About Us</h1>
-            <span>Everything you have to know about our hotel</span>
+            <span className="aboutHeaderDesc">Everything you have to know about our hotel</span>
         </div>
     </div>
   )

@@ -49,21 +49,18 @@ const ProfileMainCard = ({ profileInfo }) => {
         const getHistoryData = async () => {
             if (activeTab === History) {
                 const { data } = await getReservationHistory();
-                console.log(data);
                 setHistory(data);
             }
         }
 
         getHistoryData();
-
     }, [activeTab])
 
     const closeAddReview = (e) => {
-        console.log(e.target.localName)
-        if (e.target.className === "overlay" || (e.target.localName === "path" || e.target.localName === "svg") ) {
+
+        if (e.target.className === "overlay" || (e.target.localName === "path" || e.target.localName === "svg")) {
             setActiveReview({ rating: 0, review: '' });
             setReview({ review: '', rating: 0 });
-
         }
     }
 
@@ -94,28 +91,19 @@ const ProfileMainCard = ({ profileInfo }) => {
 
     const handleChangeInfo = async (e) => {
         e.preventDefault();
-
-        console.log(profileFormData);
-
-        const { data } = await ChangeUserData(profileFormData);
-        console.log(data);
+        await ChangeUserData(profileFormData);
     }
 
     const handlePasswordForm = async (e) => {
         e.preventDefault();
-        console.log(passwordFormData);
 
         if (passwordFormData.new_password === passwordFormData.confirm_new_password) {
-            const { data } = await sendChangePassData(passwordFormData);
-            console.log(data);
+            await sendChangePassData(passwordFormData);
         }
     }
 
     const sendReview = async (e) => {
-
-        console.log({ ...review, booking_id: activeReview?.booking_id });
-        const { data } = await addReviewToUser();
-        console.log(data)
+        await addReviewToUser({ ...review, bookingId: activeReview?.booking_id });
     }
 
     console.log(activeReview?.rating);
@@ -174,7 +162,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                             <input className="profileRadioInput" name="gender" type="radio" value="male" id="male"
                                                 disabled={!enableEdit}
                                                 onChange={(e) => setProfileFormData({ ...profileFormData, gender: e.target.value })}
-                                                defaultChecked={profileInfo?.gender === "Male" ? true : null} />
+                                                defaultChecked={profileInfo?.gender === "male" ? true : null} />
                                             <span className="checkmark"></span>
                                         </label>
 
@@ -183,7 +171,7 @@ const ProfileMainCard = ({ profileInfo }) => {
                                             <input className="profileRadioInput" name="gender" type="radio" value="female" id="female"
                                                 disabled={!enableEdit}
                                                 onChange={(e) => setProfileFormData({ ...profileFormData, gender: e.target.value })}
-                                                defaultChecked={profileInfo?.gender === "Female" ? true : null} />
+                                                defaultChecked={profileInfo?.gender === "female" ? true : null} />
                                             <span className="checkmark"></span>
                                         </label>
 
@@ -255,11 +243,6 @@ const ProfileMainCard = ({ profileInfo }) => {
                                                     </tr>
                                                 )
                                             }
-                                            {/* <tr className="profileTableRow">
-                                                <td className="profileTableBodyCell">Wed Oct 12 2022 to Thu Oct 20 2022</td>
-                                                <td className="profileTableBodyCell">202</td>
-                                                <td className="profileTableBodyCell">$ 184.4</td>
-                                        </tr>*/}
                                         </tbody>
                                     </table>
 
@@ -285,9 +268,11 @@ const ProfileMainCard = ({ profileInfo }) => {
                                                     </div>
                                                 </div>
 
-                                                <div className="addReviewCardFooter">
-                                                    <button className="addReviewBtn" onClick={(e) => sendReview(e)}>Send</button>
-                                                </div>
+                                                {
+                                                    activeReview?.review ? null : <div className="addReviewCardFooter">
+                                                        <button className="addReviewBtn" onClick={(e) => sendReview(e)}>Send</button>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>

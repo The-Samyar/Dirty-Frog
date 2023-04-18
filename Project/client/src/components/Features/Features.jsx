@@ -1,14 +1,8 @@
-import React , {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBus , faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faBus } from "@fortawesome/free-solid-svg-icons";
 import './Features.css'
 
 export const Features = () => {
-
-    
-
-
-
     return (
         <section>
             <h3 className="sectionTitle">Hotel Facilities</h3>
