@@ -205,7 +205,7 @@ class ReserveHistorySerializer(serializers.Serializer):
         return serialized.data
 
     def get_cost(self, obj):
-        return obj.total_cost
+        return round(obj.total_cost, 2)
 
     def get_review(self, obj):
         return obj.user_review

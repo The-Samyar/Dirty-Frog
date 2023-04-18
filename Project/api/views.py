@@ -299,10 +299,18 @@ def Booking(request):
         return Response(message)
 
 @api_view(('GET', 'POST'))
+@permission_classes([IsAuthenticated])
 def ProfileData(request):
-
-    user = User.objects.get(username='akbar')
-
+    user = request.user
+    print("#############################")
+    print("request.META:")
+    for item in request.META:
+        print(f"{item} : {request.META[item]}")
+        
+    print("#############################")
+    print(request)
+    print(user)
+    print("#############################")
     today = datetime.now().date()
     is_checked = models.Booking.objects.filter(user = user, check_in__lte = today, check_out__gte = today)
 
