@@ -13,7 +13,7 @@
     justify-content: center;
     height: 100%;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .AboutHeaderContainer div h1{
@@ -22,7 +22,7 @@
     letter-spacing:2px;
 }
 
-.AboutHeaderContainer div span {
+.AboutHeaderContainer div .aboutHeaderDesc {
     font-size: 1.5rem;
     margin-top: -10px;
     letter-spacing: 1px;

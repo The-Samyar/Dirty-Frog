@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from '../Table/Table'
+import { Icon } from '../Table/Icon/Icon'
 import './RoomSummary.css'
 
 const RoomSummary = ({ services }) => {
@@ -11,8 +11,6 @@ const RoomSummary = ({ services }) => {
 
             <div className="aminitiesContainer">
                 {
-
-
                     services.map(service => (
                         <span>
                             {

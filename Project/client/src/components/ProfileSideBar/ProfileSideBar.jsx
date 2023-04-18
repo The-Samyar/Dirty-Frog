@@ -8,9 +8,7 @@ const ProfileSideBar = ({profileInfo}) => {
     const handleSendingImage = async(e) => {
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
-
-        const {data} = await sendProfileImage(formData);
-        console.log(data);
+        await sendProfileImage(formData);
     }
 
     return (

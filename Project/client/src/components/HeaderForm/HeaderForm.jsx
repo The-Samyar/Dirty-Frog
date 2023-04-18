@@ -1,6 +1,5 @@
 import React , {useState} from 'react'
 import './HeaderForm.css'
-import Table from '../Table/Table'
 import { useNavigate } from "react-router-dom";
 
 const HeaderForm = ({main}) => {
@@ -13,7 +12,6 @@ const HeaderForm = ({main}) => {
         const urlParms = 
         `?checkIn=${formData.checkIn}&checkOut=${formData.checkOut}&rooms=${formData.rooms}&adults=${formData.adults}&children=${formData.children}`;
         navigator('/bookNow'+ urlParms);
-        
     }
 
     return (

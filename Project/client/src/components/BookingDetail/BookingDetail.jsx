@@ -2,12 +2,9 @@ import React from 'react'
 import './BookingDetail.css'
 import {Link} from 'react-router-dom'
 
-const BookingDetail = ({ rooms, checkIn, checkOut }) => {
-console.log(checkIn)
+const BookingDetail = ({ rooms, checkIn, checkOut , diffDays }) => {
   const checkInDate = new Date(checkIn).toDateString();
   const checkOutDate = new Date(checkOut).toDateString();
-  const diffTime = Math.abs(new Date(checkOut) - new Date(checkIn));
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   return (
     <section className="BookingDetailContainer">

@@ -11,8 +11,6 @@ const Header = () => {
         <span>Hotel & resort</span>
         <h1>WELCOME TO OUR HOTEL</h1>
       </div>
-
-
     </header>
   )
 }

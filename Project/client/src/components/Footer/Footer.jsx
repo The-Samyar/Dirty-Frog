@@ -1,12 +1,9 @@
-
-import React from 'react'
 import './Footer.css'
 import {Link} from 'react-router-dom'
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import LocalPhoneSharpIcon from '@mui/icons-material/LocalPhoneSharp';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-
 
 const Footer = () => {
 

@@ -1,9 +1,5 @@
 import React from 'react'
-import IMG1 from '../images/bar.jpg'
-import IMG2 from '../images/pool.jpg'
-import IMG3 from '../images/rest.jpg'
 import './AboutOffer.css'
-
 
 const AboutOffer = () => {
     return (

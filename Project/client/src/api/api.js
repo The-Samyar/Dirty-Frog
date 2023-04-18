@@ -2,8 +2,9 @@ import axios from 'axios';
 
 const API = axios.create({baseURL: 'http://localhost:8000/api'})
 API.interceptors.request.use(req => {
-    if(localStorage.getItem('authTokens')?.access){
-        req.headers.Authorization = `Bearer ${localStorage.getItem('authTokens')?.access}`;
+    let token = JSON.parse(localStorage.getItem('authTokens'));
+    if(token){
+        req.headers.Authorization = `Bearer ${token?.access}`;
     }
     return req;
 })
