@@ -14,8 +14,6 @@ class BookRoomSerializer(serializers.Serializer):
     size = serializers.IntegerField()
     capacity = serializers.IntegerField()
     vacant_count = serializers.IntegerField()
-    # description = serializers.CharField()
-    # room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
     services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -42,13 +40,11 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 class RoomTypeSerializer(DynamicFieldsModelSerializer):
     room_pictures = serializers.SlugRelatedField(many=True, read_only=True, slug_field="picture_address")
-    # services = serializers.SlugRelatedField(many=True, read_only=True, slug_field='services_full_info')
     services = serializers.SerializerMethodField()
 
     class Meta:
         model = models.RoomType
-        # fields = '__all__'
-        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'booked_count', 'description', 'room_pictures', 'services']
+        fields = ['room_name', 'cost_per_day', 'size', 'capacity', 'description', 'room_pictures', 'services']
 
     def get_services(self, obj):
         queryset = [service.services_full_info for service in models.RoomService.objects.filter(room_name = obj.room_name)]
@@ -183,16 +179,6 @@ class ReserveHistorySerializer(serializers.Serializer):
     review = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()
 
-    # room_number = serializers.SerializerMethodField()
-    # check_in = serializers.SerializerMethodField()
-    # check_out = serializers.SerializerMethodField()
-    # room_type = serializers.SerializerMethodField()
-
-    # class Meta:
-    #     model = models.BookedRoom
-    #     fields = ['room_number', 'check_in', 'check_out', 'room_type']
-    #     ordering = ['-room_number']
-
     def get_booking_id(self, obj):
         return obj.id
 
@@ -212,15 +198,3 @@ class ReserveHistorySerializer(serializers.Serializer):
 
     def get_rating(self, obj):
         return obj.user_rating
-    # def get_room_number(self, obj):
-    #     return obj.room_number.room_number
-
-    # def get_check_in(self, obj):
-
-    #     return obj.booking_id.check_in
-
-    # def get_check_out(self, obj):
-    #     return obj.booking_id.check_out
-
-    # def get_room_type(self, obj):
-    #     return obj.room_number.room_name.room_name

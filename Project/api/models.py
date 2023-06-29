@@ -12,7 +12,6 @@ class RoomType(models.Model):
     capacity = models.IntegerField()
     bed = models.CharField(max_length=30)
     room_count = models.IntegerField()
-    booked_count = models.IntegerField()
     description = models.TextField()
 
     def __str__(self):
@@ -26,8 +25,6 @@ class RoomPicture(models.Model):
         related_name='room_pictures')
     picture_address = models.CharField(max_length=50)
     def __str__(self):
-        # REDO
-        # return self.room_name.room_name
         return f"{self.room_name.room_name} | {self.picture_address}"
 
 class RoomService(models.Model):

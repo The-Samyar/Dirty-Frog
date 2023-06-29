@@ -4,8 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from datetime import date, timedelta
 from django.db.models import Sum, Q, Count, F
-from django.contrib.auth.hashers import check_password, make_password
-
+from django.contrib.auth.hashers import check_password
 from .serializers import *
 from . import models
 
@@ -385,6 +384,7 @@ def ReserveHistory(request):
 @api_view(('POST', ))
 @permission_classes([IsAuthenticated])
 def BookingReview(request):
+    # saves user review per reservation
     user = request.user
     if request.method == 'POST':
         reservation = models.Booking.objects.get(id=request.data['bookingId'])
