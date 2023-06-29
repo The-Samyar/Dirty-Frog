@@ -18,50 +18,40 @@ from django.contrib.auth.models import User
 
 @api_view(('GET',))
 def FeaturedRooms_component(request):
-    room_types = models.RoomType.objects.filter(Q(room_name='Premium King') | Q(room_name='Premium Royal') | Q(room_name='Premium Sea View'))
-    room_types_serialized = RoomTypeSerializer(room_types, many=True, fields=('room_name', 'cost_per_day','description', 'room_pictures'))
-
+    # returns 3 manually selected featured rooms
+    room_types = models.RoomType.objects.filter(
+        Q(room_name='Premium King') | Q(room_name='Premium Royal') | Q(room_name='Premium Sea View')
+        )
+    
+    room_types_serialized = RoomTypeSerializer(
+        room_types,
+        many=True,
+        fields=('room_name', 'cost_per_day','description', 'room_pictures')
+        )
     return Response(room_types_serialized.data)
-    # for item in room_types_serialized.data:
-    #     item = dict(item)
-
-    # json_response = [
-    #     {"room_types" : room_types_serialized.data},
-    # ]
-
-    # return Response(json_response)
-
 
 
 @api_view(('GET',))
 def Testimonials_component(request):
+    # returns top 9 best reviews
     reviews = models.Review.objects.all().order_by('rate')[:9]
     reviews_serialized = ReviewSerializer(reviews, many=True)
-    print(reviews_serialized.data)
     return Response(reviews_serialized.data)
     
-    # for item in reviews_serialized.data:
-    #     item = dict(item)
-
-    # json_response = [
-    #     {"reviews" : reviews_serialized.data},
-    # ]
-    # return Response(json_response)
-
 
 @api_view(('GET',))
 def Stats_component(request):
-
-    guests_count = models.Booking.objects.filter(check_out__gte = date.today()).count()
-    room_count = models.RoomType.objects.aggregate(Sum('room_count'))['room_count__sum']
-    staff_count = 200
-    positive_ratings_count = models.Review.objects.filter(rate__gte = 4).count()
+    # returns a summary info about hotel regarding current guest count, staff count, 
+    guests = models.Booking.objects.filter(check_in__lte=date.today(),check_out__gte = date.today()).count()
+    rooms = models.RoomType.objects.aggregate(total=Sum('room_count'))['total']
+    STAFF = 200
+    positive_ratings = models.Review.objects.filter(rate__gte = 4).count()
 
     json_response = {
-        "guests_count" : guests_count,
-        "rooms_count" : room_count,
-        "staff_count" : staff_count,
-        "positive_ratings_count" : positive_ratings_count,
+        "guests_count" : guests,
+        "rooms_count" : rooms,
+        "staff_count" : STAFF,
+        "positive_ratings_count" : positive_ratings,
     }
 
     return Response(json_response)
@@ -69,7 +59,9 @@ def Stats_component(request):
 
 @api_view(("GET","POST"))
 def BookNow(request):
-    
+    print(dir(request))
+    print("#######")
+
     if request.method == 'GET':
         today = datetime.now().date()
         tomorrow = datetime.now().date() + timedelta(days=1)
