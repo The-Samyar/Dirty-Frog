@@ -1,19 +1,18 @@
-import json
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from django.db.models import Sum, Q, Count, F
 from django.contrib.auth.hashers import check_password, make_password
-from datetime import datetime
-from http import HTTPStatus
 
 from .serializers import *
 from . import models
 
 from django.contrib.auth.models import User
+
+from PIL import Image
+from pathlib import Path
 
 
 @api_view(('GET',))
@@ -58,54 +57,50 @@ def Stats_component(request):
 
 
 @api_view(("GET","POST"))
-def BookNow(request):
-    print(dir(request))
-    print("#######")
+def RoomAvailability(request):
 
     if request.method == 'GET':
-        today = datetime.now().date()
-        tomorrow = datetime.now().date() + timedelta(days=1)
+        today = date.today()
+        tomorrow = today + timedelta(days=1)
         total_guests='1'
 
-        booked_ids = models.Booking.objects.exclude(
+        bookings = models.Booking.objects.exclude(
             check_out__lte=today
             ).exclude(
                 Q(check_in__lt=today, check_out__lte=today) | Q(check_in__gte=tomorrow, check_out__gt=tomorrow)
                 )
 
-        booked_rooms = models.BookedRoom.objects.filter(booking_id__in=booked_ids).values_list('room_number', flat=True)
-
+        booked_rooms = models.BookedRoom.objects.filter(booking_id__in=bookings).values_list('room_number', flat=True)
 
         rooms = models.RoomType.objects.annotate(
                 vacant_count=Count(
-                    'room', filter=~Q(room__room_number__in=booked_rooms) if booked_rooms else None
+                    'room', filter=~Q(room__room_number__in=booked_rooms), default=0
                     )
                 ).filter(
-                    vacant_count__gte=1,
-                    capacity__gte = int(total_guests)
+                    vacant_count__gte=1
                     )
 
         returned_serialized = BookRoomSerializer(rooms, many=True)
         return Response(returned_serialized.data)
+    
     elif request.method == 'POST':
         serialized_data = HeaderFormSerializer(data=request.data)
 
         if serialized_data.is_valid():
-            print("VALID")
             valid_data = serialized_data.validated_data
 
             total_guests = valid_data['adults'] + valid_data['children']
             check_in = valid_data['checkIn']
             check_out = valid_data['checkOut']
-            today = datetime.now().date()
+            today = date.today()
 
-            booked_ids = models.Booking.objects.exclude(
+            bookings = models.Booking.objects.exclude(
                 check_out__lte=today
                 ).exclude(
                     Q(check_in__lt=check_in, check_out__lte=check_in) | Q(check_in__gte=check_out, check_out__gt=check_out)
                     )
 
-            booked_rooms = models.BookedRoom.objects.filter(booking_id__in=booked_ids).values_list('room_number', flat=True)
+            booked_rooms = models.BookedRoom.objects.filter(booking_id__in=bookings).values_list('room_number', flat=True)
 
             
             rooms = models.RoomType.objects.annotate(
@@ -116,8 +111,6 @@ def BookNow(request):
                         vacant_count__gte=1,
                         capacity__gte = int(total_guests)
                         )
-            print(rooms)
-            print("###############CHECK")
 
             free_space = rooms.annotate(free_space= F('vacant_count') * F('capacity')).aggregate(total_free_space=Sum('free_space'))['total_free_space']
             vacant_count = rooms.aggregate(total_vacant_count=Sum('vacant_count'))['total_vacant_count']
@@ -152,14 +145,10 @@ def BookNow(request):
                     "Data": ""}
 
         else:
-            print("INVALID")
-
             response = {
                 "Error" : serialized_data.errors,
                 "Data" : ""
             }
-
-        print(response)
 
         return Response(data = response)
 
@@ -167,6 +156,8 @@ def BookNow(request):
 @api_view(("GET",))
 def Rooms(request, room_name=None):
     if room_name:
+        # returns all rooms pictures along with their name if room name is not empty in the url, otherwise returns the particular rooms complete info 
+
         # Convert slug to string
         room_name = room_name.replace('-', ' ')
 
@@ -181,8 +172,10 @@ def Rooms(request, room_name=None):
 
 
 @api_view(("POST",))
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def BookingInfo(request):
+    # returns rooms info when user is booking
+
     if request.method == 'POST':
         room_names = request.data["room"]
 
@@ -196,13 +189,12 @@ def BookingInfo(request):
 
 @api_view(('POST',))
 def SignUp(request):
+    # user sign up
     if request.method == 'POST':
         serialized = UserRegisterSerializer(data=request.data)
         if serialized.is_valid():
             validated = serialized.validated_data
 
-            print("###################")
-            print(validated)
             if validated['check'] == True and validated['password'] == validated['confirm_password']:
                 new_user = User.objects.create_user(
                     username=validated['username'],
@@ -221,23 +213,20 @@ def SignUp(request):
                 response = {'message': 'error'}
         else:
             response = {'message': f'{serialized.errors}'}
-        print(response)
         return Response(response)
 
 @api_view(("POST",))
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def Booking(request):
     if request.method == 'POST':
         serialized = BookingModelSerializer(data=request.data)
         if serialized.is_valid():
             validated = serialized.validated_data
-            user = User.objects.get(username="akbar")
-            print("VALID")
-            print(validated)
+            user = request.user
 
             rooms = validated["rooms"]
 
-            today = datetime.now().date()
+            today = date.today()
             booked_ids = models.Booking.objects.exclude(
                 check_out__lte=today
                 ).exclude(
@@ -293,17 +282,9 @@ def Booking(request):
 @api_view(('GET', 'POST'))
 @permission_classes([IsAuthenticated])
 def ProfileData(request):
+    # returns user's complete info on GET, saves edited changes on POST
     user = request.user
-    print("#############################")
-    print("request.META:")
-    for item in request.META:
-        print(f"{item} : {request.META[item]}")
-        
-    print("#############################")
-    print(request)
-    print(user)
-    print("#############################")
-    today = datetime.now().date()
+    today = date.today()
     is_checked = models.Booking.objects.filter(user = user, check_in__lte = today, check_out__gte = today)
 
     user_info = {
@@ -322,12 +303,9 @@ def ProfileData(request):
         return Response(user_info)
     
     elif request.method == 'POST':
-        print("Changed fields:")
         for row in request.data:
             if user_info[row] != request.data[row]:
-                print(f"{row} : {user_info[row]} --> {row} : {request.data[row]}")
 
-                # Method 1
                 if hasattr(user, row):
                     setattr(user, row, request.data[row])
                     user.save()
@@ -335,31 +313,15 @@ def ProfileData(request):
                     setattr(user.userinfo, row, request.data[row])
                     user.userinfo.save()
 
-                # Method 2
-                # setattr(user, row, request.data[row])
-                # user.save()
-                # setattr(user.userinfo, row, request.data[row])
-                # user.userinfo.save()
-
         return Response("Information was successfully edited")
 
 @api_view(('POST',))
+@permission_classes([IsAuthenticated])
 def ProfileImage(request):
-
-    #   Preferred way of uploading image:
-    #   <form method="POST" action="" enctype='multipart/form-data'>
-    #     {% csrf_token %}
-    #     <input type="submit"></input>
-    #     {{ form }}
-    #   </form>
-
-    # from django.core.files.images import ImageFile
-
-    from PIL import Image
-    from pathlib import Path
+    # saves user profile image file in images directory, also saves the image path in database
 
     if request.method == 'POST':
-        user = User.objects.get(username='akbar')
+        user = request.user
         files_image = request.FILES['file']
 
         image_address = f"client/public/images/users/{user.username}/"
@@ -382,57 +344,48 @@ def ProfileImage(request):
 
 
 @api_view(('POST',))
+@permission_classes([IsAuthenticated])
 def ChangePassword(request):
+    # changes user password
     if request.method == 'POST':
-        user = User.objects.get(username='akbar')
-
-        error = 0
+        user = request.user
         
-        if not check_password(request.data['old_password'], user.password):
-            error += 1
+        if check_password(request.data['old_password'], user.password):
+            if request.data['new_password'] == request.data['confirm_new_password']:
+                if not check_password(request.data['new_password'], user.password):
+                    user.set_password(request.data['new_password'])
+                    user.save()
+                    response = "Success"
+                else:
+                    response = "Choose a new password"
+            else:
+                response = "Passwords don't match"
+        else:
             response = "Old password is wrong"
-
-        if request.data['new_password'] != request.data['confirm_new_password']:
-            error += 1
-            response = "Passwords don't match"
-        
-        if check_password(request.data['new_password'], user.password):
-            error += 1
-            response = "Choose a new password"
-        
-        if error == 0:    
-            user.set_password(request.data['new_password'])
-            user.save()
-            response = "Success"
 
         return Response(response)
 
 
 @api_view(('GET',))
+@permission_classes([IsAuthenticated])
 def ReserveHistory(request):
+    # returns user's booking history
     if request.method == 'GET':
-        user = User.objects.get(username='akbar')
-        
-        # required fields: check in date - check out date, room number, room type, cost
-
-        # serialized = ReserveHistorySerializer(
-        #     models.BookedRoom.objects.filter(
-        #         booking_id__in=models.Booking.objects.filter(user = user)
-        #         ),
-        #         many=True)
-
+        user = request.user
         serialized = ReserveHistorySerializer(
             models.Booking.objects.filter(
                 user=user
                 ),
-                many=True)
+            many=True
+            )
 
         return Response(serialized.data)
 
 
 @api_view(('POST', ))
+@permission_classes([IsAuthenticated])
 def BookingReview(request):
-    user = User.objects.get(username='akbar')
+    user = request.user
     if request.method == 'POST':
         reservation = models.Booking.objects.get(id=request.data['bookingId'])
         if reservation.user == user:

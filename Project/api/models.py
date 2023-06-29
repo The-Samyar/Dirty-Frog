@@ -1,8 +1,6 @@
-from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from .models import *
-""" from numpy import empty """
 
 #  ------Tables related to rooms------
 class RoomType(models.Model):
@@ -46,7 +44,6 @@ class RoomService(models.Model):
 class Room(models.Model):
     room_number = models.IntegerField(primary_key=True)
     room_name = models.ForeignKey(RoomType, on_delete=models.CASCADE)
-    # is_vacant = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.room_number}, {self.room_name}"
 
@@ -56,7 +53,6 @@ class Room(models.Model):
 #  ----Tables related to bookings----
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
     check_in = models.DateField()
     check_out = models.DateField()
     adults_count = models.IntegerField()
@@ -91,7 +87,6 @@ class UserInfo(models.Model):
     is_checked = models.BooleanField(default=False)
     dob = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=6 ,blank=True, null=True)
-    # profile_picture = models.ImageField(upload_to='')
     profile_picture = models.CharField(max_length=40, default="")
 
     def __str__(self):
